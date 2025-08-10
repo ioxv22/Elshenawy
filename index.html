@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأستاذ إسلام الشناوي - مدرس فيزياء متخصص</title>
+    <meta name="description" content="الأستاذ إسلام الشناوي، مدرس فيزياء للصفوف المتقدمة في الإمارات، بخبرة واسعة في تبسيط المفاهيم الفيزيائية">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Meta Tags for SEO -->
+    <meta name="keywords" content="فيزياء, تدريس, الإمارات, صف متقدم, تاسع, عاشر, حادي عشر, إسلام الشناوي">
+    <meta name="author" content="الأستاذ إسلام الشناوي">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Arabic">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="الأستاذ إسلام الشناوي - مدرس فيزياء متخصص">
+    <meta property="og:description" content="مدرس فيزياء للصفوف المتقدمة في الإمارات، بخبرة واسعة في تبسيط المفاهيم الفيزيائية">
+    <meta property="og:image" content="https://i.ibb.co/dsQw1yV4/image.png">
+    <meta property="og:url" content="https://yourwebsite.com">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ar_AE">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="الأستاذ إسلام الشناوي - مدرس فيزياء متخصص">
+    <meta name="twitter:description" content="مدرس فيزياء للصفوف المتقدمة في الإمارات">
+    <meta name="twitter:image" content="https://i.ibb.co/dsQw1yV4/image.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://i.ibb.co/xSFLPSGn/image.png">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/xSFLPSGn/image.png">
+    
+    <!-- Theme Color for Mobile Browsers -->
+    <meta name="theme-color" content="#1e3a8a">
+    <meta name="msapplication-TileColor" content="#1e3a8a">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-content">
+            <div class="welcome-logo">
+                <img src="https://i.ibb.co/xSFLPSGn/image.png" alt="شعار الأستاذ إسلام الشناوي">
+                <div class="logo-glow"></div>
+            </div>
+            <div class="welcome-text">
+                <h1 class="welcome-title">مرحباً بك في</h1>
+                <h2 class="welcome-subtitle">عالم الفيزياء مع الأستاذ إسلام الشناوي</h2>
+                <div class="welcome-tagline">
+                    <span class="typing-text" id="typingText"></span>
+                    <span class="cursor">|</span>
+                </div>
+            </div>
+            <div class="welcome-animation">
+                <div class="floating-particles">
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                </div>
+            </div>
+            <div class="welcome-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText">جاري التحميل...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="https://i.ibb.co/xSFLPSGn/image.png" alt="شعار الأستاذ إسلام الشناوي">
+                    <span>الأستاذ إسلام الشناوي</span>
+                </div>
+                
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#home" class="nav-link">الرئيسية</a></li>
+                    <li><a href="#about" class="nav-link">من أنا</a></li>
+                    <li><a href="#courses" class="nav-link">الكورسات</a></li>
+                    <li><a href="#pricing" class="nav-link">الاشتراكات</a></li>
+                    <li><a href="#testimonials" class="nav-link">آراء الطلبة</a></li>
+                    <li><a href="#faq" class="nav-link">أسئلة شائعة</a></li>
+                    <li><a href="#contact" class="nav-link">تواصل معي</a></li>
+                    <li><a href="admin.html" class="nav-link admin-link" style="display: none;">لوحة الإدارة</a></li>
+                </ul>
+                
+                <div class="nav-actions">
+                    <div class="user-menu" id="userMenu" style="display: none;">
+                        <div class="user-avatar" id="userAvatar">
+                            <img src="" alt="صورة المستخدم" id="userImage" style="display: none;">
+                            <span id="userInitials"></span>
+                        </div>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="user-info">
+                                <span class="user-name" id="userName"></span>
+                                <span class="user-grade" id="userGrade"></span>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item" id="profileLink">
+                                <i class="fas fa-user"></i>
+                                الملف الشخصي
+                            </a>
+                            <a href="#" class="dropdown-item" id="subscriptionLink">
+                                <i class="fas fa-crown"></i>
+                                اشتراكي
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i>
+                                تسجيل الخروج
+                            </a>
+                        </div>
+                    </div>
+                    <div class="auth-buttons" id="authButtons">
+                        <button class="theme-toggle" id="themeToggle" title="تبديل الوضع">
+                            <i class="fas fa-sun theme-toggle-icon sun"></i>
+                            <i class="fas fa-moon theme-toggle-icon moon"></i>
+                        </button>
+                        <a href="#pricing" class="btn btn-primary">اشترك الآن</a>
+                    </div>
+                    <div class="hamburger" id="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-background">
+            <div class="physics-animation">
+                <div class="atom">
+                    <div class="nucleus"></div>
+                    <div class="electron-orbit orbit-1">
+                        <div class="electron"></div>
+                    </div>
+                    <div class="electron-orbit orbit-2">
+                        <div class="electron"></div>
+                    </div>
+                    <div class="electron-orbit orbit-3">
+                        <div class="electron"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text" data-aos="fade-up">
+                    <h1 class="hero-title">
+                        مرحباً بك في عالم الفيزياء
+                        <span class="highlight">الممتع والمبسط</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        مع الأستاذ إسلام الشناوي، اكتشف أسرار الفيزياء وتفوق في دراستك
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#pricing" class="btn btn-primary btn-large">
+                            <i class="fas fa-rocket"></i>
+                            ابدأ رحلتك الآن
+                        </a>
+                        <a href="#about" class="btn btn-outline btn-large">
+                            <i class="fas fa-user"></i>
+                            تعرف على الأستاذ
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hero-image" data-aos="fade-left">
+                    <div class="image-container">
+                        <img src="https://i.ibb.co/dsQw1yV4/image.png" alt="الأستاذ إسلام الشناوي">
+                        <div class="image-decoration"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <div class="scroll-arrow">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">من هو الأستاذ إسلام الشناوي؟</h2>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-image" data-aos="fade-right">
+                    <img src="https://i.ibb.co/8DcsSHD8/image.png" alt="بطاقة التعريف بالأستاذ">
+                </div>
+                
+                <div class="about-text" data-aos="fade-left">
+                    <p class="about-description">
+                        الأستاذ إسلام الشناوي مدرس فيزياء متخصص للصفوف المتقدمة في الإمارات. يتميز بخبرة واسعة في تبسيط المفاهيم الفيزيائية المعقدة وتحويلها إلى شروحات واضحة ومفهومة.
+                    </p>
+                    <p class="about-description">
+                        يساعد الطلبة على فهم الفيزياء بطريقة ممتعة وتفاعلية، مما يمكنهم من تحقيق أعلى الدرجات والتفوق في دراستهم.
+                    </p>
+                    
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h3>خبرة واسعة</h3>
+                            <p>سنوات من الخبرة في تدريس الفيزياء للصفوف المتقدمة</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <h3>تبسيط المفاهيم</h3>
+                            <p>أسلوب مبتكر في شرح المفاهيم الفيزيائية المعقدة</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <h3>نتائج متميزة</h3>
+                            <p>مساعدة الطلبة على تحقيق أعلى الدرجات والتفوق</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <h3>تعليم تفاعلي</h3>
+                            <p>حصص أونلاين تفاعلية مع تسجيل جميع الدروس</p>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="https://t.me/PhysixsPert" target="_blank" class="social-link telegram">
+                            <i class="fab fa-telegram"></i>
+                            <span>تيليجرام</span>
+                        </a>
+                        <a href="https://www.tiktok.com/@physixspert?_t=ZS-8wGbEpLvJtx&_r=1" target="_blank" class="social-link tiktok">
+                            <i class="fab fa-tiktok"></i>
+                            <span>تيكتوك</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section class="courses" id="courses">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">الكورسات والفيديوهات التعليمية</h2>
+                <p class="section-subtitle">شاهد شروحاتي المفصلة واشترك للوصول إلى جميع الكورسات</p>
+                <div class="section-divider"></div>
+            </div>
+            
+            <!-- Course Categories -->
+            <div class="course-categories" data-aos="fade-up" data-aos-delay="100">
+                <button class="category-btn active" data-category="all">جميع الكورسات</button>
+                <button class="category-btn" data-category="grade9">الصف التاسع</button>
+                <button class="category-btn" data-category="grade10">الصف العاشر</button>
+                <button class="category-btn" data-category="grade11">الصف الحادي عشر</button>
+            </div>
+            
+            <!-- Courses Grid -->
+            <div class="courses-grid" id="coursesGrid">
+                <!-- Grade 9 Courses -->
+                <div class="course-card grade9" data-course-id="grade9-chapter1" data-aos="fade-up" data-aos-delay="200">
+                    <div class="course-thumbnail">
+                        <img src="https://via.placeholder.com/400x225/1e3a8a/ffffff?text=الفصل+الأول" alt="الفصل الأول - تاسع">
+                        <div class="course-overlay">
+                            <button class="play-btn" onclick="openVideoModal('grade9-chapter1')">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="course-duration">45 دقيقة</div>
+                    </div>
+                    <div class="course-content">
+                        <div class="course-category">الصف التاسع</div>
+                        <h3 class="course-title">الفصل الأول: الحركة</h3>
+                        <p class="course-description">شرح مفصل لمفاهيم الحركة والسرعة والتسارع</p>
+                        <div class="course-stats">
+                            <span><i class="fas fa-video"></i> 8 فيديوهات</span>
+                            <span><i class="fas fa-clock"></i> 6 ساعات</span>
+                            <span><i class="fas fa-users"></i> 150 طالب</span>
+                        </div>
+                        <div class="course-actions">
+                            <button class="btn btn-primary course-btn" onclick="requireSubscription('grade9')">
+                                <i class="fas fa-lock"></i>
+                                مشاهدة الكورس
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="course-card grade9" data-course-id="grade9-chapter2" data-aos="fade-up" data-aos-delay="300">
+                    <div class="course-thumbnail">
+                        <img src="https://via.placeholder.com/400x225/1e3a8a/ffffff?text=الفصل+الثاني" alt="الفصل الثاني - تاسع">
+                        <div class="course-overlay">
+                            <button class="play-btn" onclick="openVideoModal('grade9-chapter2')">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="course-duration">50 دقيقة</div>
+                    </div>
+                    <div class="course-content">
+                        <div class="course-category">الصف التاسع</div>
+                        <h3 class="course-title">الفصل الثاني: القوى</h3>
+                        <p class="course-description">فهم القوى وقوانين نيوتن للحركة</p>
+                        <div class="course-stats">
+                            <span><i class="fas fa-video"></i> 10 فيديوهات</span>
+                            <span><i class="fas fa-clock"></i> 7 ساعات</span>
+                            <span><i class="fas fa-users"></i> 145 طالب</span>
+                        </div>
+                        <div class="course-actions">
+                            <button class="btn btn-primary course-btn" onclick="requireSubscription('grade9')">
+                                <i class="fas fa-lock"></i>
+                                مشاهدة الكورس
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Grade 10 Courses -->
+                <div class="course-card grade10" data-course-id="grade10-chapter1" data-aos="fade-up" data-aos-delay="400">
+                    <div class="course-thumbnail">
+                        <img src="https://via.placeholder.com/400x225/3b82f6/ffffff?text=الفصل+الأول" alt="الفصل الأول - عاشر">
+                        <div class="course-overlay">
+                            <button class="play-btn" onclick="openVideoModal('grade10-chapter1')">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="course-duration">55 دقيقة</div>
+                    </div>
+                    <div class="course-content">
+                        <div class="course-category">الصف العاشر</div>
+                        <h3 class="course-title">الفصل الأول: الطاقة والشغل</h3>
+                        <p class="course-description">مفاهيم الطاقة الحركية والكامنة والشغل</p>
+                        <div class="course-stats">
+                            <span><i class="fas fa-video"></i> 12 فيديو</span>
+                            <span><i class="fas fa-clock"></i> 8 ساعات</span>
+                            <span><i class="fas fa-users"></i> 200 طالب</span>
+                        </div>
+                        <div class="course-actions">
+                            <button class="btn btn-primary course-btn" onclick="requireSubscription('grade10')">
+                                <i class="fas fa-lock"></i>
+                                مشاهدة الكورس
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="course-card grade10" data-course-id="grade10-chapter2" data-aos="fade-up" data-aos-delay="500">
+                    <div class="course-thumbnail">
+                        <img src="https://via.placeholder.com/400x225/3b82f6/ffffff?text=الفصل+الثاني" alt="الفصل الثاني - عاشر">
+                        <div class="course-overlay">
+                            <button class="play-btn" onclick="openVideoModal('grade10-chapter2')">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="course-duration">60 دقيقة</div>
+                    </div>
+                    <div class="course-content">
+                        <div class="course-category">الصف العاشر</div>
+                        <h3 class="course-title">الفصل الثاني: الموجات والصوت</h3>
+                        <p class="course-description">خصائص الموجات والصوت والاهتزازات</p>
+                        <div class="course-stats">
+                            <span><i class="fas fa-video"></i> 15 فيديو</span>
+                            <span><i class="fas fa-clock"></i> 10 ساعات</span>
+                            <span><i class="fas fa-users"></i> 180 طالب</span>
+                        </div>
+                        <div class="course-actions">
+                            <button class="btn btn-primary course-btn" onclick="requireSubscription('grade10')">
+                                <i class="fas fa-lock"></i>
+                                مشاهدة الكورس
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Grade 11 Courses -->
+                <div class="course-card grade11" data-course-id="grade11-chapter1" data-aos="fade-up" data-aos-delay="600">
+                    <div class="course-thumbnail">
+                        <img src="https://via.placeholder.com/400x225/f59e0b/ffffff?text=الفصل+الأول" alt="الفصل الأول - حادي عشر">
+                        <div class="course-overlay">
+                            <button class="play-btn" onclick="openVideoModal('grade11-chapter1')">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="course-duration">65 دقيقة</div>
+                    </div>
+                    <div class="course-content">
+                        <div class="course-category">الصف الحادي عشر</div>
+                        <h3 class="course-title">الفصل الأول: الكهرباء الساكنة</h3>
+                        <p class="course-description">الشحنات الكهربائية والمجالات الكهربائية</p>
+                        <div class="course-stats">
+                            <span><i class="fas fa-video"></i> 18 فيديو</span>
+                            <span><i class="fas fa-clock"></i> 12 ساعة</span>
+                            <span><i class="fas fa-users"></i> 120 طالب</span>
+                        </div>
+                        <div class="course-actions">
+                            <button class="btn btn-primary course-btn" onclick="requireSubscription('grade11')">
+                                <i class="fas fa-lock"></i>
+                                مشاهدة الكورس
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="course-card grade11" data-course-id="grade11-chapter2" data-aos="fade-up" data-aos-delay="700">
+                    <div class="course-thumbnail">
+                        <img src="https://via.placeholder.com/400x225/f59e0b/ffffff?text=الفصل+الثاني" alt="الفصل الثاني - حادي عشر">
+                        <div class="course-overlay">
+                            <button class="play-btn" onclick="openVideoModal('grade11-chapter2')">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="course-duration">70 دقيقة</div>
+                    </div>
+                    <div class="course-content">
+                        <div class="course-category">الصف الحادي عشر</div>
+                        <h3 class="course-title">الفصل الثاني: الدوائر الكهربائية</h3>
+                        <p class="course-description">التيار والمقاومة وقوانين كيرشوف</p>
+                        <div class="course-stats">
+                            <span><i class="fas fa-video"></i> 20 فيديو</span>
+                            <span><i class="fas fa-clock"></i> 14 ساعة</span>
+                            <span><i class="fas fa-users"></i> 110 طالب</span>
+                        </div>
+                        <div class="course-actions">
+                            <button class="btn btn-primary course-btn" onclick="requireSubscription('grade11')">
+                                <i class="fas fa-lock"></i>
+                                مشاهدة الكورس
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Subscription CTA -->
+            <div class="subscription-cta" data-aos="fade-up" data-aos-delay="800">
+                <div class="cta-content">
+                    <h3>احصل على وصول كامل لجميع الكورسات</h3>
+                    <p>اشترك الآن واستمتع بمشاهدة جميع الفيديوهات والكورسات التعليمية</p>
+                    <a href="#pricing" class="btn btn-primary btn-large">
+                        <i class="fas fa-crown"></i>
+                        اشترك الآن
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal">
+        <div class="modal-overlay" onclick="closeVideoModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeVideoModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="video-container">
+                <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="video-info">
+                <h3 id="videoTitle">عنوان الفيديو</h3>
+                <p id="videoDescription">وصف الفيديو</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">أسعار الاشتراكات للفصل القادم</h2>
+                <p class="section-subtitle">اختر الباقة المناسبة لصفك الدراسي</p>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="pricing-grid">
+                <!-- Grade 9 -->
+                <div class="pricing-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-header">
+                        <div class="grade-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <h3 class="grade-title">صف تاسع متقدم</h3>
+                        <div class="price">
+                            <span class="currency">درهم</span>
+                            <span class="amount">99</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <ul class="features-list">
+                            <li><i class="fas fa-check"></i> حصتين أونلاين أسبوعياً على الأقل</li>
+                            <li><i class="fas fa-check"></i> الحصة لا تقل عن ساعة</li>
+                            <li><i class="fas fa-check"></i> شرح كامل لمنهاج الفصل الدراسي</li>
+                            <li><i class="fas fa-check"></i> شرح وحل الهيكل فور صدوره</li>
+                            <li><i class="fas fa-check"></i> مراجعة ليلة الامتحان</li>
+                            <li><i class="fas fa-check"></i> تسجيل جميع الحصص</li>
+                            <li><i class="fas fa-check"></i> اجتماعات مباشرة للمراجعة</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <a href="https://pay.ziina.com/ShenawyPhysics/BmPodX9XP" target="_blank" class="btn btn-primary btn-full">
+                            <i class="fas fa-credit-card"></i>
+                            اشترك الآن
+                        </a>
+                        <button class="btn btn-outline btn-full" onclick="openReceiptModal('grade9')" style="margin-top: 10px;">
+                            <i class="fas fa-receipt"></i>
+                            رفع الإيصال
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Grade 10 -->
+                <div class="pricing-card featured" data-aos="fade-up" data-aos-delay="200">
+                    <div class="popular-badge">الأكثر طلباً</div>
+                    <div class="card-header">
+                        <div class="grade-icon">
+                            <i class="fas fa-microscope"></i>
+                        </div>
+                        <h3 class="grade-title">صف عاشر متقدم</h3>
+                        <div class="price">
+                            <span class="currency">درهم</span>
+                            <span class="amount">199</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <ul class="features-list">
+                            <li><i class="fas fa-check"></i> حصتين أونلاين أسبوعياً على الأقل</li>
+                            <li><i class="fas fa-check"></i> الحصة لا تقل عن ساعة</li>
+                            <li><i class="fas fa-check"></i> شرح كامل لمنهاج الفصل الدراسي</li>
+                            <li><i class="fas fa-check"></i> شرح وحل الهيكل فور صدوره</li>
+                            <li><i class="fas fa-check"></i> مراجعة ليلة الامتحان</li>
+                            <li><i class="fas fa-check"></i> تسجيل جميع الحصص</li>
+                            <li><i class="fas fa-check"></i> اجتماعات مباشرة للمراجعة</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <a href="https://pay.ziina.com/ShenawyPhysics/rQC1OVW8b" target="_blank" class="btn btn-primary btn-full">
+                            <i class="fas fa-credit-card"></i>
+                            اشترك الآن
+                        </a>
+                        <button class="btn btn-outline btn-full" onclick="openReceiptModal('grade10')" style="margin-top: 10px;">
+                            <i class="fas fa-receipt"></i>
+                            رفع الإيصال
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Grade 11 -->
+                <div class="pricing-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card-header">
+                        <div class="grade-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <h3 class="grade-title">صف حادي عشر متقدم</h3>
+                        <div class="price">
+                            <span class="currency">درهم</span>
+                            <span class="amount">299</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <ul class="features-list">
+                            <li><i class="fas fa-check"></i> حصتين أونلاين أسبوعياً على الأقل</li>
+                            <li><i class="fas fa-check"></i> الحصة لا تقل عن ساعة</li>
+                            <li><i class="fas fa-check"></i> شرح كامل لمنهاج الفصل الدراسي</li>
+                            <li><i class="fas fa-check"></i> شرح وحل الهيكل فور صدوره</li>
+                            <li><i class="fas fa-check"></i> مراجعة ليلة الامتحان</li>
+                            <li><i class="fas fa-check"></i> تسجيل جميع الحصص</li>
+                            <li><i class="fas fa-check"></i> اجتماعات مباشرة للمراجعة</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <a href="https://pay.ziina.com/ShenawyPhysics/WPWHg-QWJ" target="_blank" class="btn btn-primary btn-full">
+                            <i class="fas fa-credit-card"></i>
+                            اشترك الآن
+                        </a>
+                        <button class="btn btn-outline btn-full" onclick="openReceiptModal('grade11')" style="margin-top: 10px;">
+                            <i class="fas fa-receipt"></i>
+                            رفع الإيصال
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Subscription Features -->
+            <div class="subscription-features" data-aos="fade-up" data-aos-delay="400">
+                <h3 class="features-title">مميزات الاشتراك</h3>
+                <div class="features-grid">
+                    <div class="feature-item" data-aos="zoom-in" data-aos-delay="500">
+                        <div class="feature-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h4>حصص أونلاين تفاعلية</h4>
+                        <p>حصتين أسبوعياً على الأقل، كل حصة لا تقل عن ساعة</p>
+                    </div>
+                    
+                    <div class="feature-item" data-aos="zoom-in" data-aos-delay="600">
+                        <div class="feature-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <h4>شرح كامل للمنهاج</h4>
+                        <p>تغطية شاملة لجميع فصول المنهاج الدراسي</p>
+                    </div>
+                    
+                    <div class="feature-item" data-aos="zoom-in" data-aos-delay="700">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h4>حل الهيكل فور صدوره</h4>
+                        <p>شرح وحل مفصل للهيكل الامتحاني بمجرد إعلانه</p>
+                    </div>
+                    
+                    <div class="feature-item" data-aos="zoom-in" data-aos-delay="800">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h4>مراجعة ليلة الامتحان</h4>
+                        <p>جلسة مراجعة شاملة قبل الامتحان مباشرة</p>
+                    </div>
+                    
+                    <div class="feature-item" data-aos="zoom-in" data-aos-delay="900">
+                        <div class="feature-icon">
+                            <i class="fas fa-record-vinyl"></i>
+                        </div>
+                        <h4>تسجيل جميع الحصص</h4>
+                        <p>إرسال تسجيلات الحصص فور انتهائها للمراجعة</p>
+                    </div>
+                    
+                    <div class="feature-item" data-aos="zoom-in" data-aos-delay="1000">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>اجتماعات مباشرة</h4>
+                        <p>جلسات تدريب ومراجعة إضافية مع الطلاب</p>
+                    </div>
+                    
+                    <div class="feature-item" data-aos="zoom-in" data-aos-delay="1100">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h4>دعم فني متواصل</h4>
+                        <p>تواصل مباشر مع الأستاذ لحل الاستفسارات</p>
+                    </div>
+                    
+                    <div class="feature-item" data-aos="zoom-in" data-aos-delay="1200">
+                        <div class="feature-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h4>وصول كامل للكورسات</h4>
+                        <p>مشاهدة جميع الفيديوهات والكورسات التعليمية</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="payment-info" data-aos="fade-up" data-aos-delay="1300">
+                <div class="payment-card">
+                    <h3><i class="fas fa-info-circle"></i> معلومات مهمة</h3>
+                    <ul>
+                        <li><i class="fas fa-money-bill-wave"></i> الدفع مرة واحدة فقط للفصل الدراسي كاملاً</li>
+                        <li><i class="fas fa-university"></i> متوفر أيضاً التحويل البنكي</li>
+                        <li><i class="fas fa-shield-alt"></i>  يوجد ضمان استرداد المال </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">آراء الطلبة</h2>
+                <p class="section-subtitle">ماذا يقول طلابنا عن تجربتهم معنا</p>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="testimonials-slider" data-aos="fade-up" data-aos-delay="200">
+                <div class="testimonial-card active">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-right"></i>
+                        </div>
+                        <p class="testimonial-text">
+                            "الأستاذ إسلام غير نظرتي تماماً للفيزياء. أسلوبه في الشرح مبسط وممتع، وأصبحت أحب المادة أكثر من قبل."
+                        </p>
+                        <div class="student-info">
+                            <div class="student-avatar">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <div class="student-details">
+                                <h4>أحمد محمد</h4>
+                                <span>طالب صف عاشر متقدم</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-right"></i>
+                        </div>
+                        <p class="testimonial-text">
+                            "حصلت على درجة ممتازة في الفيزياء بفضل شروحات الأستاذ إسلام الواضحة والمفصلة. شكراً لك أستاذ!"
+                        </p>
+                        <div class="student-info">
+                            <div class="student-avatar">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <div class="student-details">
+                                <h4>فاطمة علي</h4>
+                                <span>طالبة صف حادي عشر متقدم</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-right"></i>
+                        </div>
+                        <p class="testimonial-text">
+                            "الحصص التفاعلية والتسجيلات ساعدتني كثيراً في المراجعة. أنصح كل طالب بالانضمام لحصص الأستاذ إسلام."
+                        </p>
+                        <div class="student-info">
+                            <div class="student-avatar">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <div class="student-details">
+                                <h4>محمد خالد</h4>
+                                <span>طالب صف تاسع متقدم</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonials-controls">
+                <button class="testimonial-btn prev-btn" id="prevBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <div class="testimonials-dots" id="testimonialsDots">
+                    <span class="dot active" data-slide="0"></span>
+                    <span class="dot" data-slide="1"></span>
+                    <span class="dot" data-slide="2"></span>
+                </div>
+                <button class="testimonial-btn next-btn" id="nextBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">أسئلة شائعة</h2>
+                <p class="section-subtitle">إجابات على الأسئلة الأكثر تكراراً</p>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="faq-container" data-aos="fade-up" data-aos-delay="200">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>كيف يتم الدفع؟</h3>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>يمكنك الدفع عبر الروابط المتوفرة أو عن طريق التحويل البنكي. الدفع يتم مرة واحدة فقط للفصل الدراسي كاملاً.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>هل يتم تسجيل الحصص؟</h3>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>نعم، يتم تسجيل جميع الحصص وإرسالها للطلبة بعد انتهاء كل حصة مباشرة للمراجعة في أي وقت.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>كم عدد الحصص في الأسبوع؟</h3>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>حصتين أونلاين أسبوعياً على الأقل، كل حصة لا تقل عن ساعة كاملة مع إمكانية زيادة الحصص حسب الحاجة.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>هل يشمل الاشتراك حل الهيكل؟</h3>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>نعم، يشمل الاشتراك شرح وحل الهيكل فور صدوره، بالإضافة إلى مراجعة شاملة ليلة الامتحان.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>هل يمكنني التواصل مع الأستاذ خارج أوقات الحصص؟</h3>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>نعم، يمكنك التواصل مع الأستاذ عبر التيليجرام لأي استفسارات أو أسئلة إضافية خارج أوقات الحصص.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">تواصل معي</h2>
+                <p class="section-subtitle">لأي استفسار أو سؤال، لا تتردد في التواصل</p>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info" data-aos="fade-right">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-telegram"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>تيليجرام</h3>
+                            <a href="https://t.me/PhysixsPert" target="_blank">@PhysixsPert</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-tiktok"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>تيكتوك</h3>
+                            <a href="https://www.tiktok.com/@physixspert?_t=ZS-8wGbEpLvJtx&_r=1" target="_blank">@physixspert</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>أوقات الرد</h3>
+                            <p>يومياً من 9 صباحاً إلى 10 مساءً</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form" data-aos="fade-left">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">الاسم</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="grade">الصف الدراسي</label>
+                            <select id="grade" name="grade" required>
+                                <option value="">اختر الصف</option>
+                                <option value="grade9">صف تاسع متقدم</option>
+                                <option value="grade10">صف عاشر متقدم</option>
+                                <option value="grade11">صف حادي عشر متقدم</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">الرسالة</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <i class="fas fa-paper-plane"></i>
+                            إرسال الرسالة
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="https://i.ibb.co/xSFLPSGn/image.png" alt="شعار الأستاذ إسلام الشناوي">
+                        <h3>الأستاذ إسلام الشناوي</h3>
+                    </div>
+                    <p>مدرس فيزياء متخصص للصفوف المتقدمة في الإمارات</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>روابط سريعة</h4>
+                    <ul>
+                        <li><a href="#home">الرئيسية</a></li>
+                        <li><a href="#about">من أنا</a></li>
+                        <li><a href="#pricing">الاشتراكات</a></li>
+                        <li><a href="#contact">تواصل معي</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>تواصل معي</h4>
+                    <div class="footer-social">
+                        <a href="https://t.me/PhysixsPert" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                            <span>تليجرام</span>
+                        </a>
+                        <a href="https://www.tiktok.com/@physixspert?_t=ZS-8wGbEpLvJtx&_r=1" target="_blank">
+                            <i class="fab fa-tiktok"></i>
+                            <span>تيك توك</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="copyright">
+                    <p>&copy; 2025 جميع الحقوق محفوظة للأستاذ إسلام الشناوي</p>
+                </div>
+                <div class="developer-credit">
+                    <p>تصميم وبرمجة: <a href="https://t.me/iivoz" target="_blank">iivoz</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Receipt Upload Modal -->
+    <div class="modal-overlay" id="receiptModal">
+        <div class="modal-content receipt-modal">
+            <div class="modal-header">
+                <h3>رفع إيصال الدفع</h3>
+                <button class="modal-close" onclick="closeReceiptModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="receiptForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="studentName">اسم الطالب</label>
+                        <input type="text" id="studentName" name="studentName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="studentGrade">الصف الدراسي</label>
+                        <select id="studentGrade" name="studentGrade" required>
+                            <option value="">اختر الصف</option>
+                            <option value="grade9">الصف التاسع المتقدم</option>
+                            <option value="grade10">الصف العاشر المتقدم</option>
+                            <option value="grade11">الصف الحادي عشر المتقدم</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="studentPhone">رقم الهاتف</label>
+                        <input type="tel" id="studentPhone" name="studentPhone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="receiptImage">صورة الإيصال</label>
+                        <div class="file-upload-area" id="fileUploadArea">
+                            <input type="file" id="receiptImage" name="receiptImage" accept="image/*" required>
+                            <div class="upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>اضغط هنا لرفع صورة الإيصال</p>
+                                <span>أو اسحب الملف هنا</span>
+                            </div>
+                            <div class="upload-preview" id="uploadPreview" style="display: none;">
+                                <img id="previewImage" src="" alt="معاينة الإيصال">
+                                <button type="button" class="remove-image" onclick="removeImage()">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="paymentMethod">طريقة الدفع</label>
+                        <select id="paymentMethod" name="paymentMethod" required>
+                            <option value="">اختر طريقة الدفع</option>
+                            <option value="ziina">Ziina</option>
+                            <option value="bank_transfer">تحويل بنكي</option>
+                            <option value="cash">نقداً</option>
+                            <option value="other">أخرى</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="notes">ملاحظات إضافية (اختياري)</label>
+                        <textarea id="notes" name="notes" rows="3" placeholder="أي ملاحظات أو تفاصيل إضافية..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" onclick="closeReceiptModal()">
+                            إلغاء
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            إرسال الإيصال
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase CDN -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+    
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="main-auth.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

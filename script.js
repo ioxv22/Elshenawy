@@ -1,0 +1,1476 @@
+// ===== DOM Elements =====
+const themeToggle = document.getElementById('themeToggle');
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('navMenu');
+const header = document.getElementById('header');
+const contactForm = document.getElementById('contactForm');
+const faqItems = document.querySelectorAll('.faq-item');
+const testimonialCards = document.querySelectorAll('.testimonial-card');
+const testimonialDots = document.querySelectorAll('.dot');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const videoModal = document.getElementById('videoModal');
+const videoFrame = document.getElementById('videoFrame');
+const videoTitle = document.getElementById('videoTitle');
+const videoDescription = document.getElementById('videoDescription');
+
+// ===== Theme Toggle =====
+let currentTheme = localStorage.getItem('theme') || 'light';
+
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    
+    const icon = themeToggle.querySelector('i');
+    if (theme === 'dark') {
+        icon.className = 'fas fa-sun';
+    } else {
+        icon.className = 'fas fa-moon';
+    }
+}
+
+// Initialize theme
+setTheme(currentTheme);
+
+themeToggle.addEventListener('click', () => {
+    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+    setTheme(currentTheme);
+});
+
+// ===== Mobile Navigation =====
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+    document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+});
+
+// Close mobile menu when clicking on a link
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    });
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+});
+
+// ===== Header Scroll Effect =====
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+        header.style.background = currentTheme === 'dark' 
+            ? 'rgba(17, 24, 39, 0.98)' 
+            : 'rgba(255, 255, 255, 0.98)';
+        header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+    } else {
+        header.style.background = currentTheme === 'dark' 
+            ? 'rgba(17, 24, 39, 0.95)' 
+            : 'rgba(255, 255, 255, 0.95)';
+        header.style.boxShadow = 'none';
+    }
+});
+
+// ===== Smooth Scrolling =====
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            const headerHeight = header.offsetHeight;
+            const targetPosition = target.offsetTop - headerHeight;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// ===== FAQ Accordion =====
+faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    
+    question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        
+        // Close all FAQ items
+        faqItems.forEach(faqItem => {
+            faqItem.classList.remove('active');
+        });
+        
+        // Open clicked item if it wasn't active
+        if (!isActive) {
+            item.classList.add('active');
+        }
+    });
+});
+
+// ===== Testimonials Slider =====
+let currentTestimonial = 0;
+
+function showTestimonial(index) {
+    testimonialCards.forEach((card, i) => {
+        card.classList.toggle('active', i === index);
+    });
+    
+    testimonialDots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+    });
+}
+
+function nextTestimonial() {
+    currentTestimonial = (currentTestimonial + 1) % testimonialCards.length;
+    showTestimonial(currentTestimonial);
+}
+
+function prevTestimonial() {
+    currentTestimonial = (currentTestimonial - 1 + testimonialCards.length) % testimonialCards.length;
+    showTestimonial(currentTestimonial);
+}
+
+// Event listeners for testimonial controls
+if (nextBtn) {
+    nextBtn.addEventListener('click', nextTestimonial);
+}
+
+if (prevBtn) {
+    prevBtn.addEventListener('click', prevTestimonial);
+}
+
+testimonialDots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+        currentTestimonial = index;
+        showTestimonial(currentTestimonial);
+    });
+});
+
+// Auto-play testimonials
+setInterval(nextTestimonial, 5000);
+
+// ===== Contact Form =====
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const name = formData.get('name');
+        const grade = formData.get('grade');
+        const message = formData.get('message');
+        
+        // Create WhatsApp message
+        const gradeText = {
+            'grade9': 'صف تاسع متقدم',
+            'grade10': 'صف عاشر متقدم',
+            'grade11': 'صف حادي عشر متقدم'
+        };
+        
+        const whatsappMessage = `مرحباً أستاذ إسلام،
+        
+الاسم: ${name}
+الصف الدراسي: ${gradeText[grade] || grade}
+
+الرسالة:
+${message}`;
+        
+        const encodedMessage = encodeURIComponent(whatsappMessage);
+        const whatsappURL = `https://wa.me/+97156880360?text=${encodedMessage}`;
+
+        // Show success message
+        showNotification('تم إرسال رسالتك بنجاح! سيتم توجيهك إلى واتساب...', 'success');
+        
+        // Redirect to WhatsApp after 2 seconds
+        setTimeout(() => {
+            window.open(whatsappURL, '_blank');
+        }, 2000);
+        
+        // Reset form
+        this.reset();
+    });
+}
+
+// ===== Notification System =====
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    // Add notification styles
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: ${type === 'success' ? '#10b981' : '#3b82f6'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        z-index: 10000;
+        transform: translateX(400px);
+        transition: transform 0.3s ease-in-out;
+        max-width: 300px;
+        font-family: var(--font-arabic);
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Remove after 4 seconds
+    setTimeout(() => {
+        notification.style.transform = 'translateX(400px)';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 4000);
+}
+
+// ===== Scroll Animations =====
+function initScrollAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+            }
+        });
+    }, observerOptions);
+    
+    // Observe elements for animation
+    document.querySelectorAll('.pricing-card, .feature-item, .testimonial-card, .faq-item').forEach(el => {
+        observer.observe(el);
+    });
+}
+
+// ===== Parallax Effect =====
+function initParallax() {
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const parallaxElements = document.querySelectorAll('.physics-animation');
+        
+        parallaxElements.forEach(element => {
+            const speed = 0.5;
+            element.style.transform = `translate(-50%, -50%) translateY(${scrolled * speed}px)`;
+        });
+    });
+}
+
+// ===== Counter Animation =====
+function animateCounters() {
+    const counters = document.querySelectorAll('.amount');
+    
+    counters.forEach(counter => {
+        const target = parseInt(counter.textContent);
+        const increment = target / 100;
+        let current = 0;
+        
+        const updateCounter = () => {
+            if (current < target) {
+                current += increment;
+                counter.textContent = Math.ceil(current);
+                requestAnimationFrame(updateCounter);
+            } else {
+                counter.textContent = target;
+            }
+        };
+        
+        // Start animation when element is visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    updateCounter();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+        
+        observer.observe(counter);
+    });
+}
+
+// ===== Typing Effect =====
+function initTypingEffect() {
+    const typingElement = document.querySelector('.hero-title');
+    if (!typingElement) return;
+    
+    const text = typingElement.textContent;
+    typingElement.textContent = '';
+    
+    let i = 0;
+    const typeWriter = () => {
+        if (i < text.length) {
+            typingElement.textContent += text.charAt(i);
+            i++;
+            setTimeout(typeWriter, 50);
+        }
+    };
+    
+    // Start typing effect after page load
+    setTimeout(typeWriter, 1000);
+}
+
+// ===== Loading Screen =====
+function initLoadingScreen() {
+    const loader = document.createElement('div');
+    loader.className = 'loader';
+    loader.innerHTML = `
+        <div class="loader-content">
+            <div class="loader-logo">
+                <img src="https://i.ibb.co/xSFLPSGn/image.png" alt="Loading">
+            </div>
+            <div class="loader-text">جاري التحميل...</div>
+            <div class="loader-progress">
+                <div class="loader-bar"></div>
+            </div>
+        </div>
+    `;
+    
+    loader.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        color: white;
+        font-family: var(--font-arabic);
+    `;
+    
+    document.body.appendChild(loader);
+    
+    // Remove loader after page load
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                document.body.removeChild(loader);
+            }, 500);
+        }, 1000);
+    });
+}
+
+// ===== Scroll to Top Button =====
+function initScrollToTop() {
+    const scrollBtn = document.createElement('button');
+    scrollBtn.className = 'scroll-to-top';
+    scrollBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+    scrollBtn.style.cssText = `
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: var(--gradient-primary);
+        border: none;
+        border-radius: 50%;
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 1000;
+        box-shadow: var(--shadow-medium);
+    `;
+    
+    document.body.appendChild(scrollBtn);
+    
+    // Show/hide button based on scroll position
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            scrollBtn.style.opacity = '1';
+            scrollBtn.style.visibility = 'visible';
+        } else {
+            scrollBtn.style.opacity = '0';
+            scrollBtn.style.visibility = 'hidden';
+        }
+    });
+    
+    // Scroll to top on click
+    scrollBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+// ===== Active Navigation Link =====
+function updateActiveNavLink() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    window.addEventListener('scroll', () => {
+        let current = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            const sectionHeight = section.offsetHeight;
+            
+            if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
+        });
+    });
+}
+
+// ===== Lazy Loading Images =====
+function initLazyLoading() {
+    const images = document.querySelectorAll('img[data-src]');
+    
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.remove('lazy');
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+    
+    images.forEach(img => imageObserver.observe(img));
+}
+
+// ===== Form Validation =====
+function initFormValidation() {
+    const inputs = document.querySelectorAll('input, textarea, select');
+    
+    inputs.forEach(input => {
+        input.addEventListener('blur', validateField);
+        input.addEventListener('input', clearError);
+    });
+    
+    function validateField(e) {
+        const field = e.target;
+        const value = field.value.trim();
+        
+        // Remove existing error
+        clearError(e);
+        
+        // Validate based on field type
+        if (field.hasAttribute('required') && !value) {
+            showFieldError(field, 'هذا الحقل مطلوب');
+            return false;
+        }
+        
+        if (field.type === 'email' && value && !isValidEmail(value)) {
+            showFieldError(field, 'يرجى إدخال بريد إلكتروني صحيح');
+            return false;
+        }
+        
+        return true;
+    }
+    
+    function clearError(e) {
+        const field = e.target;
+        const errorElement = field.parentNode.querySelector('.field-error');
+        if (errorElement) {
+            errorElement.remove();
+        }
+        field.classList.remove('error');
+    }
+    
+    function showFieldError(field, message) {
+        field.classList.add('error');
+        const errorElement = document.createElement('div');
+        errorElement.className = 'field-error';
+        errorElement.textContent = message;
+        errorElement.style.cssText = `
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        `;
+        field.parentNode.appendChild(errorElement);
+    }
+    
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+}
+
+// ===== Initialize AOS =====
+function initAOS() {
+    if (typeof AOS !== 'undefined') {
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            offset: 100
+        });
+    }
+}
+
+// ===== Performance Optimization =====
+function optimizePerformance() {
+    // Preload critical resources
+    const preloadLinks = [
+        'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
+    ];
+    
+    preloadLinks.forEach(href => {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        document.head.appendChild(link);
+    });
+    
+    // Lazy load non-critical CSS
+    const lazyStyles = document.querySelectorAll('link[data-lazy]');
+    lazyStyles.forEach(link => {
+        link.rel = 'stylesheet';
+        link.removeAttribute('data-lazy');
+    });
+}
+
+// ===== Error Handling =====
+window.addEventListener('error', (e) => {
+    console.error('JavaScript Error:', e.error);
+    // You can add error reporting here
+});
+
+// ===== Initialize Everything =====
+document.addEventListener('DOMContentLoaded', () => {
+    initLoadingScreen();
+    initScrollAnimations();
+    initParallax();
+    animateCounters();
+    initScrollToTop();
+    updateActiveNavLink();
+    initLazyLoading();
+    initFormValidation();
+    initAOS();
+    optimizePerformance();
+    
+    // Initialize typing effect after a delay
+    setTimeout(initTypingEffect, 2000);
+});
+
+// ===== Service Worker Registration =====
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                console.log('SW registered: ', registration);
+            })
+            .catch(registrationError => {
+                console.log('SW registration failed: ', registrationError);
+            });
+    });
+}
+
+// ===== Analytics and Tracking =====
+function trackEvent(eventName, eventData = {}) {
+    // Add your analytics tracking code here
+    console.log('Event tracked:', eventName, eventData);
+}
+
+// Track button clicks
+document.addEventListener('click', (e) => {
+    if (e.target.matches('.btn-primary')) {
+        trackEvent('button_click', {
+            button_text: e.target.textContent.trim(),
+            page_url: window.location.href
+        });
+    }
+});
+
+// Track form submissions
+document.addEventListener('submit', (e) => {
+    trackEvent('form_submit', {
+        form_id: e.target.id,
+        page_url: window.location.href
+    });
+});
+
+// ===== Accessibility Improvements =====
+function initAccessibility() {
+    // Add skip to content link
+    const skipLink = document.createElement('a');
+    skipLink.href = '#main';
+    skipLink.textContent = 'تخطي إلى المحتوى الرئيسي';
+    skipLink.className = 'skip-link';
+    skipLink.style.cssText = `
+        position: absolute;
+        top: -40px;
+        left: 6px;
+        background: var(--primary-color);
+        color: white;
+        padding: 8px;
+        text-decoration: none;
+        border-radius: 4px;
+        z-index: 10000;
+        transition: top 0.3s;
+    `;
+    
+    skipLink.addEventListener('focus', () => {
+        skipLink.style.top = '6px';
+    });
+    
+    skipLink.addEventListener('blur', () => {
+        skipLink.style.top = '-40px';
+    });
+    
+    document.body.insertBefore(skipLink, document.body.firstChild);
+    
+    // Add main landmark
+    const heroSection = document.querySelector('.hero');
+    if (heroSection) {
+        heroSection.setAttribute('id', 'main');
+        heroSection.setAttribute('role', 'main');
+    }
+    
+    // Improve button accessibility
+    document.querySelectorAll('button, .btn').forEach(btn => {
+        if (!btn.getAttribute('aria-label') && !btn.textContent.trim()) {
+            const icon = btn.querySelector('i');
+            if (icon) {
+                btn.setAttribute('aria-label', 'زر');
+            }
+        }
+    });
+}
+
+// Initialize accessibility features
+document.addEventListener('DOMContentLoaded', initAccessibility);
+
+// ===== Print Styles =====
+function initPrintStyles() {
+    const printStyles = `
+        @media print {
+            .header, .footer, .theme-toggle, .scroll-to-top {
+                display: none !important;
+            }
+            
+            body {
+                font-size: 12pt;
+                line-height: 1.5;
+                color: black;
+                background: white;
+            }
+            
+            .container {
+                max-width: none;
+                padding: 0;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+                margin-bottom: 20pt;
+            }
+            
+            .btn {
+                border: 1pt solid black;
+                background: white;
+                color: black;
+            }
+        }
+    `;
+    
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = printStyles;
+    document.head.appendChild(styleSheet);
+}
+
+// Initialize print styles
+initPrintStyles();
+
+// ===== Courses Functionality =====
+function initializeCourses() {
+    // Load and display videos from admin panel
+    loadAndDisplayVideos();
+    
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    
+    // Category filtering
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const category = btn.getAttribute('data-category');
+            
+            // Update active button
+            categoryBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Filter courses
+            filterCoursesByCategory(category);
+        });
+    });
+}
+
+function loadAndDisplayVideos() {
+    const videos = loadVideosFromAdmin();
+    const coursesGrid = document.querySelector('.courses-grid');
+    
+    if (!coursesGrid) return;
+    
+    if (videos.length === 0) {
+        coursesGrid.innerHTML = `
+            <div class="empty-courses">
+                <i class="fas fa-video"></i>
+                <h3>لا توجد فيديوهات متاحة حالياً</h3>
+                <p>سيتم إضافة المزيد من الفيديوهات قريباً</p>
+            </div>
+        `;
+        return;
+    }
+    
+    coursesGrid.innerHTML = videos.map(video => `
+        <div class="course-card ${video.category}" data-aos="fade-up">
+            <div class="course-thumbnail">
+                <img src="${video.thumbnail}" alt="${video.title}" loading="lazy">
+                <div class="course-duration">${video.duration}</div>
+                ${video.isPremium ? '<div class="premium-badge"><i class="fas fa-crown"></i></div>' : ''}
+                <div class="course-overlay">
+                    <button class="play-btn" onclick="openVideoModal('${video.id}')">
+                        <i class="fas fa-play"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="course-info">
+                <h3>${video.title}</h3>
+                <p>${video.description}</p>
+                <div class="course-meta">
+                    <span class="course-type">${getTypeNameArabic(video.type)}</span>
+                    <span class="course-grade">${getGradeNameArabic(video.category)}</span>
+                </div>
+                <button class="course-btn ${video.isPremium ? 'premium' : 'free'}" 
+                        onclick="${video.isPremium ? 'requireSubscription()' : `openVideoModal('${video.id}')`}">
+                    ${video.isPremium ? '<i class="fas fa-crown"></i> يتطلب اشتراك' : '<i class="fas fa-play"></i> مشاهدة مجانية'}
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function getTypeNameArabic(type) {
+    const types = {
+        'lesson': 'درس',
+        'review': 'مراجعة',
+        'exam': 'امتحان',
+        'homework': 'واجب'
+    };
+    return types[type] || 'درس';
+}
+
+function getGradeNameArabic(grade) {
+    const grades = {
+        'grade9': 'الصف التاسع',
+        'grade10': 'الصف العاشر',
+        'grade11': 'الصف الحادي عشر'
+    };
+    return grades[grade] || grade;
+}
+
+function filterCoursesByCategory(category) {
+    const courseCards = document.querySelectorAll('.course-card');
+    
+    courseCards.forEach(card => {
+        if (category === 'all' || card.classList.contains(category)) {
+            card.classList.remove('hidden');
+            card.style.display = 'block';
+        } else {
+            card.classList.add('hidden');
+            setTimeout(() => {
+                card.style.display = 'none';
+            }, 300);
+        }
+    });
+}
+
+// ===== Video Modal Functions =====
+function openVideoModal(videoId) {
+    const videos = loadVideosFromAdmin();
+    const video = videos.find(v => v.id == videoId);
+    
+    if (video) {
+        const videoModal = document.getElementById('videoModal');
+        const videoFrame = document.getElementById('videoFrame');
+        const videoTitle = document.getElementById('videoTitle');
+        const videoDescription = document.getElementById('videoDescription');
+        
+        if (videoModal && videoFrame && videoTitle && videoDescription) {
+            videoFrame.src = video.videoUrl;
+            videoTitle.textContent = video.title;
+            videoDescription.textContent = video.description;
+            videoModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+}
+
+function closeVideoModal() {
+    videoModal.classList.remove('active');
+    videoFrame.src = '';
+    document.body.style.overflow = 'auto';
+}
+
+function getCourseData(courseId) {
+    const courses = {
+        'grade9-chapter1': {
+            title: 'الفصل الثالث: الحركة',
+            description: 'شرح مفصل لمفاهيم الحركة والسرعة والتسارع',
+            videoUrl: 'https://drive.google.com/file/d/1vOihXtyhX7Xptn0kOs1fISHXsBQOzxum/view?usp=sharing'
+        },
+        'grade10-chapter1': {
+            title: 'الفصل الثالث: المغناطيس',
+            description: 'مفاهيم المغناطيس ',
+            videoUrl: 'https://drive.google.com/file/d/1iTO2628HDuKpEdPG5_z2VV-v0hHAs8sI/view?usp=sharing'
+        },
+        'grade11-chapter1': {
+            title: 'الفصل الثالث: الكتلة',
+            description: 'الكتلة والحجم والكثافة',
+            videoUrl: 'https://drive.google.com/file/d/1hD5GUReRwAz5L-AJd-IaxKqqJ00DZkJJ/view?usp=sharing'
+        },
+    };
+    
+    return courses[courseId];
+}
+
+// ===== Subscription Requirement =====
+function requireSubscription(grade) {
+    const gradeTexts = {
+        'grade9': 'الصف التاسع',
+        'grade10': 'الصف العاشر',
+        'grade11': 'الصف الحادي عشر'
+    };
+    
+    const message = `للوصول إلى كورسات ${gradeTexts[grade]}، يجب عليك الاشتراك أولاً.`;
+    
+    showNotification(message, 'info');
+    
+    // Scroll to pricing section
+    setTimeout(() => {
+        document.querySelector('#pricing').scrollIntoView({
+            behavior: 'smooth'
+        });
+    }, 1000);
+}
+
+// ===== Enhanced Contact Form =====
+function enhanceContactForm() {
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const messageData = {
+                name: formData.get('name'),
+                grade: formData.get('grade'),
+                message: formData.get('message'),
+                timestamp: Date.now()
+            };
+            
+            // Save to admin panel if available
+            if (window.adminPanel) {
+                window.adminPanel.addMessage(messageData);
+            }
+            
+            // Create WhatsApp message
+            const gradeText = {
+                'grade9': 'صف تاسع متقدم',
+                'grade10': 'صف عاشر متقدم',
+                'grade11': 'صف حادي عشر متقدم'
+            };
+            
+            const whatsappMessage = `مرحباً أستاذ إسلام،
+            
+الاسم: ${messageData.name}
+الصف الدراسي: ${gradeText[messageData.grade] || messageData.grade}
+
+الرسالة:
+${messageData.message}`;
+            
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            const whatsappURL = `https://wa.me/971501234567?text=${encodedMessage}`;
+            
+            // Show success message
+            showNotification('تم إرسال رسالتك بنجاح! سيتم توجيهك إلى واتساب...', 'success');
+            
+            // Redirect to WhatsApp after 2 seconds
+            setTimeout(() => {
+                window.open(whatsappURL, '_blank');
+            }, 2000);
+            
+            // Reset form
+            this.reset();
+        });
+    }
+}
+
+// ===== Admin Panel Integration =====
+function checkAdminAccess() {
+    const adminLink = document.querySelector('.admin-link');
+    const currentUser = sessionStorage.getItem('adminUser');
+    
+    if (currentUser || window.location.hash === '#admin') {
+        if (adminLink) {
+            adminLink.style.display = 'block';
+        }
+    }
+}
+
+// ===== Enhanced Animations =====
+function initEnhancedAnimations() {
+    // Animate subscription features on scroll
+    const featureItems = document.querySelectorAll('.subscription-features .feature-item');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 100);
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    featureItems.forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(30px)';
+        item.style.transition = 'all 0.6s ease';
+        observer.observe(item);
+    });
+    
+    // Animate course cards
+    const courseCards = document.querySelectorAll('.course-card');
+    courseCards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+    });
+}
+
+// ===== Keyboard Navigation =====
+function initKeyboardNavigation() {
+    document.addEventListener('keydown', (e) => {
+        // Close video modal with Escape key
+        if (e.key === 'Escape' && videoModal.classList.contains('active')) {
+            closeVideoModal();
+        }
+        
+        // Navigate testimonials with arrow keys
+        if (e.key === 'ArrowLeft' && !videoModal.classList.contains('active')) {
+            nextTestimonial();
+        } else if (e.key === 'ArrowRight' && !videoModal.classList.contains('active')) {
+            prevTestimonial();
+        }
+    });
+}
+
+// ===== Welcome Screen =====
+function initializeWelcomeScreen() {
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const typingText = document.getElementById('typingText');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    
+    if (!welcomeScreen) return;
+    
+    const messages = [
+        'تعلم الفيزياء بطريقة مبسطة وممتعة',
+        'اكتشف أسرار الكون والطبيعة',
+        'حقق أحلامك الأكاديمية معنا',
+        'انضم لآلاف الطلاب الناجحين'
+    ];
+    
+    let messageIndex = 0;
+    let charIndex = 0;
+    
+    function typeMessage() {
+        if (charIndex < messages[messageIndex].length) {
+            typingText.textContent += messages[messageIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(typeMessage, 100);
+        } else {
+            setTimeout(() => {
+                messageIndex = (messageIndex + 1) % messages.length;
+                charIndex = 0;
+                typingText.textContent = '';
+                typeMessage();
+            }, 2000);
+        }
+    }
+    
+    // Start typing animation
+    setTimeout(typeMessage, 2000);
+    
+    // Progress updates
+    const progressSteps = [
+        { progress: 20, text: 'تحميل الموارد...' },
+        { progress: 40, text: 'إعداد الواجهة...' },
+        { progress: 60, text: 'تحضير المحتوى...' },
+        { progress: 80, text: 'تطبيق التصميم...' },
+        { progress: 100, text: 'مرحباً بك!' }
+    ];
+    
+    let stepIndex = 0;
+    
+    function updateProgress() {
+        if (stepIndex < progressSteps.length) {
+            const step = progressSteps[stepIndex];
+            progressFill.style.width = step.progress + '%';
+            progressText.textContent = step.text;
+            stepIndex++;
+            setTimeout(updateProgress, 800);
+        } else {
+            // Hide welcome screen after completion
+            setTimeout(() => {
+                welcomeScreen.classList.add('hidden');
+                setTimeout(() => {
+                    welcomeScreen.style.display = 'none';
+                }, 1000);
+            }, 1000);
+        }
+    }
+    
+    // Start progress animation
+    setTimeout(updateProgress, 3000);
+}
+
+// ===== Receipt Upload Modal =====
+function initializeReceiptModal() {
+    const receiptModal = document.getElementById('receiptModal');
+    const receiptForm = document.getElementById('receiptForm');
+    const fileInput = document.getElementById('receiptImage');
+    const uploadArea = document.getElementById('fileUploadArea');
+    const uploadPreview = document.getElementById('uploadPreview');
+    const uploadPlaceholder = uploadArea?.querySelector('.upload-placeholder');
+    const previewImage = document.getElementById('previewImage');
+    
+    if (!receiptModal) return;
+    
+    // File upload handling
+    if (fileInput) {
+        fileInput.addEventListener('change', handleFileSelect);
+    }
+    
+    // Drag and drop
+    if (uploadArea) {
+        uploadArea.addEventListener('dragover', handleDragOver);
+        uploadArea.addEventListener('dragleave', handleDragLeave);
+        uploadArea.addEventListener('drop', handleFileDrop);
+    }
+    
+    // Form submission
+    if (receiptForm) {
+        receiptForm.addEventListener('submit', handleReceiptSubmit);
+    }
+    
+    function handleFileSelect(e) {
+        const file = e.target.files[0];
+        if (file) {
+            displayImagePreview(file);
+        }
+    }
+    
+    function handleDragOver(e) {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    }
+    
+    function handleDragLeave(e) {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+    }
+    
+    function handleFileDrop(e) {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            const file = files[0];
+            if (file.type.startsWith('image/')) {
+                fileInput.files = files;
+                displayImagePreview(file);
+            } else {
+                showNotification('يرجى رفع ملف صورة فقط', 'error');
+            }
+        }
+    }
+    
+    function displayImagePreview(file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;
+            uploadPlaceholder.style.display = 'none';
+            uploadPreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+    
+    async function handleReceiptSubmit(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(receiptForm);
+        const receiptData = {
+            studentName: formData.get('studentName'),
+            studentGrade: formData.get('studentGrade'),
+            studentPhone: formData.get('studentPhone'),
+            paymentMethod: formData.get('paymentMethod'),
+            notes: formData.get('notes'),
+            timestamp: Date.now(),
+            status: 'pending'
+        };
+        
+        // Convert image to base64 for storage
+        const imageFile = formData.get('receiptImage');
+        if (imageFile && imageFile.size > 0) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                receiptData.receiptImage = e.target.result;
+                saveReceiptData(receiptData);
+            };
+            reader.readAsDataURL(imageFile);
+        } else {
+            saveReceiptData(receiptData);
+        }
+    }
+    
+    function saveReceiptData(receiptData) {
+        // Save to localStorage for admin panel
+        const receipts = JSON.parse(localStorage.getItem('receipts') || '[]');
+        receipts.push(receiptData);
+        localStorage.setItem('receipts', JSON.stringify(receipts));
+        
+        // Save to Firebase if available
+        if (window.firebaseDb && window.getCurrentUser && window.getCurrentUser()) {
+            const db = window.firebaseDb();
+            db.collection('receipts').add(receiptData)
+                .then(() => {
+                    console.log('Receipt saved to Firebase');
+                })
+                .catch((error) => {
+                    console.error('Error saving receipt to Firebase:', error);
+                });
+        }
+        
+        showNotification('تم رفع الإيصال بنجاح! سيتم مراجعته من قبل الإدارة قريباً.', 'success');
+        closeReceiptModal();
+        receiptForm.reset();
+        resetFileUpload();
+        
+        // Show success animation
+        showReceiptSuccessAnimation();
+    }
+}
+
+function openReceiptModal(grade) {
+    const modal = document.getElementById('receiptModal');
+    const gradeSelect = document.getElementById('studentGrade');
+    
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Pre-select grade if provided
+        if (grade && gradeSelect) {
+            gradeSelect.value = grade;
+        }
+        
+        // Pre-fill user data if logged in
+        if (window.getCurrentUser && window.getUserData) {
+            const user = window.getCurrentUser();
+            const userData = window.getUserData();
+            
+            if (user && userData) {
+                const nameInput = document.getElementById('studentName');
+                if (nameInput && !nameInput.value) {
+                    nameInput.value = userData.name || user.displayName || '';
+                }
+                
+                if (gradeSelect && !gradeSelect.value && userData.grade) {
+                    gradeSelect.value = userData.grade;
+                }
+            }
+        }
+    }
+}
+
+function closeReceiptModal() {
+    const modal = document.getElementById('receiptModal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        resetFileUpload();
+    }
+}
+
+function removeImage() {
+    resetFileUpload();
+}
+
+function resetFileUpload() {
+    const fileInput = document.getElementById('receiptImage');
+    const uploadArea = document.getElementById('fileUploadArea');
+    const uploadPreview = document.getElementById('uploadPreview');
+    const uploadPlaceholder = uploadArea?.querySelector('.upload-placeholder');
+    
+    if (fileInput) fileInput.value = '';
+    if (uploadPreview) uploadPreview.style.display = 'none';
+    if (uploadPlaceholder) uploadPlaceholder.style.display = 'block';
+}
+
+function showReceiptSuccessAnimation() {
+    const successModal = document.createElement('div');
+    successModal.className = 'success-modal-overlay';
+    successModal.innerHTML = `
+        <div class="success-modal-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>تم رفع الإيصال بنجاح!</h3>
+            <p>سيتم مراجعة الإيصال من قبل الإدارة وسيتم التواصل معك قريباً</p>
+            <div class="success-animation">
+                <div class="checkmark">
+                    <svg viewBox="0 0 52 52">
+                        <circle cx="26" cy="26" r="25" fill="none"/>
+                        <path fill="none" d="m14.1 27.2l7.1 7.2 16.7-16.8"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(successModal);
+    
+    setTimeout(() => {
+        successModal.classList.add('active');
+    }, 100);
+    
+    setTimeout(() => {
+        successModal.classList.remove('active');
+        setTimeout(() => {
+            document.body.removeChild(successModal);
+        }, 300);
+    }, 3000);
+}
+
+// ===== Course Search Functionality =====
+function initCourseSearch() {
+    const searchInput = document.createElement('input');
+    searchInput.type = 'text';
+    searchInput.placeholder = 'البحث في الكورسات...';
+    searchInput.className = 'course-search';
+    searchInput.style.cssText = `
+        width: 100%;
+        max-width: 400px;
+        padding: 1rem;
+        margin: 0 auto 2rem;
+        display: block;
+        border: 2px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        font-family: var(--font-arabic);
+        font-size: var(--font-size-base);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        transition: all var(--transition-normal);
+    `;
+    
+    const coursesSection = document.querySelector('.courses .container');
+    const sectionHeader = coursesSection.querySelector('.section-header');
+    
+    if (sectionHeader) {
+        sectionHeader.appendChild(searchInput);
+        
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const courseCards = document.querySelectorAll('.course-card');
+            
+            courseCards.forEach(card => {
+                const title = card.querySelector('.course-title').textContent.toLowerCase();
+                const description = card.querySelector('.course-description').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    card.classList.remove('hidden');
+                } else {
+                    card.style.display = 'none';
+                    card.classList.add('hidden');
+                }
+            });
+        });
+    }
+}
+
+// ===== Welcome Screen Enhanced =====
+function initializeWelcomeScreen() {
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const typingText = document.getElementById('typingText');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    
+    if (!welcomeScreen) return;
+    
+    const messages = [
+        'اكتشف أسرار الفيزياء معنا 🔬',
+        'تعلم بطريقة مبسطة وممتعة ✨',
+        'انضم إلى رحلة التفوق العلمي 🚀',
+        'مع الأستاذ إسلام الشناوي 👨‍🏫'
+    ];
+    
+    let messageIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    
+    function typeMessage() {
+        const currentMessage = messages[messageIndex];
+        
+        if (!isDeleting && charIndex < currentMessage.length) {
+            typingText.textContent += currentMessage.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeMessage, 80);
+        } else if (isDeleting && charIndex > 0) {
+            typingText.textContent = currentMessage.substring(0, charIndex - 1);
+            charIndex--;
+            setTimeout(typeMessage, 40);
+        } else if (!isDeleting && charIndex === currentMessage.length) {
+            setTimeout(() => {
+                isDeleting = true;
+                typeMessage();
+            }, 2000);
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            messageIndex = (messageIndex + 1) % messages.length;
+            setTimeout(typeMessage, 200);
+        }
+    }
+    
+    // Start typing animation
+    setTimeout(typeMessage, 1000);
+    
+    // Enhanced progress bar animation
+    let progress = 0;
+    const loadingSteps = [
+        { progress: 15, text: 'تحميل الموارد...', delay: 100 },
+        { progress: 35, text: 'تحضير المحتوى...', delay: 80 },
+        { progress: 55, text: 'تجهيز الكورسات...', delay: 60 },
+        { progress: 75, text: 'إعداد التجربة...', delay: 70 },
+        { progress: 90, text: 'اللمسات الأخيرة...', delay: 90 },
+        { progress: 100, text: 'مرحباً بك! 🎉', delay: 50 }
+    ];
+    
+    let stepIndex = 0;
+    
+    function updateProgress() {
+        if (stepIndex < loadingSteps.length) {
+            const step = loadingSteps[stepIndex];
+            const targetProgress = step.progress;
+            
+            const progressInterval = setInterval(() => {
+                if (progress < targetProgress) {
+                    progress += 1;
+                    progressFill.style.width = progress + '%';
+                    progressText.textContent = step.text;
+                } else {
+                    clearInterval(progressInterval);
+                    stepIndex++;
+                    setTimeout(updateProgress, step.delay);
+                }
+            }, 30);
+        } else {
+            // Finish loading with enhanced animation
+            setTimeout(() => {
+                welcomeScreen.style.transform = 'scale(1.1)';
+                welcomeScreen.style.opacity = '0';
+                setTimeout(() => {
+                    welcomeScreen.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }, 800);
+            }, 1000);
+        }
+    }
+    
+    // Start progress animation
+    setTimeout(updateProgress, 500);
+}
+
+// ===== Load Videos from Admin Panel =====
+function loadVideosFromAdmin() {
+    const adminVideos = JSON.parse(localStorage.getItem('siteVideos') || '[]');
+    return adminVideos.map(video => ({
+        id: video.id,
+        title: video.title,
+        description: video.description,
+        duration: video.duration + ' دقيقة',
+        category: video.grade,
+        videoUrl: video.videoUrl.includes('youtube.com') ? 
+            video.videoUrl.replace('watch?v=', 'embed/').split('&')[0] : 
+            video.videoUrl,
+        thumbnail: video.thumbnail || `https://img.youtube.com/vi/${extractVideoId(video.videoUrl)}/maxresdefault.jpg`,
+        isPremium: video.status === 'premium',
+        type: video.type
+    }));
+}
+
+function extractVideoId(url) {
+    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
+    return match ? match[1] : '';
+}
+
+// ===== Initialize All New Features =====
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize welcome screen first
+    initializeWelcomeScreen();
+    
+    // Initialize existing features
+    initLoadingScreen();
+    initScrollAnimations();
+    initParallax();
+    animateCounters();
+    initScrollToTop();
+    updateActiveNavLink();
+    initLazyLoading();
+    initFormValidation();
+    initAOS();
+    optimizePerformance();
+    
+    // Initialize new features
+    initializeCourses();
+    initializeReceiptModal();
+    enhanceContactForm();
+    checkAdminAccess();
+    initEnhancedAnimations();
+    initKeyboardNavigation();
+    initCourseSearch();
+    
+    // Initialize typing effect after a delay
+    setTimeout(initTypingEffect, 2000);
+});
+
+// ===== Global Functions for HTML =====
+window.openVideoModal = openVideoModal;
+window.closeVideoModal = closeVideoModal;
+window.requireSubscription = requireSubscription;

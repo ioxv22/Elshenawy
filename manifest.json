@@ -1,0 +1,27 @@
+{
+  "name": "الأستاذ إسلام الشناوي - مدرس فيزياء",
+  "short_name": "إسلام الشناوي",
+  "description": "موقع الأستاذ إسلام الشناوي، مدرس فيزياء للصفوف المتقدمة في الإمارات",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1e3a8a",
+  "theme_color": "#1e3a8a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://i.ibb.co/xSFLPSGn/image.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://i.ibb.co/xSFLPSGn/image.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "physics", "tutoring"],
+  "lang": "ar",
+  "dir": "rtl"
+}
