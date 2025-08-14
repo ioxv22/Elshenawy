@@ -355,7 +355,6 @@
     100% { width: 100%; }
 }
 
-<<<<<<< HEAD
 /* ===== Language Toggle Styles ===== */
 .language-toggle {
     display: flex;
@@ -1935,8 +1934,6 @@
     }
 }
 
-=======
->>>>>>> 0a9aa1ce2bd07e515aaa39a3358830246fb28552
 /* ===== Reset & Base Styles ===== */
 * {
     margin: 0;

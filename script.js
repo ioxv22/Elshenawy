@@ -1105,27 +1105,24 @@ function initializeWelcomeScreen() {
         if (charIndex < messages[messageIndex].length) {
             typingText.textContent += messages[messageIndex].charAt(charIndex);
             charIndex++;
-            setTimeout(typeMessage, 100);
+            setTimeout(typeMessage, 30); // SUPER FAST TYPING
         } else {
             setTimeout(() => {
                 messageIndex = (messageIndex + 1) % messages.length;
                 charIndex = 0;
                 typingText.textContent = '';
                 typeMessage();
-            }, 2000);
+            }, 500); // SHORT PAUSE
         }
     }
     
-    // Start typing animation
-    setTimeout(typeMessage, 2000);
+    // Start typing animation - FAST
+    setTimeout(typeMessage, 500);
     
-    // Progress updates
+    // Progress updates - SUPER FAST
     const progressSteps = [
-        { progress: 20, text: 'تحميل الموارد...' },
-        { progress: 40, text: 'إعداد الواجهة...' },
-        { progress: 60, text: 'تحضير المحتوى...' },
-        { progress: 80, text: 'تطبيق التصميم...' },
-        { progress: 100, text: 'مرحباً بك!' }
+        { progress: 50, text: 'تحميل...' },
+        { progress: 100, text: 'تم!' }
     ];
     
     let stepIndex = 0;
@@ -1136,20 +1133,38 @@ function initializeWelcomeScreen() {
             progressFill.style.width = step.progress + '%';
             progressText.textContent = step.text;
             stepIndex++;
-            setTimeout(updateProgress, 800);
+            setTimeout(updateProgress, 200); // SUPER FAST!
         } else {
-            // Hide welcome screen after completion
+            // Hide welcome screen IMMEDIATELY
             setTimeout(() => {
                 welcomeScreen.classList.add('hidden');
                 setTimeout(() => {
                     welcomeScreen.style.display = 'none';
-                }, 1000);
-            }, 1000);
+                }, 300);
+            }, 200);
         }
     }
     
-    // Start progress animation
-    setTimeout(updateProgress, 3000);
+    // Start progress animation IMMEDIATELY
+    setTimeout(updateProgress, 500);
+    
+    // EMERGENCY SKIP - Auto hide after 2 seconds MAX
+    setTimeout(() => {
+        if (welcomeScreen && welcomeScreen.style.display !== 'none') {
+            welcomeScreen.classList.add('hidden');
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+            }, 300);
+        }
+    }, 2000);
+    
+    // Click anywhere to skip IMMEDIATELY
+    welcomeScreen.addEventListener('click', () => {
+        welcomeScreen.classList.add('hidden');
+        setTimeout(() => {
+            welcomeScreen.style.display = 'none';
+        }, 300);
+    });
 }
 
 // ===== Receipt Upload Modal =====
@@ -1571,7 +1586,6 @@ function extractVideoId(url) {
     return match ? match[1] : '';
 }
 
-<<<<<<< HEAD
 // Force create videos function
 function forceCreateVideos() {
     console.log('🚀 Force creating videos...');
@@ -1796,6 +1810,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // No need for additional video loading listeners since we're preserving HTML videos
     
     // Initialize existing features
+    initializeWelcomeScreen(); // شاشة التحميل
     initLoadingScreen();
     initScrollAnimations();
     initParallax();

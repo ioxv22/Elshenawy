@@ -477,11 +477,16 @@ document.addEventListener('DOMContentLoaded', function() {
         refreshedLangButtons.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
+                e.stopPropagation();
                 const lang = btn.getAttribute('data-lang');
                 console.log(`🌍 Language button clicked: ${lang}`);
+                console.log(`🌍 Current language: ${currentLanguage}`);
                 if (lang && lang !== currentLanguage) {
+                    console.log(`🌍 Switching language from ${currentLanguage} to ${lang}`);
                     setLanguage(lang);
                     console.log(`🌍 Language switched to: ${lang}`);
+                } else {
+                    console.log(`🌍 Same language clicked or invalid lang: ${lang}`);
                 }
             });
         });
