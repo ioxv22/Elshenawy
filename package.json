@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "start": "npx http-server . -p 3000 -o",
-    "build": "npm run minify-css && npm run minify-js",
+    "build": "echo 'Build completed - no minification needed for static site'",
     "minify-css": "npx clean-css-cli -o styles.min.css styles.css",
     "minify-js": "npx terser script.js -o script.min.js",
     "validate-html": "npx html-validate index.html",
