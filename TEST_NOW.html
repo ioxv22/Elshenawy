@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار سريع - زر اللغة</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+            text-align: center;
+        }
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .language-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .lang-btn {
+            padding: 10px 20px;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .lang-btn.active {
+            background: white;
+            color: #1e3a8a;
+        }
+        .lang-btn:hover {
+            transform: scale(1.05);
+        }
+        .test-text {
+            font-size: 1.5rem;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        .success { background: #10b981; }
+        .error { background: #ef4444; }
+        .info { background: #3b82f6; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 data-ar="🧪 اختبار زر اللغة" data-en="🧪 Language Button Test">🧪 اختبار زر اللغة</h1>
+        
+        <div class="language-toggle">
+            <button class="lang-btn active" data-lang="ar">🇦🇪 عربي</button>
+            <button class="lang-btn" data-lang="en">🇺🇸 English</button>
+        </div>
+        
+        <div class="test-text" data-ar="هذا النص سيتغير عند الضغط على زر اللغة" data-en="This text will change when you click the language button">
+            هذا النص سيتغير عند الضغط على زر اللغة
+        </div>
+        
+        <div id="status" class="status info">
+            <span data-ar="اضغط على زر اللغة لاختبار التبديل" data-en="Click the language button to test switching">اضغط على زر اللغة لاختبار التبديل</span>
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <a href="index.html" style="color: white; text-decoration: none; padding: 10px 20px; border: 2px solid white; border-radius: 25px; display: inline-block;">
+                <span data-ar="العودة للموقع الرئيسي" data-en="Back to Main Site">العودة للموقع الرئيسي</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let currentLanguage = 'ar';
+        
+        const translations = {
+            ar: {
+                title: "🧪 اختبار زر اللغة",
+                testText: "هذا النص سيتغير عند الضغط على زر اللغة",
+                status: "تم تغيير اللغة إلى العربية ✅",
+                backLink: "العودة للموقع الرئيسي"
+            },
+            en: {
+                title: "🧪 Language Button Test", 
+                testText: "This text will change when you click the language button",
+                status: "Language changed to English ✅",
+                backLink: "Back to Main Site"
+            }
+        };
+        
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update HTML attributes
+            document.documentElement.setAttribute('lang', lang);
+            document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+            });
+            
+            // Update all elements with data attributes
+            document.querySelectorAll('[data-ar][data-en]').forEach(element => {
+                const text = element.getAttribute(`data-${lang}`);
+                if (text) {
+                    element.textContent = text;
+                }
+            });
+            
+            // Update status
+            const status = document.getElementById('status');
+            status.textContent = translations[lang].status;
+            status.className = 'status success';
+            
+            console.log(`🌍 Language changed to: ${lang}`);
+        }
+        
+        // Add event listeners
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const lang = btn.getAttribute('data-lang');
+                console.log(`🌍 Button clicked: ${lang}`);
+                if (lang !== currentLanguage) {
+                    setLanguage(lang);
+                }
+            });
+        });
+        
+        console.log('🧪 Test page loaded successfully!');
+    </script>
+</body>
+</html>

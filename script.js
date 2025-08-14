@@ -1818,6 +1818,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // No need for additional video loading listeners since we're preserving HTML videos
     
     // Initialize existing features
+    initializeWelcomeScreen(); // شاشة التحميل السريعة
     initLoadingScreen();
     initScrollAnimations();
     initParallax();
