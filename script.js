@@ -1593,7 +1593,6 @@ function extractVideoId(url) {
     return match ? match[1] : '';
 }
 
-<<<<<<< HEAD
 // Force create videos function
 function forceCreateVideos() {
     console.log('🚀 Force creating videos...');

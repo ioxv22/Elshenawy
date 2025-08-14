@@ -1,6 +1,6 @@
 [build]
   publish = "."
-  command = "echo 'No build command needed'"
+  command = "echo 'Force rebuild - v20241214-003'"
 
 [build.environment]
   NODE_VERSION = "18"
