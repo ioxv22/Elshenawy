@@ -17,6 +17,7 @@ const ADMIN_CREDENTIALS = {
 // Current user data
 let currentUser = null;
 
+<<<<<<< HEAD
 // Real data with actual course links and information
 let messages = JSON.parse(localStorage.getItem('adminMessages') || JSON.stringify([
     {
@@ -165,6 +166,12 @@ let students = JSON.parse(localStorage.getItem('adminStudents') || JSON.stringif
         paymentStatus: 'paid'
     }
 ]));
+=======
+// Sample data
+let messages = JSON.parse(localStorage.getItem('adminMessages') || '[]');
+let courses = JSON.parse(localStorage.getItem('adminCourses') || '[]');
+let students = JSON.parse(localStorage.getItem('adminStudents') || '[]');
+>>>>>>> 0a9aa1ce2bd07e515aaa39a3358830246fb28552
 
 // DOM Elements
 const loginModal = document.getElementById('loginModal');
@@ -423,6 +430,7 @@ function replyToMessage(messageId) {
     }
 }
 
+<<<<<<< HEAD
 // ===== Dashboard Statistics =====
 function loadDashboardStats() {
     // Calculate real statistics from actual data
@@ -511,6 +519,101 @@ function loadCourses() {
                     <button class="btn btn-outline btn-sm" onclick="toggleCourseStatus(${course.id})">
                         <i class="fas fa-toggle-${course.status === 'active' ? 'on' : 'off'}"></i>
                         ${course.status === 'active' ? 'إلغاء التفعيل' : 'تفعيل'}
+=======
+// ===== Courses Management =====
+function loadCourses() {
+    const coursesContainer = document.getElementById('adminCoursesGrid');
+    
+    // Default courses if none exist
+    if (courses.length === 0) {
+        courses = [
+            {
+                id: 'grade9-chapter1',
+                title: 'الفصل الأول: الحركة',
+                grade: 'grade9',
+                description: 'شرح مفصل لمفاهيم الحركة والسرعة والتسارع',
+                videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                duration: 45,
+                thumbnail: 'https://via.placeholder.com/400x225/1e3a8a/ffffff?text=الفصل+الأول'
+            },
+            {
+                id: 'grade9-chapter2',
+                title: 'الفصل الثاني: القوى',
+                grade: 'grade9',
+                description: 'فهم القوى وقوانين نيوتن للحركة',
+                videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                duration: 50,
+                thumbnail: 'https://via.placeholder.com/400x225/1e3a8a/ffffff?text=الفصل+الثاني'
+            },
+            {
+                id: 'grade10-chapter1',
+                title: 'الفصل الأول: الطاقة والشغل',
+                grade: 'grade10',
+                description: 'مفاهيم الطاقة الحركية والكامنة والشغل',
+                videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                duration: 55,
+                thumbnail: 'https://via.placeholder.com/400x225/3b82f6/ffffff?text=الفصل+الأول'
+            },
+            {
+                id: 'grade10-chapter2',
+                title: 'الفصل الثاني: الموجات والصوت',
+                grade: 'grade10',
+                description: 'خصائص الموجات والصوت والاهتزازات',
+                videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                duration: 60,
+                thumbnail: 'https://via.placeholder.com/400x225/3b82f6/ffffff?text=الفصل+الثاني'
+            },
+            {
+                id: 'grade11-chapter1',
+                title: 'الفصل الأول: الكهرباء الساكنة',
+                grade: 'grade11',
+                description: 'الشحنات الكهربائية والمجالات الكهربائية',
+                videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                duration: 65,
+                thumbnail: 'https://via.placeholder.com/400x225/f59e0b/ffffff?text=الفصل+الأول'
+            },
+            {
+                id: 'grade11-chapter2',
+                title: 'الفصل الثاني: الدوائر الكهربائية',
+                grade: 'grade11',
+                description: 'التيار والمقاومة وقوانين كيرشوف',
+                videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                duration: 70,
+                thumbnail: 'https://via.placeholder.com/400x225/f59e0b/ffffff?text=الفصل+الثاني'
+            }
+        ];
+        localStorage.setItem('adminCourses', JSON.stringify(courses));
+    }
+    
+    coursesContainer.innerHTML = courses.map(course => `
+        <div class="admin-course-card">
+            <div class="admin-course-thumbnail">
+                <img src="${course.thumbnail}" alt="${course.title}">
+                <div class="course-actions-overlay">
+                    <button class="btn btn-sm btn-primary" onclick="editCourse('${course.id}')">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteCourse('${course.id}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="admin-course-content">
+                <h3 class="admin-course-title">${course.title}</h3>
+                <p class="admin-course-description">${course.description}</p>
+                <div class="admin-course-meta">
+                    <span class="course-grade">${getGradeText(course.grade)}</span>
+                    <span class="course-duration">${course.duration} دقيقة</span>
+                </div>
+                <div class="admin-course-actions">
+                    <button class="btn btn-sm btn-outline" onclick="previewCourse('${course.id}')">
+                        <i class="fas fa-eye"></i>
+                        معاينة
+                    </button>
+                    <button class="btn btn-sm btn-primary" onclick="editCourse('${course.id}')">
+                        <i class="fas fa-edit"></i>
+                        تعديل
+>>>>>>> 0a9aa1ce2bd07e515aaa39a3358830246fb28552
                     </button>
                 </div>
             </div>
@@ -518,6 +621,7 @@ function loadCourses() {
     `).join('');
 }
 
+<<<<<<< HEAD
 // Helper function to get grade name in Arabic
 function getGradeName(grade) {
     const gradeNames = {
@@ -614,6 +718,38 @@ function contactStudent(phone) {
     const whatsappURL = `https://wa.me/${phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
     window.open(whatsappURL, '_blank');
 }
+=======
+function openAddCourseModal() {
+    const modal = document.getElementById('addCourseModal');
+    modal.classList.add('active');
+}
+
+function closeAddCourseModal() {
+    const modal = document.getElementById('addCourseModal');
+    modal.classList.remove('active');
+    document.getElementById('addCourseForm').reset();
+}
+
+function addCourse(courseData) {
+    const newCourse = {
+        id: 'course-' + Date.now(),
+        ...courseData,
+        thumbnail: `https://via.placeholder.com/400x225/1e3a8a/ffffff?text=${encodeURIComponent(courseData.title)}`
+    };
+    
+    courses.push(newCourse);
+    localStorage.setItem('adminCourses', JSON.stringify(courses));
+    loadCourses();
+    closeAddCourseModal();
+    showNotification('تم إضافة الكورس بنجاح', 'success');
+}
+
+function editCourse(courseId) {
+    const course = courses.find(c => c.id === courseId);
+    if (course) {
+        // Open edit modal with course data
+        showNotification('سيتم إضافة نافذة التعديل قريباً', 'info');
+>>>>>>> 0a9aa1ce2bd07e515aaa39a3358830246fb28552
     }
 }
 
