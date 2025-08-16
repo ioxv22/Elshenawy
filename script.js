@@ -1205,6 +1205,9 @@ function initializeReceiptModal() {
         receipts.push(receiptData);
         localStorage.setItem('receipts', JSON.stringify(receipts));
         
+        // Send receipt notification to Telegram
+        sendReceiptToTelegram(receiptData);
+        
         // Save to Firebase if available
         if (window.firebaseDb && window.getCurrentUser && window.getCurrentUser()) {
             const db = window.firebaseDb();
@@ -1224,6 +1227,93 @@ function initializeReceiptModal() {
         
         // Show success animation
         showReceiptSuccessAnimation();
+    }
+    
+    // Send receipt notification to Telegram
+    function sendReceiptToTelegram(receiptData) {
+        const telegramBotToken = 'YOUR_BOT_TOKEN_HERE'; // Replace with actual bot token from @BotFather
+        const chatIds = ['@abdurhman009', '@Elshenawy_Physics']; // Target usernames
+        
+        // Skip if no bot token configured
+        if (telegramBotToken === 'YOUR_BOT_TOKEN_HERE') {
+            console.log('Telegram bot token not configured. Receipt saved locally only.');
+            return;
+        }
+        
+        const gradeText = {
+            'grade9': 'الصف التاسع المتقدم',
+            'grade10': 'الصف العاشر المتقدم', 
+            'grade11': 'الصف الحادي عشر المتقدم'
+        };
+        
+        const paymentMethodText = {
+            'bank_transfer': 'تحويل بنكي',
+            'cash': 'نقداً',
+            'online': 'دفع إلكتروني'
+        };
+        
+        const message = `🧾 *إيصال دفع جديد*
+        
+👤 *الطالب:* ${receiptData.studentName}
+📚 *الصف:* ${gradeText[receiptData.grade] || receiptData.grade}
+📞 *الهاتف:* ${receiptData.phone}
+💳 *طريقة الدفع:* ${paymentMethodText[receiptData.paymentMethod] || receiptData.paymentMethod}
+📝 *ملاحظات:* ${receiptData.notes || 'لا توجد ملاحظات'}
+⏰ *وقت الإرسال:* ${new Date(receiptData.timestamp).toLocaleString('ar-EG')}
+
+✅ يرجى مراجعة الإيصال في لوحة الإدارة`;
+
+        // Send to each chat
+        chatIds.forEach(chatId => {
+            // Send text message first
+            fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            }).then(response => {
+                if (response.ok) {
+                    console.log(`Receipt notification sent to ${chatId}`);
+                } else {
+                    console.error(`Failed to send notification to ${chatId}`);
+                }
+            }).catch(error => {
+                console.error(`Error sending to ${chatId}:`, error);
+            });
+            
+            // Send image if available
+            if (receiptData.receiptImage) {
+                // Convert base64 to blob for sending
+                fetch(receiptData.receiptImage)
+                    .then(res => res.blob())
+                    .then(blob => {
+                        const formData = new FormData();
+                        formData.append('chat_id', chatId);
+                        formData.append('photo', blob, 'receipt.jpg');
+                        formData.append('caption', `📸 صورة الإيصال - ${receiptData.studentName}`);
+                        
+                        return fetch(`https://api.telegram.org/bot${telegramBotToken}/sendPhoto`, {
+                            method: 'POST',
+                            body: formData
+                        });
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log(`Receipt image sent to ${chatId}`);
+                        } else {
+                            console.error(`Failed to send image to ${chatId}`);
+                        }
+                    })
+                    .catch(error => {
+                        console.error(`Error sending image to ${chatId}:`, error);
+                    });
+            }
+        });
     }
 }
 
