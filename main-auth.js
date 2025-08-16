@@ -1,5 +1,5 @@
 // Firebase services will be available globally after firebase-config.js loads
-let auth, db;
+let firebaseAuth, firebaseDb;
 
 // DOM Elements
 const userMenu = document.getElementById('userMenu');
@@ -25,16 +25,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Wait for Firebase to be ready
 window.addEventListener('firebaseReady', function() {
-    auth = window.firebaseAuth();
-    db = window.firebaseDb();
+    firebaseAuth = window.firebaseAuth();
+    firebaseDb = window.firebaseDb();
     initializeAuth();
 });
 
 // Initialize Authentication
 function initializeAuth() {
-    if (!auth) return;
+    if (!firebaseAuth) return;
     
-    auth.onAuthStateChanged(async (user) => {
+    firebaseAuth.onAuthStateChanged(async (user) => {
         if (user) {
             currentUser = user;
             await loadUserData();
@@ -54,7 +54,7 @@ async function loadUserData() {
     if (!currentUser) return;
     
     try {
-        const userDoc = await db.collection('users').doc(currentUser.uid).get();
+        const userDoc = await firebaseDb.collection('users').doc(currentUser.uid).get();
         if (userDoc.exists) {
             userData = userDoc.data();
             updateUserInterface();
