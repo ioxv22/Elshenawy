@@ -2071,6 +2071,23 @@ a:hover {
     box-shadow: var(--shadow-heavy);
 }
 
+.btn-secondary {
+    background: linear-gradient(135deg, #0088cc, #0099dd);
+    color: white;
+    box-shadow: var(--shadow-medium);
+    border: 2px solid transparent;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 136, 204, 0.4);
+    background: linear-gradient(135deg, #0099dd, #00aaee);
+}
+
+.btn-secondary i {
+    margin-right: 8px;
+}
+
 .btn-outline {
     background: transparent;
     color: var(--primary-color);

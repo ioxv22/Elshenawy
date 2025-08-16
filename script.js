@@ -1231,8 +1231,13 @@ function initializeReceiptModal() {
     
     // Send receipt notification to Telegram
     function sendReceiptToTelegram(receiptData) {
-        const telegramBotToken = 'YOUR_BOT_TOKEN_HERE'; // Replace with actual bot token from @BotFather
+        const telegramBotToken = '8300804684:AAEpxmj8MfkH9lRYMgYX2vbnTZwUzlaLQxs'; // Your actual bot token
+        // Send to specific chat IDs (you'll need to get these by messaging the bot first)
+        // For now, we'll try to send to the bot owner's chat
         const chatIds = ['@abdurhman009', '@Elshenawy_Physics']; // Target usernames
+        
+        // Alternative: Send to bot owner (you need to message the bot first to get your chat ID)
+        // You can get your chat ID by messaging the bot and checking: https://api.telegram.org/bot8300804684:AAEpxmj8MfkH9lRYMgYX2vbnTZwUzlaLQxs/getUpdates
         
         // Skip if no bot token configured
         if (telegramBotToken === 'YOUR_BOT_TOKEN_HERE') {
@@ -1314,6 +1319,165 @@ function initializeReceiptModal() {
                     });
             }
         });
+    }
+    
+    // Send receipt directly to Telegram bot (for user interaction)
+    window.sendReceiptToTelegramBot = function() {
+        const form = document.getElementById('receiptForm');
+        const formData = new FormData(form);
+        
+        // Validate required fields
+        if (!formData.get('studentName') || !formData.get('phone') || !formData.get('paymentMethod')) {
+            showNotification('يرجى ملء جميع الحقول المطلوبة', 'error');
+            return;
+        }
+        
+        const receiptData = {
+            studentName: formData.get('studentName'),
+            phone: formData.get('phone'),
+            grade: document.getElementById('receiptGrade').value,
+            paymentMethod: formData.get('paymentMethod'),
+            notes: formData.get('notes') || '',
+            timestamp: Date.now()
+        };
+        
+        // Convert image to base64 if available
+        const imageFile = formData.get('receiptImage');
+        if (imageFile && imageFile.size > 0) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                receiptData.receiptImage = e.target.result;
+                sendDirectToTelegramBot(receiptData);
+            };
+            reader.readAsDataURL(imageFile);
+        } else {
+            sendDirectToTelegramBot(receiptData);
+        }
+    };
+    
+    // Send directly to Telegram bot
+    function sendDirectToTelegramBot(receiptData) {
+        const telegramBotToken = '8300804684:AAEpxmj8MfkH9lRYMgYX2vbnTZwUzlaLQxs';
+        
+        // Create message for Telegram
+        const gradeText = {
+            'grade9': 'الصف التاسع المتقدم',
+            'grade10': 'الصف العاشر المتقدم', 
+            'grade11': 'الصف الحادي عشر المتقدم'
+        };
+        
+        const paymentMethodText = {
+            'ziina': 'Ziina',
+            'bank_transfer': 'تحويل بنكي',
+            'cash': 'نقداً',
+            'other': 'أخرى'
+        };
+        
+        const message = `🧾 *إيصال دفع جديد*
+
+👤 *الطالب:* ${receiptData.studentName}
+📚 *الصف:* ${gradeText[receiptData.grade] || receiptData.grade}
+📞 *الهاتف:* ${receiptData.phone}
+💳 *طريقة الدفع:* ${paymentMethodText[receiptData.paymentMethod] || receiptData.paymentMethod}
+📝 *ملاحظات:* ${receiptData.notes || 'لا توجد ملاحظات'}
+⏰ *وقت الإرسال:* ${new Date(receiptData.timestamp).toLocaleString('ar-EG')}
+
+📱 *تم الإرسال من الموقع مباشرة*`;
+
+        // Method 1: Try to send via API to a specific chat (you need to provide your chat ID)
+        const yourChatId = 'YOUR_CHAT_ID'; // Replace with your actual chat ID
+        
+        if (yourChatId !== 'YOUR_CHAT_ID') {
+            // Send message via API
+            fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: yourChatId,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Receipt sent to Telegram successfully');
+                    showNotification('تم إرسال الإيصال للتيليجرام بنجاح!', 'success');
+                    
+                    // Send image if available
+                    if (receiptData.receiptImage) {
+                        sendImageToTelegram(receiptData, yourChatId, telegramBotToken);
+                    }
+                } else {
+                    console.error('Failed to send to Telegram');
+                    fallbackToTelegramLink(receiptData, message);
+                }
+            }).catch(error => {
+                console.error('Error sending to Telegram:', error);
+                fallbackToTelegramLink(receiptData, message);
+            });
+        } else {
+            // Fallback: Open Telegram with pre-filled message
+            fallbackToTelegramLink(receiptData, message);
+        }
+        
+        // Save locally
+        const receipts = JSON.parse(localStorage.getItem('receipts') || '[]');
+        receipts.push({...receiptData, status: 'sent_to_bot'});
+        localStorage.setItem('receipts', JSON.stringify(receipts));
+        
+        closeReceiptModal();
+        document.getElementById('receiptForm').reset();
+        resetFileUpload();
+    }
+    
+    // Send image to Telegram
+    function sendImageToTelegram(receiptData, chatId, botToken) {
+        if (receiptData.receiptImage) {
+            fetch(receiptData.receiptImage)
+                .then(res => res.blob())
+                .then(blob => {
+                    const formData = new FormData();
+                    formData.append('chat_id', chatId);
+                    formData.append('photo', blob, 'receipt.jpg');
+                    formData.append('caption', `📸 صورة الإيصال - ${receiptData.studentName}`);
+                    
+                    return fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Receipt image sent to Telegram');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error sending image:', error);
+                });
+        }
+    }
+    
+    // Fallback method: Open Telegram app/web
+    function fallbackToTelegramLink(receiptData, message) {
+        // Create a simple message for URL
+        const simpleMessage = `إيصال دفع من ${receiptData.studentName} - ${receiptData.phone}`;
+        
+        // Try to open Telegram app first, then web
+        const telegramAppUrl = `tg://msg?text=${encodeURIComponent(simpleMessage)}`;
+        const telegramWebUrl = `https://web.telegram.org/k/#@abdurhman009`;
+        
+        // Try app first
+        const link = document.createElement('a');
+        link.href = telegramAppUrl;
+        link.click();
+        
+        // Fallback to web after a short delay
+        setTimeout(() => {
+            window.open(telegramWebUrl, '_blank');
+        }, 1000);
+        
+        showNotification('تم فتح التيليجرام. يرجى إرسال تفاصيل الإيصال يدوياً', 'info');
     }
 }
 
