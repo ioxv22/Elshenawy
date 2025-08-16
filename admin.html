@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الإدارة - الأستاذ إسلام الشناوي</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Admin CSS -->
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-container">
+            <div class="login-header">
+                <img src="https://i.ibb.co/xSFLPSGn/image.png" alt="شعار الأستاذ إسلام الشناوي">
+                <h2>لوحة الإدارة</h2>
+                <p>تسجيل الدخول للوصول إلى لوحة التحكم</p>
+            </div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="email">البريد الإلكتروني</label>
+                    <input type="email" id="email" name="email" required>
+                    <i class="fas fa-envelope"></i>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">كلمة المرور</label>
+                    <input type="password" id="password" name="password" required>
+                    <i class="fas fa-lock"></i>
+                    <button type="button" class="toggle-password" onclick="togglePassword()">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-full">
+                    <i class="fas fa-sign-in-alt"></i>
+                    تسجيل الدخول
+                </button>
+                
+                <div class="login-error" id="loginError" style="display: none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>بيانات تسجيل الدخول غير صحيحة</span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div class="admin-dashboard" id="adminDashboard" style="display: none;">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="https://i.ibb.co/xSFLPSGn/image.png" alt="شعار">
+                <h3>لوحة الإدارة</h3>
+                <span class="user-role" id="userRole">مدير عام</span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active">
+                        <a href="#dashboard" class="nav-link" data-section="dashboard">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>الرئيسية</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#messages" class="nav-link" data-section="messages">
+                            <i class="fas fa-envelope"></i>
+                            <span>الرسائل</span>
+                            <span class="badge" id="messagesBadge">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#receipts" class="nav-link" data-section="receipts">
+                            <i class="fas fa-receipt"></i>
+                            <span>الإيصالات</span>
+                            <span class="badge" id="receiptsBadge">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#videos" class="nav-link" data-section="videos">
+                            <i class="fas fa-video"></i>
+                            <span>إدارة الفيديوهات</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#students" class="nav-link" data-section="students">
+                            <i class="fas fa-users"></i>
+                            <span>الطلاب</span>
+                        </a>
+                    </li>
+                    <li class="nav-item admin-only">
+                        <a href="#analytics" class="nav-link" data-section="analytics">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>الإحصائيات</span>
+                        </a>
+                    </li>
+                    <li class="nav-item admin-only">
+                        <a href="#settings" class="nav-link" data-section="settings">
+                            <i class="fas fa-cog"></i>
+                            <span>الإعدادات</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="btn btn-outline" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    تسجيل الخروج
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title" id="pageTitle">الرئيسية</h1>
+                </div>
+                
+                <div class="header-right">
+                    <div class="user-info">
+                        <span class="user-name" id="userName">المدير</span>
+                        <img src="https://i.ibb.co/dsQw1yV4/image.png" alt="صورة المستخدم" class="user-avatar">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section class="content-section active" id="dashboard-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalMessages">0</h3>
+                            <p>إجمالي الرسائل</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalStudents">0</h3>
+                            <p>عدد الطلاب</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalCourses">6</h3>
+                            <p>عدد الكورسات</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalRevenue">0</h3>
+                            <p>إجمالي الإيرادات</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-widgets">
+                    <div class="widget">
+                        <div class="widget-header">
+                            <h3>الرسائل الحديثة</h3>
+                            <a href="#messages" class="widget-link">عرض الكل</a>
+                        </div>
+                        <div class="widget-content">
+                            <div class="recent-messages" id="recentMessages">
+                                <p class="no-data">لا توجد رسائل جديدة</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="widget">
+                        <div class="widget-header">
+                            <h3>الاشتراكات الحديثة</h3>
+                        </div>
+                        <div class="widget-content">
+                            <div class="recent-subscriptions" id="recentSubscriptions">
+                                <p class="no-data">لا توجد اشتراكات جديدة</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Messages Section -->
+            <section class="content-section" id="messages-section">
+                <div class="section-header">
+                    <h2>إدارة الرسائل</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-outline" onclick="refreshMessages()">
+                            <i class="fas fa-sync-alt"></i>
+                            تحديث
+                        </button>
+                        <button class="btn btn-danger" onclick="deleteAllMessages()">
+                            <i class="fas fa-trash"></i>
+                            حذف الكل
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="messages-container">
+                    <div class="messages-list" id="messagesList">
+                        <p class="no-data">لا توجد رسائل</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Receipts Section -->
+            <section class="content-section" id="receipts-section">
+                <div class="section-header">
+                    <h2>إدارة الإيصالات</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-outline" onclick="refreshReceipts()">
+                            <i class="fas fa-sync-alt"></i>
+                            تحديث
+                        </button>
+                        <button class="btn btn-primary" onclick="exportReceipts()">
+                            <i class="fas fa-download"></i>
+                            تصدير
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="receipts-filters">
+                    <div class="filter-group">
+                        <label for="statusFilter">حالة الإيصال:</label>
+                        <select id="statusFilter" onchange="filterReceipts()">
+                            <option value="">جميع الحالات</option>
+                            <option value="pending">في الانتظار</option>
+                            <option value="approved">مقبول</option>
+                            <option value="rejected">مرفوض</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="gradeFilter">الصف:</label>
+                        <select id="gradeFilter" onchange="filterReceipts()">
+                            <option value="">جميع الصفوف</option>
+                            <option value="grade9">الصف التاسع</option>
+                            <option value="grade10">الصف العاشر</option>
+                            <option value="grade11">الصف الحادي عشر</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="paymentMethodFilter">طريقة الدفع:</label>
+                        <select id="paymentMethodFilter" onchange="filterReceipts()">
+                            <option value="">جميع الطرق</option>
+                            <option value="ziina">Ziina</option>
+                            <option value="bank_transfer">تحويل بنكي</option>
+                            <option value="cash">نقداً</option>
+                            <option value="other">أخرى</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="receipts-grid" id="receiptsGrid">
+                    <div class="no-data">
+                        <i class="fas fa-receipt"></i>
+                        <p>لا توجد إيصالات</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Videos Section -->
+            <section class="content-section" id="videos-section">
+                <div class="section-header">
+                    <h2>إدارة الفيديوهات</h2>
+                    <button class="btn btn-primary" onclick="openAddVideoModal()">
+                        <i class="fas fa-plus"></i>
+                        إضافة فيديو جديد
+                    </button>
+                </div>
+                
+                <div class="videos-grid" id="adminVideosGrid">
+                    <!-- Videos will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Students Section -->
+            <section class="content-section" id="students-section">
+                <div class="section-header">
+                    <h2>إدارة الطلاب</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" onclick="exportStudents()">
+                            <i class="fas fa-download"></i>
+                            تصدير البيانات
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="students-table-container">
+                    <table class="students-table">
+                        <thead>
+                            <tr>
+                                <th>الاسم</th>
+                                <th>الصف</th>
+                                <th>البريد الإلكتروني</th>
+                                <th>تاريخ الاشتراك</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsTableBody">
+                            <tr>
+                                <td colspan="6" class="no-data">لا توجد بيانات طلاب</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Analytics Section (Admin Only) -->
+            <section class="content-section admin-only" id="analytics-section">
+                <div class="section-header">
+                    <h2>الإحصائيات والتقارير</h2>
+                </div>
+                
+                <div class="analytics-grid">
+                    <div class="chart-container">
+                        <h3>الاشتراكات الشهرية</h3>
+                        <canvas id="subscriptionsChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3>توزيع الطلاب حسب الصف</h3>
+                        <canvas id="gradesChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section (Admin Only) -->
+            <section class="content-section admin-only" id="settings-section">
+                <div class="section-header">
+                    <h2>إعدادات الموقع</h2>
+                </div>
+                
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3>إعدادات عامة</h3>
+                        <form class="settings-form">
+                            <div class="form-group">
+                                <label>اسم الموقع</label>
+                                <input type="text" value="الأستاذ إسلام الشناوي">
+                            </div>
+                            <div class="form-group">
+                                <label>وصف الموقع</label>
+                                <textarea rows="3">مدرس فيزياء للصفوف المتقدمة في الإمارات</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                        </form>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <h3>إعدادات الأسعار</h3>
+                        <form class="settings-form">
+                            <div class="form-group">
+                                <label>سعر الصف التاسع</label>
+                                <input type="number" value="99">
+                            </div>
+                            <div class="form-group">
+                                <label>سعر الصف العاشر</label>
+                                <input type="number" value="199">
+                            </div>
+                            <div class="form-group">
+                                <label>سعر الصف الحادي عشر</label>
+                                <input type="number" value="299">
+                            </div>
+                            <button type="submit" class="btn btn-primary">حفظ الأسعار</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Video Modal -->
+    <div class="modal" id="addVideoModal">
+        <div class="modal-overlay" onclick="closeAddVideoModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>إضافة فيديو جديد</h3>
+                <button class="modal-close" onclick="closeAddVideoModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form class="modal-form" id="addVideoForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-heading"></i> عنوان الفيديو</label>
+                        <input type="text" name="title" required placeholder="مثال: الحركة في خط مستقيم">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-graduation-cap"></i> الصف الدراسي</label>
+                        <select name="grade" required>
+                            <option value="">اختر الصف</option>
+                            <option value="grade9">الصف التاسع</option>
+                            <option value="grade10">الصف العاشر</option>
+                            <option value="grade11">الصف الحادي عشر</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-align-left"></i> وصف الفيديو</label>
+                    <textarea name="description" rows="3" required placeholder="وصف مختصر عن محتوى الفيديو"></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-link"></i> رابط الفيديو</label>
+                        <input type="url" name="videoUrl" required placeholder="https://youtube.com/watch?v=...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-clock"></i> مدة الفيديو (بالدقائق)</label>
+                        <input type="number" name="duration" required placeholder="45">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-image"></i> صورة مصغرة (اختياري)</label>
+                        <input type="url" name="thumbnail" placeholder="رابط الصورة المصغرة">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-tag"></i> نوع المحتوى</label>
+                        <select name="type">
+                            <option value="lesson">درس</option>
+                            <option value="review">مراجعة</option>
+                            <option value="exam">امتحان</option>
+                            <option value="homework">واجب</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> حالة الفيديو</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="status" value="free" checked>
+                            <span>مجاني</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="status" value="premium">
+                            <span>مدفوع</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeAddVideoModal()">إلغاء</button>
+                    <button type="submit" class="btn btn-primary">إضافة الفيديو</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="admin-script.js"></script>
+</body>
+</html>
