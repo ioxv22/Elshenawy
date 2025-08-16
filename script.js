@@ -1385,7 +1385,7 @@ function initializeReceiptModal() {
 📱 *تم الإرسال من الموقع مباشرة*`;
 
         // Method 1: Try to send via API to a specific chat (you need to provide your chat ID)
-        const yourChatId = 'YOUR_CHAT_ID'; // Replace with your actual chat ID
+        const yourChatId = '7733935141'; // Replace with your actual chat ID
         
         if (yourChatId !== 'YOUR_CHAT_ID') {
             // Send message via API
