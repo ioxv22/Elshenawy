@@ -66,8 +66,9 @@
     --shadow-heavy: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 
-/* ===== Welcome Screen ===== */
+/* ===== Welcome Screen - INSTANT HIDE ===== */
 .welcome-screen {
+    display: none !important; /* Force hide immediately */
     position: fixed;
     top: 0;
     left: 0;

@@ -1082,74 +1082,21 @@ function initKeyboardNavigation() {
     });
 }
 
-// ===== Welcome Screen =====
+// ===== Welcome Screen - INSTANT LOAD =====
 function initializeWelcomeScreen() {
     const welcomeScreen = document.getElementById('welcomeScreen');
-    const typingText = document.getElementById('typingText');
-    const progressFill = document.getElementById('progressFill');
-    const progressText = document.getElementById('progressText');
     
     if (!welcomeScreen) return;
     
-    const messages = [
-        'تعلم الفيزياء بطريقة مبسطة وممتعة',
-        'اكتشف أسرار الكون والطبيعة',
-        'حقق أحلامك الأكاديمية معنا',
-        'انضم لآلاف الطلاب الناجحين'
-    ];
+    // 🚀 INSTANT HIDE - NO DELAYS!
+    console.log('⚡ INSTANT LOAD: Hiding welcome screen immediately');
+    welcomeScreen.style.display = 'none';
+    welcomeScreen.classList.add('hidden');
     
-    let messageIndex = 0;
-    let charIndex = 0;
+    // Ensure body is scrollable immediately
+    document.body.style.overflow = '';
     
-    function typeMessage() {
-        if (charIndex < messages[messageIndex].length) {
-            typingText.textContent += messages[messageIndex].charAt(charIndex);
-            charIndex++;
-            setTimeout(typeMessage, 100);
-        } else {
-            setTimeout(() => {
-                messageIndex = (messageIndex + 1) % messages.length;
-                charIndex = 0;
-                typingText.textContent = '';
-                typeMessage();
-            }, 2000);
-        }
-    }
-    
-    // Start typing animation
-    setTimeout(typeMessage, 2000);
-    
-    // Progress updates
-    const progressSteps = [
-        { progress: 20, text: 'تحميل الموارد...' },
-        { progress: 40, text: 'إعداد الواجهة...' },
-        { progress: 60, text: 'تحضير المحتوى...' },
-        { progress: 80, text: 'تطبيق التصميم...' },
-        { progress: 100, text: 'مرحباً بك!' }
-    ];
-    
-    let stepIndex = 0;
-    
-    function updateProgress() {
-        if (stepIndex < progressSteps.length) {
-            const step = progressSteps[stepIndex];
-            progressFill.style.width = step.progress + '%';
-            progressText.textContent = step.text;
-            stepIndex++;
-            setTimeout(updateProgress, 800);
-        } else {
-            // Hide welcome screen after completion
-            setTimeout(() => {
-                welcomeScreen.classList.add('hidden');
-                setTimeout(() => {
-                    welcomeScreen.style.display = 'none';
-                }, 1000);
-            }, 1000);
-        }
-    }
-    
-    // Start progress animation
-    setTimeout(updateProgress, 3000);
+    console.log('✅ Welcome screen hidden instantly - site ready!');
 }
 
 // ===== Receipt Upload Modal =====

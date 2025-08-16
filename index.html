@@ -1374,19 +1374,16 @@
     // Run normal ensure function
     ensureVideosVisible();
     
-    // Run again after DOM is loaded
+    // Run immediately after DOM is loaded - NO DELAYS!
     document.addEventListener('DOMContentLoaded', () => {
-        console.log('📺 DOM loaded - ensuring videos visible again');
-        setTimeout(() => ensureVideosVisible(), 100);
-        setTimeout(() => ensureVideosVisible(), 500);
-        setTimeout(() => ensureVideosVisible(), 1000);
-        setTimeout(() => ensureVideosVisible(), 2000);
+        console.log('⚡ DOM loaded - instant video protection');
+        ensureVideosVisible(); // Instant execution
     });
     
-    // Run when page is fully loaded
+    // Run when page is fully loaded - INSTANT!
     window.addEventListener('load', () => {
-        console.log('🎯 Page fully loaded - final video check');
-        setTimeout(() => ensureVideosVisible(), 200);
+        console.log('⚡ Page loaded - instant final check');
+        ensureVideosVisible(); // Instant execution
     });
     
     console.log('✅ Emergency video script initialized');
