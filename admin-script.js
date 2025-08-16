@@ -17,7 +17,6 @@ const ADMIN_CREDENTIALS = {
 // Current user data
 let currentUser = null;
 
-<<<<<<< HEAD
 // Real data with actual course links and information
 let messages = JSON.parse(localStorage.getItem('adminMessages') || JSON.stringify([
     {
@@ -62,7 +61,7 @@ let courses = JSON.parse(localStorage.getItem('adminCourses') || JSON.stringify(
         grade: 'grade9',
         description: 'شرح شامل ومبسط لمنهج الصف التاسع المتقدم',
         videoUrl: 'https://drive.google.com/file/d/1vOihXtyhX7Xptn0kOs1fISHXsBQOzxum/view?usp=drive_link',
-        thumbnailUrl: 'https://via.placeholder.com/400x225/1e3a8a/ffffff?text=فيزياء+الصف+التاسع+المتقدم',
+        thumbnailUrl: 'https://i.ibb.co/xSFLPSGn/image.png',
         duration: '120 دقيقة',
         views: 245,
         likes: 38,
@@ -76,7 +75,7 @@ let courses = JSON.parse(localStorage.getItem('adminCourses') || JSON.stringify(
         grade: 'grade10',
         description: 'شرح مفصل لمنهج العاشر المتقدم بطريقة ممتازة',
         videoUrl: 'https://drive.google.com/file/d/1iTO2628HDuKpEdPG5_z2VV-v0hHAs8sI/view?usp=drive_link',
-        thumbnailUrl: 'https://via.placeholder.com/400x225/3b82f6/ffffff?text=فيزياء+الصف+العاشر+المتقدم',
+        thumbnailUrl: 'https://i.ibb.co/xSFLPSGn/image.png',
         duration: '135 دقيقة',
         views: 378,
         likes: 45,
@@ -90,7 +89,7 @@ let courses = JSON.parse(localStorage.getItem('adminCourses') || JSON.stringify(
         grade: 'grade11',
         description: 'الفيديو الأصلي لمنهج الحادي عشر المتقدم كاملاً',
         videoUrl: 'https://drive.google.com/file/d/1hD5GUReRwAz5L-AJd-IaxKqqJ00DZkJJ/view?usp=drive_link',
-        thumbnailUrl: 'https://via.placeholder.com/400x225/f59e0b/ffffff?text=فيزياء+صف+11+متقدم',
+        thumbnailUrl: 'https://i.ibb.co/xSFLPSGn/image.png',
         duration: '145 دقيقة',
         views: 512,
         likes: 67,
@@ -166,12 +165,6 @@ let students = JSON.parse(localStorage.getItem('adminStudents') || JSON.stringif
         paymentStatus: 'paid'
     }
 ]));
-=======
-// Sample data
-let messages = JSON.parse(localStorage.getItem('adminMessages') || '[]');
-let courses = JSON.parse(localStorage.getItem('adminCourses') || '[]');
-let students = JSON.parse(localStorage.getItem('adminStudents') || '[]');
->>>>>>> 0a9aa1ce2bd07e515aaa39a3358830246fb28552
 
 // DOM Elements
 const loginModal = document.getElementById('loginModal');
@@ -1381,6 +1374,16 @@ document.addEventListener('DOMContentLoaded', function() {
             closeAddVideoModal();
         });
     }
+});
+
+// ===== Initialize Admin Panel =====
+document.addEventListener('DOMContentLoaded', function() {
+    checkAuth();
+});
+
+// Also check auth when page loads
+window.addEventListener('load', function() {
+    checkAuth();
 });
 
 // ===== Export functions for use in main site =====
