@@ -1845,7 +1845,61 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===== Global Functions for HTML =====
 window.openVideoModal = openVideoModal;
 window.closeVideoModal = closeVideoModal;
-window.requireSubscription = requireSubscription;// ===== DOM Elements =====
+window.requireSubscription = requireSubscription;
+
+// ===== Language Toggle Initialization =====
+function initLanguageToggle() {
+    if (languageToggle && langButtons.length > 0) {
+        // Add event listeners to language buttons
+        langButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                if (lang && typeof setLanguage === 'function') {
+                    setLanguage(lang);
+                }
+            });
+        });
+        
+        // Initialize with saved language or default to Arabic
+        const savedLanguage = localStorage.getItem('language') || 'ar';
+        if (typeof setLanguage === 'function') {
+            setLanguage(savedLanguage);
+        }
+        
+        console.log('✅ Language toggle initialized');
+    }
+}
+
+// ===== Floating Telegram Button Enhancement =====
+function initFloatingTelegram() {
+    const floatingTelegram = document.querySelector('.floating-telegram');
+    if (floatingTelegram) {
+        // Update tooltip based on current language
+        const updateTooltip = () => {
+            const currentLang = localStorage.getItem('language') || 'ar';
+            const tooltipText = currentLang === 'ar' ? 'انضم إلى التيليجرام' : 'Join Telegram Channel';
+            floatingTelegram.setAttribute('data-tooltip', tooltipText);
+        };
+        
+        updateTooltip();
+        
+        // Listen for language changes
+        document.addEventListener('languageChanged', updateTooltip);
+        
+        console.log('✅ Floating Telegram button initialized');
+    }
+}
+
+// Initialize language features when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        initLanguageToggle();
+        initFloatingTelegram();
+    });
+} else {
+    initLanguageToggle();
+    initFloatingTelegram();
+}// ===== DOM Elements =====
 const themeToggle = document.getElementById('themeToggle');
 const hamburger = document.getElementById('hamburger');
 const navMenu = document.getElementById('navMenu');
@@ -3686,3 +3740,57 @@ document.addEventListener('DOMContentLoaded', () => {
 window.openVideoModal = openVideoModal;
 window.closeVideoModal = closeVideoModal;
 window.requireSubscription = requireSubscription;
+
+// ===== Language Toggle Initialization =====
+function initLanguageToggle() {
+    if (languageToggle && langButtons.length > 0) {
+        // Add event listeners to language buttons
+        langButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                if (lang && typeof setLanguage === 'function') {
+                    setLanguage(lang);
+                }
+            });
+        });
+        
+        // Initialize with saved language or default to Arabic
+        const savedLanguage = localStorage.getItem('language') || 'ar';
+        if (typeof setLanguage === 'function') {
+            setLanguage(savedLanguage);
+        }
+        
+        console.log('✅ Language toggle initialized');
+    }
+}
+
+// ===== Floating Telegram Button Enhancement =====
+function initFloatingTelegram() {
+    const floatingTelegram = document.querySelector('.floating-telegram');
+    if (floatingTelegram) {
+        // Update tooltip based on current language
+        const updateTooltip = () => {
+            const currentLang = localStorage.getItem('language') || 'ar';
+            const tooltipText = currentLang === 'ar' ? 'انضم إلى التيليجرام' : 'Join Telegram Channel';
+            floatingTelegram.setAttribute('data-tooltip', tooltipText);
+        };
+        
+        updateTooltip();
+        
+        // Listen for language changes
+        document.addEventListener('languageChanged', updateTooltip);
+        
+        console.log('✅ Floating Telegram button initialized');
+    }
+}
+
+// Initialize language features when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        initLanguageToggle();
+        initFloatingTelegram();
+    });
+} else {
+    initLanguageToggle();
+    initFloatingTelegram();
+}

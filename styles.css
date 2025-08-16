@@ -4424,3 +4424,358 @@ a:hover {
         display: none;
     }
 }
+
+/* ===== Language Toggle System ===== */
+.language-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    padding: 4px;
+    margin-right: var(--spacing-md);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all var(--transition-smooth);
+}
+
+.language-toggle:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border: none;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    min-width: 70px;
+    justify-content: center;
+}
+
+.lang-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.lang-btn:hover::before {
+    left: 100%;
+}
+
+.lang-btn.active {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
+    transform: scale(1.05);
+}
+
+.lang-btn:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.lang-flag {
+    font-size: 16px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.lang-text {
+    font-family: var(--font-arabic);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Dark theme adjustments for language toggle */
+[data-theme="dark"] .language-toggle {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .language-toggle:hover {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .lang-btn {
+    color: var(--text-light);
+}
+
+[data-theme="dark"] .lang-btn:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* ===== Floating Telegram Button ===== */
+.floating-telegram {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #0088cc 0%, #229ED9 50%, #0088cc 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+    box-shadow: 0 8px 25px rgba(0, 136, 204, 0.4);
+    z-index: 1000;
+    transition: all var(--transition-smooth);
+    animation: pulse 2s infinite, float 3s ease-in-out infinite;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+    overflow: hidden;
+}
+
+.floating-telegram::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: linear-gradient(45deg, #0088cc, #229ED9, #00D4FF, #0088cc);
+    border-radius: 50%;
+    z-index: -1;
+    animation: rotate 3s linear infinite;
+}
+
+.floating-telegram::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: 70px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-smooth);
+    font-family: var(--font-arabic);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.floating-telegram:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 15px 35px rgba(0, 136, 204, 0.6);
+    animation-play-state: paused;
+}
+
+.floating-telegram:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(-10px);
+}
+
+.floating-telegram:active {
+    transform: translateY(-3px) scale(1.05);
+}
+
+/* Floating button animations */
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 8px 25px rgba(0, 136, 204, 0.4);
+    }
+    50% {
+        box-shadow: 0 8px 25px rgba(0, 136, 204, 0.8), 0 0 0 10px rgba(0, 136, 204, 0.1);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Language notification styles */
+.language-notification {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: var(--primary-color);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-heavy);
+    z-index: 10000;
+    transform: translateX(400px);
+    transition: transform 0.3s ease-in-out;
+    max-width: 300px;
+    font-family: var(--font-arabic);
+}
+
+.language-notification.show {
+    transform: translateX(0);
+}
+
+.language-notification-success {
+    background: #10b981;
+}
+
+.language-notification-error {
+    background: #ef4444;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.notification-content i {
+    font-size: var(--font-size-lg);
+}
+
+/* Enhanced Telegram button in header */
+.telegram-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #0088cc 0%, #229ED9 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    transition: all var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    margin-right: var(--spacing-md);
+    box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
+}
+
+.telegram-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.telegram-btn:hover::before {
+    left: 100%;
+}
+
+.telegram-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 136, 204, 0.5);
+    background: linear-gradient(135deg, #229ED9 0%, #00D4FF 100%);
+}
+
+.telegram-btn:active {
+    transform: translateY(0);
+}
+
+.telegram-text {
+    font-family: var(--font-arabic);
+    letter-spacing: 0.5px;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .language-toggle {
+        margin-right: var(--spacing-sm);
+        padding: 2px;
+    }
+    
+    .lang-btn {
+        padding: 6px 8px;
+        font-size: var(--font-size-xs);
+        min-width: 50px;
+        gap: 4px;
+    }
+    
+    .lang-flag {
+        font-size: 14px;
+    }
+    
+    .floating-telegram {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 20px;
+    }
+    
+    .floating-telegram::after {
+        right: 60px;
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+    
+    .telegram-btn {
+        padding: 8px 12px;
+        font-size: var(--font-size-xs);
+        margin-right: var(--spacing-sm);
+    }
+    
+    .telegram-text {
+        display: none;
+    }
+    
+    .language-notification {
+        right: 10px;
+        top: 80px;
+        max-width: calc(100vw - 20px);
+        font-size: var(--font-size-sm);
+    }
+}
+
+@media (max-width: 480px) {
+    .language-toggle {
+        display: none;
+    }
+    
+    .floating-telegram {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    .telegram-btn .telegram-text {
+        display: none;
+    }
+}
