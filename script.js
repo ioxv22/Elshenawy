@@ -944,32 +944,118 @@ function checkAdminAccess() {
 
 // ===== Enhanced Animations =====
 function initEnhancedAnimations() {
-    // Animate subscription features on scroll
-    const featureItems = document.querySelectorAll('.subscription-features .feature-item');
-    
+    // Enhanced Intersection Observer for all animated elements
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
                 setTimeout(() => {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('animate-in');
                 }, index * 100);
             }
         });
-    }, { threshold: 0.1 });
+    }, observerOptions);
+
+    // Animate all cards and features
+    const animatedElements = document.querySelectorAll(
+        '.subscription-features .feature-item, .course-card, .experiment-card, .certificate-card, .feature-item'
+    );
     
-    featureItems.forEach(item => {
+    animatedElements.forEach((item, index) => {
         item.style.opacity = '0';
         item.style.transform = 'translateY(30px)';
-        item.style.transition = 'all 0.6s ease';
+        item.style.transition = `all 0.6s ease ${index * 0.05}s`;
         observer.observe(item);
     });
-    
-    // Animate course cards
-    const courseCards = document.querySelectorAll('.course-card');
-    courseCards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
+
+    // Enhanced parallax effect
+    let ticking = false;
+    function updateParallax() {
+        const scrolled = window.pageYOffset;
+        const parallaxElements = document.querySelectorAll('.hero-background, .physics-animation');
+        
+        parallaxElements.forEach(element => {
+            if (element) {
+                const speed = element.dataset.speed || 0.3;
+                element.style.transform = `translateY(${scrolled * speed}px)`;
+            }
+        });
+        
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(updateParallax);
+            ticking = true;
+        }
     });
+
+    // Add interactive hover effects
+    addInteractiveEffects();
+    
+    // Initialize floating particles
+    initFloatingParticles();
+}
+
+// Interactive effects for better UX
+function addInteractiveEffects() {
+    document.querySelectorAll('.btn, .course-card, .experiment-card, .certificate-card').forEach(element => {
+        element.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-8px) scale(1.03)';
+            this.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.2)';
+        });
+        
+        element.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+            this.style.boxShadow = '';
+        });
+    });
+}
+
+// Floating particles for hero section
+function initFloatingParticles() {
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+
+    const particlesContainer = document.createElement('div');
+    particlesContainer.className = 'floating-particles-container';
+    particlesContainer.style.cssText = `
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+        overflow: hidden;
+    `;
+
+    // Create animated particles
+    for (let i = 0; i < 15; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'floating-particle';
+        particle.style.cssText = `
+            position: absolute;
+            width: ${2 + Math.random() * 4}px;
+            height: ${2 + Math.random() * 4}px;
+            background: rgba(255, 255, 255, ${0.3 + Math.random() * 0.4});
+            border-radius: 50%;
+            animation: float ${4 + Math.random() * 3}s ease-in-out infinite;
+            animation-delay: ${Math.random() * 3}s;
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+        `;
+        particlesContainer.appendChild(particle);
+    }
+
+    hero.appendChild(particlesContainer);
 }
 
 // ===== Keyboard Navigation =====
@@ -1465,12 +1551,539 @@ document.addEventListener('DOMContentLoaded', () => {
     initEnhancedAnimations();
     initKeyboardNavigation();
     initCourseSearch();
+    initializeNewFeatures();
     
     // Initialize typing effect after a delay
     setTimeout(initTypingEffect, 2000);
 });
 
+// ===== Experiments Section Functions =====
+function showTodayLab() {
+    const labModal = document.createElement('div');
+    labModal.className = 'lab-modal';
+    labModal.innerHTML = `
+        <div class="modal-overlay" onclick="closeTodayLab()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>تجارب عملية - الصف العاشر المتقدم</h3>
+                <button class="modal-close" onclick="closeTodayLab()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="lab-content">
+                    <div class="lab-info">
+                        <h4>تجربة اليوم: دراسة الحركة التوافقية البسيطة</h4>
+                        <p>في هذه التجربة سنقوم بدراسة:</p>
+                        <ul>
+                            <li>حركة البندول البسيط</li>
+                            <li>تأثير الطول على الدورة الزمنية</li>
+                            <li>العلاقة بين الكتلة والحركة</li>
+                            <li>حساب التسارع الأرضي</li>
+                        </ul>
+                    </div>
+                    <div class="lab-links">
+                        <h4>روابط التجارب التفاعلية:</h4>
+                        <div class="lab-buttons">
+                            <a href="https://phet.colorado.edu/en/simulations/pendulum-lab" target="_blank" class="btn btn-primary">
+                                <i class="fas fa-pendulum"></i>
+                                تجربة البندول
+                            </a>
+                            <a href="https://phet.colorado.edu/sims/html/masses-and-springs/latest/masses-and-springs_all.html" target="_blank" class="btn btn-primary">
+                                <i class="fas fa-spring"></i>
+                                الكتلة والنابض
+                            </a>
+                        </div>
+                    </div>
+                    <div class="lab-instructions">
+                        <h4>تعليمات التجربة:</h4>
+                        <ol>
+                            <li>افتح رابط تجربة البندول</li>
+                            <li>غير طول البندول وسجل النتائج</li>
+                            <li>احسب الدورة الزمنية لكل طول</li>
+                            <li>ارسم العلاقة البيانية</li>
+                            <li>استنتج العلاقة الرياضية</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(labModal);
+    labModal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    `;
+    
+    const overlay = labModal.querySelector('.modal-overlay');
+    overlay.style.cssText = `
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(5px);
+    `;
+    
+    const content = labModal.querySelector('.modal-content');
+    content.style.cssText = `
+        position: relative;
+        background: var(--bg-primary);
+        border-radius: 15px;
+        max-width: 800px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        animation: modalSlideIn 0.3s ease-out;
+    `;
+    
+    const header = labModal.querySelector('.modal-header');
+    header.style.cssText = `
+        padding: 20px;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    `;
+    
+    const body = labModal.querySelector('.modal-body');
+    body.style.cssText = `
+        padding: 20px;
+    `;
+    
+    const closeBtn = labModal.querySelector('.modal-close');
+    closeBtn.style.cssText = `
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-secondary);
+        transition: color 0.3s;
+    `;
+    
+    document.body.style.overflow = 'hidden';
+}
+
+function closeTodayLab() {
+    const labModal = document.querySelector('.lab-modal');
+    if (labModal) {
+        labModal.remove();
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// ===== Certificate Modal Functions =====
+function openCertificateModal(imageUrl) {
+    const certificateModal = document.getElementById('certificateModal');
+    const certificateImage = document.getElementById('certificateImage');
+    
+    if (certificateModal && certificateImage) {
+        certificateImage.src = imageUrl;
+        certificateModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Add zoom functionality
+        certificateImage.style.cursor = 'zoom-in';
+        certificateImage.onclick = () => {
+            if (certificateImage.style.transform === 'scale(1.5)') {
+                certificateImage.style.transform = 'scale(1)';
+                certificateImage.style.cursor = 'zoom-in';
+            } else {
+                certificateImage.style.transform = 'scale(1.5)';
+                certificateImage.style.cursor = 'zoom-out';
+            }
+        };
+    }
+}
+
+function closeCertificateModal() {
+    const certificateModal = document.getElementById('certificateModal');
+    const certificateImage = document.getElementById('certificateImage');
+    
+    if (certificateModal) {
+        certificateModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        
+        if (certificateImage) {
+            certificateImage.style.transform = 'scale(1)';
+            certificateImage.onclick = null;
+        }
+    }
+}
+
+// ===== Enhanced Animations for New Sections =====
+function initExperimentAnimations() {
+    const experimentCards = document.querySelectorAll('.experiment-card');
+    
+    experimentCards.forEach((card, index) => {
+        card.addEventListener('mouseenter', () => {
+            const icon = card.querySelector('.experiment-icon');
+            if (icon) {
+                icon.style.transform = 'scale(1.1) rotate(5deg)';
+            }
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            const icon = card.querySelector('.experiment-icon');
+            if (icon) {
+                icon.style.transform = 'scale(1) rotate(0deg)';
+            }
+        });
+    });
+}
+
+function initCertificateAnimations() {
+    const certificateItems = document.querySelectorAll('.certificate-item');
+    
+    certificateItems.forEach((item, index) => {
+        item.addEventListener('mouseenter', () => {
+            // Add subtle rotation effect
+            item.style.transform = 'translateY(-5px) scale(1.02) rotate(1deg)';
+        });
+        
+        item.addEventListener('mouseleave', () => {
+            item.style.transform = 'translateY(0) scale(1) rotate(0deg)';
+        });
+    });
+}
+
+// ===== Statistics Counter Animation =====
+function animateStats() {
+    const statNumbers = document.querySelectorAll('.stat-number');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target;
+                const finalValue = target.textContent;
+                const numericValue = parseInt(finalValue.replace(/\D/g, ''));
+                
+                if (numericValue) {
+                    animateNumber(target, 0, numericValue, finalValue);
+                }
+                
+                observer.unobserve(target);
+            }
+        });
+    });
+    
+    statNumbers.forEach(stat => observer.observe(stat));
+}
+
+function animateNumber(element, start, end, finalText) {
+    const duration = 2000;
+    const increment = end / (duration / 16);
+    let current = start;
+    
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= end) {
+            element.textContent = finalText;
+            clearInterval(timer);
+        } else {
+            const suffix = finalText.includes('+') ? '+' : 
+                          finalText.includes('%') ? '%' : '';
+            element.textContent = Math.floor(current) + suffix;
+        }
+    }, 16);
+}
+
+// ===== Keyboard Navigation for Modals =====
+function initModalKeyboardNavigation() {
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            // Close any open modals
+            closeCertificateModal();
+            closeTodayLab();
+            closeVideoModal();
+        }
+    });
+}
+
+// ===== Improved Loading Performance =====
+function optimizeNewSections() {
+    // Lazy load certificate images
+    const certificateImages = document.querySelectorAll('.certificate-image img');
+    
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src || img.src;
+                img.classList.add('loaded');
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+    
+    certificateImages.forEach(img => {
+        if (img.src) {
+            img.dataset.src = img.src;
+            img.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"><rect width="300" height="200" fill="%23f3f4f6"/><text x="150" y="100" text-anchor="middle" fill="%236b7280">جاري التحميل...</text></svg>';
+        }
+        imageObserver.observe(img);
+    });
+}
+
+// ===== Enhanced Accessibility =====
+function enhanceAccessibility() {
+    // Add ARIA labels to experiment buttons
+    const experimentBtns = document.querySelectorAll('.experiment-btn');
+    experimentBtns.forEach(btn => {
+        const title = btn.closest('.experiment-card').querySelector('.experiment-title').textContent;
+        btn.setAttribute('aria-label', `ابدأ تجربة ${title}`);
+    });
+    
+    // Add ARIA labels to certificate buttons
+    const certificateBtns = document.querySelectorAll('.view-certificate');
+    certificateBtns.forEach((btn, index) => {
+        btn.setAttribute('aria-label', `عرض شهادة التقدير رقم ${index + 1}`);
+    });
+    
+    // Add keyboard navigation for certificate gallery
+    const certificateItems = document.querySelectorAll('.certificate-item');
+    certificateItems.forEach((item, index) => {
+        item.setAttribute('tabindex', '0');
+        item.setAttribute('role', 'button');
+        item.setAttribute('aria-label', `شهادة تقدير رقم ${index + 1}`);
+        
+        item.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const img = item.querySelector('img');
+                if (img) {
+                    openCertificateModal(img.src);
+                }
+            }
+        });
+    });
+}
+
+// ===== Initialize New Features =====
+function initializeNewFeatures() {
+    initExperimentAnimations();
+    initCertificateAnimations();
+    animateStats();
+    initModalKeyboardNavigation();
+    optimizeNewSections();
+    enhanceAccessibility();
+    addAdvancedFeatures();
+}
+
+// ===== Advanced Features =====
+function addAdvancedFeatures() {
+    // Add smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Add active state to navigation
+                document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+                this.classList.add('active');
+            }
+        });
+    });
+
+    // Enhanced loading states for buttons
+    document.querySelectorAll('.btn').forEach(btn => {
+        if (!btn.dataset.originalText) {
+            btn.dataset.originalText = btn.innerHTML;
+        }
+        
+        btn.addEventListener('click', function(e) {
+            if (!this.classList.contains('loading') && !this.href && !this.onclick) {
+                e.preventDefault();
+                this.classList.add('loading');
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحميل...';
+                
+                setTimeout(() => {
+                    this.classList.remove('loading');
+                    this.innerHTML = this.dataset.originalText;
+                    
+                    // Add success animation
+                    this.classList.add('success');
+                    setTimeout(() => this.classList.remove('success'), 1000);
+                }, 1500);
+            }
+        });
+    });
+
+    // Enhanced progress indicator
+    const progressBar = document.createElement('div');
+    progressBar.className = 'page-progress';
+    progressBar.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 3px;
+        background: linear-gradient(90deg, #1e40af, #3b82f6, #f59e0b);
+        z-index: 9999;
+        transition: width 0.3s ease;
+        box-shadow: 0 0 10px rgba(30, 64, 175, 0.5);
+    `;
+    document.body.appendChild(progressBar);
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                progressBar.style.width = Math.min(scrollPercent, 100) + '%';
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
+    // Add keyboard shortcuts
+    addKeyboardShortcuts();
+    
+    // Add performance optimizations
+    addPerformanceOptimizations();
+    
+    // Add tooltips
+    addTooltips();
+}
+
+// Keyboard shortcuts
+function addKeyboardShortcuts() {
+    document.addEventListener('keydown', (e) => {
+        // Ctrl/Cmd + K for search
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            const searchInput = document.querySelector('#courseSearch');
+            if (searchInput) {
+                searchInput.focus();
+            }
+        }
+        
+        // Escape to close modals
+        if (e.key === 'Escape') {
+            const activeModal = document.querySelector('.modal-overlay.active');
+            if (activeModal) {
+                activeModal.classList.remove('active');
+            }
+        }
+        
+        // Arrow keys for navigation
+        if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+            const focusedElement = document.activeElement;
+            if (focusedElement.classList.contains('course-card') || 
+                focusedElement.classList.contains('experiment-card')) {
+                e.preventDefault();
+                const cards = Array.from(document.querySelectorAll('.course-card, .experiment-card'));
+                const currentIndex = cards.indexOf(focusedElement);
+                
+                if (e.key === 'ArrowUp' && currentIndex > 0) {
+                    cards[currentIndex - 1].focus();
+                } else if (e.key === 'ArrowDown' && currentIndex < cards.length - 1) {
+                    cards[currentIndex + 1].focus();
+                }
+            }
+        }
+    });
+}
+
+// Performance optimizations
+function addPerformanceOptimizations() {
+    // Lazy load images
+    const images = document.querySelectorAll('img[data-src]');
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.remove('lazy');
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+
+    images.forEach(img => imageObserver.observe(img));
+
+    // Preload critical resources
+    const preloadLinks = [
+        'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
+    ];
+
+    preloadLinks.forEach(href => {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        document.head.appendChild(link);
+    });
+
+    // Optimize scroll performance
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+        document.body.classList.add('scrolling');
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            document.body.classList.remove('scrolling');
+        }, 150);
+    }, { passive: true });
+}
+
+// Enhanced tooltips
+function addTooltips() {
+    const tooltip = document.createElement('div');
+    tooltip.className = 'custom-tooltip';
+    tooltip.style.cssText = `
+        position: absolute;
+        background: var(--bg-dark);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 14px;
+        z-index: 10000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    `;
+    document.body.appendChild(tooltip);
+
+    document.querySelectorAll('[data-tooltip]').forEach(element => {
+        element.addEventListener('mouseenter', (e) => {
+            tooltip.textContent = e.target.dataset.tooltip;
+            tooltip.style.opacity = '1';
+        });
+
+        element.addEventListener('mousemove', (e) => {
+            tooltip.style.left = e.pageX + 10 + 'px';
+            tooltip.style.top = e.pageY - 40 + 'px';
+        });
+
+        element.addEventListener('mouseleave', () => {
+            tooltip.style.opacity = '0';
+        });
+    });
+}
+
 // ===== Global Functions for HTML =====
 window.openVideoModal = openVideoModal;
 window.closeVideoModal = closeVideoModal;
 window.requireSubscription = requireSubscription;
+window.showTodayLab = showTodayLab;
+window.closeTodayLab = closeTodayLab;
+window.openCertificateModal = openCertificateModal;
+window.closeCertificateModal = closeCertificateModal;

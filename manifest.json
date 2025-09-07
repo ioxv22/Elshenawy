@@ -1,13 +1,44 @@
 {
-  "name": "الأستاذ إسلام الشناوي - مدرس فيزياء",
+  "name": "الأستاذ إسلام الشناوي - مدرس فيزياء متخصص",
   "short_name": "إسلام الشناوي",
-  "description": "موقع الأستاذ إسلام الشناوي، مدرس فيزياء للصفوف المتقدمة في الإمارات",
+  "description": "موقع تعليمي عصري للأستاذ إسلام الشناوي، مدرس فيزياء للصفوف المتقدمة في الإمارات. يقدم كورسات، تجارب علمية تفاعلية، وشهادات شكر.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#1e3a8a",
-  "theme_color": "#1e3a8a",
+  "background_color": "#1e40af",
+  "theme_color": "#1e40af",
   "orientation": "portrait-primary",
   "icons": [
+    {
+      "src": "https://i.ibb.co/xSFLPSGn/image.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://i.ibb.co/xSFLPSGn/image.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://i.ibb.co/xSFLPSGn/image.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://i.ibb.co/xSFLPSGn/image.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://i.ibb.co/xSFLPSGn/image.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
     {
       "src": "https://i.ibb.co/xSFLPSGn/image.png",
       "sizes": "192x192",
@@ -16,12 +47,78 @@
     },
     {
       "src": "https://i.ibb.co/xSFLPSGn/image.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://i.ibb.co/xSFLPSGn/image.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
   ],
-  "categories": ["education", "physics", "tutoring"],
+  "categories": ["education", "physics", "tutoring", "science", "learning"],
   "lang": "ar",
-  "dir": "rtl"
+  "dir": "rtl",
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "الكورسات",
+      "short_name": "كورسات",
+      "description": "عرض جميع الكورسات التعليمية",
+      "url": "/#courses",
+      "icons": [
+        {
+          "src": "https://i.ibb.co/xSFLPSGn/image.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "التجارب العلمية",
+      "short_name": "تجارب",
+      "description": "التجارب العلمية التفاعلية",
+      "url": "/#experiments",
+      "icons": [
+        {
+          "src": "https://i.ibb.co/xSFLPSGn/image.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "شهادات الشكر",
+      "short_name": "شهادات",
+      "description": "عرض شهادات الشكر والتقدير",
+      "url": "/#certificates",
+      "icons": [
+        {
+          "src": "https://i.ibb.co/xSFLPSGn/image.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "تواصل معي",
+      "short_name": "تواصل",
+      "description": "صفحة التواصل والاستفسارات",
+      "url": "/#contact",
+      "icons": [
+        {
+          "src": "https://i.ibb.co/xSFLPSGn/image.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://i.ibb.co/dsQw1yV4/image.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "الصفحة الرئيسية للموقع"
+    }
+  ]
 }
