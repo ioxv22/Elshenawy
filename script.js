@@ -1168,22 +1168,7 @@ function initKeyboardNavigation() {
     });
 }
 
-// ===== Welcome Screen - INSTANT LOAD =====
-function initializeWelcomeScreen() {
-    const welcomeScreen = document.getElementById('welcomeScreen');
-    
-    if (!welcomeScreen) return;
-    
-    // 🚀 INSTANT HIDE - NO DELAYS!
-    console.log('⚡ INSTANT LOAD: Hiding welcome screen immediately');
-    welcomeScreen.style.display = 'none';
-    welcomeScreen.classList.add('hidden');
-    
-    // Ensure body is scrollable immediately
-    document.body.style.overflow = '';
-    
-    console.log('✅ Welcome screen hidden instantly - site ready!');
-}
+
 
 // ===== Receipt Upload Modal =====
 function initializeReceiptModal() {
@@ -1708,11 +1693,10 @@ function initCourseSearch() {
 // ===== Welcome Screen Enhanced =====
 function initializeWelcomeScreen() {
     const welcomeScreen = document.getElementById('welcomeScreen');
-    const typingText = document.getElementById('typingText');
-    const progressFill = document.getElementById('progressFill');
-    const progressText = document.getElementById('progressText');
     
     if (!welcomeScreen) return;
+    
+    console.log('🚀 Starting FAST welcome screen...');
     
     // التحقق من تحميل الصفحة بالكامل
     let pageLoaded = false;
@@ -1914,20 +1898,10 @@ function extractVideoId(url) {
     const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
     return match ? match[1] : '';
 }
-<<<<<<< HEAD
-
-// ===== Initialize All New Features =====
+// ===== Initialize Welcome Screen =====
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize welcome screen first
     initializeWelcomeScreen();
-    
-    // Initialize existing features
-    initLoadingScreen();
-    initScrollAnimations();
-    initParallax();
-    animateCounters();
-    initScrollToTop();
-    updateActiveNavLink();
     initLazyLoading();
     initFormValidation();
     initAOS();
@@ -2477,5 +2451,4 @@ window.showTodayLab = showTodayLab;
 window.closeTodayLab = closeTodayLab;
 window.openCertificateModal = openCertificateModal;
 window.closeCertificateModal = closeCertificateModal;
-=======
->>>>>>> cf0331e2ffd5392e3adcdd87fd7d42ac49fbee63
+
