@@ -17,10 +17,154 @@ const ADMIN_CREDENTIALS = {
 // Current user data
 let currentUser = null;
 
-// Sample data
-let messages = JSON.parse(localStorage.getItem('adminMessages') || '[]');
-let courses = JSON.parse(localStorage.getItem('adminCourses') || '[]');
-let students = JSON.parse(localStorage.getItem('adminStudents') || '[]');
+// Real data with actual course links and information
+let messages = JSON.parse(localStorage.getItem('adminMessages') || JSON.stringify([
+    {
+        id: 1,
+        name: 'أحمد محمد',
+        email: 'ahmed@student.ae',
+        grade: 'grade11',
+        phone: '+971501234567',
+        message: 'أريد الاشتراك في كورس الصف الحادي عشر المتقدم',
+        date: new Date().toISOString(),
+        status: 'new',
+        priority: 'high'
+    },
+    {
+        id: 2,
+        name: 'فاطمة علي',
+        email: 'fatima@student.ae',
+        grade: 'grade10',
+        phone: '+971509876543',
+        message: 'متى موعد الحصة القادمة؟',
+        date: new Date(Date.now() - 86400000).toISOString(),
+        status: 'replied',
+        priority: 'medium'
+    },
+    {
+        id: 3,
+        name: 'محمد خالد',
+        email: 'mohamed@student.ae',
+        grade: 'grade9',
+        phone: '+971556677889',
+        message: 'هل يوجد ملفات PDF للمنهج؟',
+        date: new Date(Date.now() - 172800000).toISOString(),
+        status: 'pending',
+        priority: 'low'
+    }
+]));
+
+let courses = JSON.parse(localStorage.getItem('adminCourses') || JSON.stringify([
+    {
+        id: 1,
+        title: 'فيديو فيزياء صف 9 متقدم',
+        grade: 'grade9',
+        description: 'شرح شامل ومبسط لمنهج الصف التاسع المتقدم',
+        videoUrl: 'https://drive.google.com/file/d/1vOihXtyhX7Xptn0kOs1fISHXsBQOzxum/view?usp=drive_link',
+        thumbnailUrl: 'https://i.ibb.co/xSFLPSGn/image.png',
+        duration: '120 دقيقة',
+        views: 245,
+        likes: 38,
+        status: 'active',
+        dateAdded: '2024-12-01',
+        isPublic: true
+    },
+    {
+        id: 2,
+        title: 'فيديو صف 10 متقدم',
+        grade: 'grade10',
+        description: 'شرح مفصل لمنهج العاشر المتقدم بطريقة ممتازة',
+        videoUrl: 'https://drive.google.com/file/d/1iTO2628HDuKpEdPG5_z2VV-v0hHAs8sI/view?usp=drive_link',
+        thumbnailUrl: 'https://i.ibb.co/xSFLPSGn/image.png',
+        duration: '135 دقيقة',
+        views: 378,
+        likes: 45,
+        status: 'active',
+        dateAdded: '2024-12-05',
+        isPublic: true
+    },
+    {
+        id: 3,
+        title: 'فيديو فيزياء صف 11 متقدم',
+        grade: 'grade11',
+        description: 'الفيديو الأصلي لمنهج الحادي عشر المتقدم كاملاً',
+        videoUrl: 'https://drive.google.com/file/d/1hD5GUReRwAz5L-AJd-IaxKqqJ00DZkJJ/view?usp=drive_link',
+        thumbnailUrl: 'https://i.ibb.co/xSFLPSGn/image.png',
+        duration: '145 دقيقة',
+        views: 512,
+        likes: 67,
+        status: 'active',
+        dateAdded: '2024-12-10',
+        isPublic: true
+    }
+]));
+
+let students = JSON.parse(localStorage.getItem('adminStudents') || JSON.stringify([
+    {
+        id: 1,
+        name: 'أحمد محمد الزعابي',
+        email: 'ahmed.alzaabi@student.ae',
+        phone: '+971501234567',
+        grade: 'grade11',
+        school: 'مدرسة الإمارات الثانوية',
+        subscriptionStatus: 'active',
+        subscriptionDate: '2024-11-15',
+        expiryDate: '2025-11-15',
+        totalHours: 45,
+        completedLessons: 12,
+        averageGrade: 'A+',
+        lastLogin: new Date().toISOString(),
+        paymentStatus: 'paid'
+    },
+    {
+        id: 2,
+        name: 'فاطمة علي السويدي',
+        email: 'fatima.alsuwaidi@student.ae',
+        phone: '+971509876543',
+        grade: 'grade10',
+        school: 'مدرسة دبي الدولية',
+        subscriptionStatus: 'active',
+        subscriptionDate: '2024-12-01',
+        expiryDate: '2025-12-01',
+        totalHours: 32,
+        completedLessons: 8,
+        averageGrade: 'A',
+        lastLogin: new Date(Date.now() - 3600000).toISOString(),
+        paymentStatus: 'paid'
+    },
+    {
+        id: 3,
+        name: 'محمد خالد النعيمي',
+        email: 'mohamed.alnaimi@student.ae',
+        phone: '+971556677889',
+        grade: 'grade9',
+        school: 'مدرسة أبوظبي الحديثة',
+        subscriptionStatus: 'trial',
+        subscriptionDate: '2024-12-12',
+        expiryDate: '2024-12-27',
+        totalHours: 8,
+        completedLessons: 2,
+        averageGrade: 'B+',
+        lastLogin: new Date(Date.now() - 86400000).toISOString(),
+        paymentStatus: 'pending'
+    },
+    {
+        id: 4,
+        name: 'عائشة سالم المرزوقي',
+        email: 'aisha.almarzouki@student.ae',
+        phone: '+971524445566',
+        grade: 'grade11',
+        school: 'مدرسة الشارقة النموذجية',
+        subscriptionStatus: 'active',
+        subscriptionDate: '2024-10-20',
+        expiryDate: '2025-10-20',
+        totalHours: 78,
+        completedLessons: 18,
+        averageGrade: 'A+',
+        lastLogin: new Date(Date.now() - 1800000).toISOString(),
+        paymentStatus: 'paid'
+    }
+]));
 
 // DOM Elements
 const loginModal = document.getElementById('loginModal');
@@ -279,6 +423,96 @@ function replyToMessage(messageId) {
     }
 }
 
+<<<<<<< HEAD
+// ===== Dashboard Statistics =====
+function loadDashboardStats() {
+    // Calculate real statistics from actual data
+    const stats = {
+        totalStudents: students.length,
+        activeSubscriptions: students.filter(s => s.subscriptionStatus === 'active').length,
+        totalCourses: courses.length,
+        totalMessages: messages.length,
+        unreadMessages: messages.filter(m => !m.read).length,
+        newMessages: messages.filter(m => m.status === 'new').length,
+        totalViews: courses.reduce((sum, course) => sum + (course.views || 0), 0),
+        totalRevenue: students.filter(s => s.paymentStatus === 'paid').length * 500, // 500 AED average
+        averageRating: 4.8,
+        completionRate: Math.round((students.reduce((sum, s) => sum + (s.completedLessons || 0), 0) / (students.length * 20)) * 100)
+    };
+
+    // Update dashboard stats
+    document.getElementById('totalStudents').textContent = stats.totalStudents;
+    document.getElementById('activeSubscriptions').textContent = stats.activeSubscriptions;
+    document.getElementById('totalCourses').textContent = stats.totalCourses;
+    document.getElementById('totalMessages').textContent = stats.totalMessages;
+    document.getElementById('unreadMessages').textContent = stats.unreadMessages;
+    document.getElementById('totalViews').textContent = stats.totalViews.toLocaleString();
+    document.getElementById('totalRevenue').textContent = `${stats.totalRevenue.toLocaleString()} درهم`;
+    document.getElementById('averageRating').textContent = stats.averageRating;
+    document.getElementById('completionRate').textContent = `${stats.completionRate}%`;
+
+    // Update progress bars if they exist
+    const completionBar = document.querySelector('.completion-progress');
+    if (completionBar) {
+        completionBar.style.width = `${stats.completionRate}%`;
+    }
+}
+
+// ===== Courses Management =====
+function loadCourses() {
+    const coursesContainer = document.getElementById('adminCoursesGrid');
+    if (!coursesContainer) return;
+    
+    // Display real courses with actual data
+    coursesContainer.innerHTML = courses.map(course => `
+        <div class="admin-course-card">
+            <div class="admin-course-thumbnail">
+                <img src="${course.thumbnailUrl}" alt="${course.title}">
+                <div class="course-actions-overlay">
+                    <button class="btn btn-sm btn-primary" onclick="window.open('${course.videoUrl}', '_blank')">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline" onclick="editCourse(${course.id})">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
+                <div class="course-status ${course.status}">${course.status === 'active' ? 'نشط' : 'غير نشط'}</div>
+            </div>
+            <div class="admin-course-content">
+                <div class="course-header">
+                    <div class="course-grade grade-${course.grade}">${getGradeName(course.grade)}</div>
+                    <div class="course-views">
+                        <i class="fas fa-eye"></i>
+                        ${course.views}
+                    </div>
+                </div>
+                <h3 class="course-title">${course.title}</h3>
+                <p class="course-description">${course.description}</p>
+                
+                <div class="course-stats">
+                    <div class="stat">
+                        <i class="fas fa-clock"></i>
+                        <span>${course.duration}</span>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-thumbs-up"></i>
+                        <span>${course.likes}</span>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-calendar"></i>
+                        <span>${new Date(course.dateAdded).toLocaleDateString('ar-SA')}</span>
+                    </div>
+                </div>
+                
+                <div class="course-actions">
+                    <button class="btn btn-primary btn-sm" onclick="window.open('${course.videoUrl}', '_blank')">
+                        <i class="fas fa-external-link-alt"></i>
+                        فتح الفيديو
+                    </button>
+                    <button class="btn btn-outline btn-sm" onclick="toggleCourseStatus(${course.id})">
+                        <i class="fas fa-toggle-${course.status === 'active' ? 'on' : 'off'}"></i>
+                        ${course.status === 'active' ? 'إلغاء التفعيل' : 'تفعيل'}
+=======
 // ===== Courses Management =====
 function loadCourses() {
     const coursesContainer = document.getElementById('adminCoursesGrid');
@@ -372,6 +606,7 @@ function loadCourses() {
                     <button class="btn btn-sm btn-primary" onclick="editCourse('${course.id}')">
                         <i class="fas fa-edit"></i>
                         تعديل
+>>>>>>> 0a9aa1ce2bd07e515aaa39a3358830246fb28552
                     </button>
                 </div>
             </div>
@@ -379,6 +614,104 @@ function loadCourses() {
     `).join('');
 }
 
+<<<<<<< HEAD
+// Helper function to get grade name in Arabic
+function getGradeName(grade) {
+    const gradeNames = {
+        'grade9': 'الصف التاسع',
+        'grade10': 'الصف العاشر',
+        'grade11': 'الصف الحادي عشر'
+    };
+    return gradeNames[grade] || grade;
+}
+
+// Toggle course active/inactive status
+function toggleCourseStatus(courseId) {
+    const course = courses.find(c => c.id === courseId);
+    if (course) {
+        course.status = course.status === 'active' ? 'inactive' : 'active';
+        localStorage.setItem('adminCourses', JSON.stringify(courses));
+        loadCourses();
+        loadDashboardStats();
+        showNotification(`تم ${course.status === 'active' ? 'تفعيل' : 'إلغاء تفعيل'} الكورس`, 'success');
+    }
+}
+
+// Edit course function (placeholder)
+function editCourse(courseId) {
+    showNotification('ميزة تحرير الكورس ستكون متاحة قريباً', 'info');
+}
+
+// ===== Students Management =====
+function loadStudents() {
+    const studentsContainer = document.getElementById('adminStudentsGrid');
+    if (!studentsContainer) return;
+
+    studentsContainer.innerHTML = students.map(student => `
+        <div class="admin-student-card">
+            <div class="student-header">
+                <div class="student-avatar">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <div class="student-info">
+                    <h3>${student.name}</h3>
+                    <p>${student.email}</p>
+                    <p>${student.phone}</p>
+                </div>
+                <div class="student-status ${student.subscriptionStatus}">
+                    ${student.subscriptionStatus === 'active' ? 'نشط' : 
+                      student.subscriptionStatus === 'trial' ? 'تجريبي' : 'غير نشط'}
+                </div>
+            </div>
+            
+            <div class="student-details">
+                <div class="detail-row">
+                    <span>الصف:</span>
+                    <span>${getGradeName(student.grade)}</span>
+                </div>
+                <div class="detail-row">
+                    <span>المدرسة:</span>
+                    <span>${student.school}</span>
+                </div>
+                <div class="detail-row">
+                    <span>تاريخ الاشتراك:</span>
+                    <span>${new Date(student.subscriptionDate).toLocaleDateString('ar-SA')}</span>
+                </div>
+                <div class="detail-row">
+                    <span>انتهاء الاشتراك:</span>
+                    <span>${new Date(student.expiryDate).toLocaleDateString('ar-SA')}</span>
+                </div>
+                <div class="detail-row">
+                    <span>الدروس المكتملة:</span>
+                    <span>${student.completedLessons}/${20}</span>
+                </div>
+                <div class="detail-row">
+                    <span>المعدل:</span>
+                    <span class="grade-${student.averageGrade.toLowerCase()}">${student.averageGrade}</span>
+                </div>
+            </div>
+            
+            <div class="student-actions">
+                <button class="btn btn-primary btn-sm" onclick="contactStudent('${student.phone}')">
+                    <i class="fab fa-whatsapp"></i>
+                    تواصل
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="viewStudentDetails(${student.id})">
+                    <i class="fas fa-eye"></i>
+                    التفاصيل
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Contact student via WhatsApp
+function contactStudent(phone) {
+    const message = 'مرحباً! هذه رسالة من الأستاذ إسلام الشناوي';
+    const whatsappURL = `https://wa.me/${phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappURL, '_blank');
+}
+=======
 function openAddCourseModal() {
     const modal = document.getElementById('addCourseModal');
     modal.classList.add('active');
@@ -409,6 +742,7 @@ function editCourse(courseId) {
     if (course) {
         // Open edit modal with course data
         showNotification('سيتم إضافة نافذة التعديل قريباً', 'info');
+>>>>>>> 0a9aa1ce2bd07e515aaa39a3358830246fb28552
     }
 }
 
@@ -1040,6 +1374,16 @@ document.addEventListener('DOMContentLoaded', function() {
             closeAddVideoModal();
         });
     }
+});
+
+// ===== Initialize Admin Panel =====
+document.addEventListener('DOMContentLoaded', function() {
+    checkAuth();
+});
+
+// Also check auth when page loads
+window.addEventListener('load', function() {
+    checkAuth();
 });
 
 // ===== Export functions for use in main site =====

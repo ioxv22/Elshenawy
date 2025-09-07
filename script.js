@@ -13,6 +13,8 @@ const videoModal = document.getElementById('videoModal');
 const videoFrame = document.getElementById('videoFrame');
 const videoTitle = document.getElementById('videoTitle');
 const videoDescription = document.getElementById('videoDescription');
+const languageToggle = document.getElementById('languageToggle');
+const langButtons = document.querySelectorAll('.lang-btn');
 
 // ===== Theme Toggle =====
 let currentTheme = localStorage.getItem('theme') || 'light';
@@ -731,19 +733,100 @@ function initializeCourses() {
 }
 
 function loadAndDisplayVideos() {
-    const videos = loadVideosFromAdmin();
+    console.log('🎥 Starting loadAndDisplayVideos...');
+    
     const coursesGrid = document.querySelector('.courses-grid');
+    console.log('🎥 Found coursesGrid:', coursesGrid ? 'YES' : 'NO');
     
-    if (!coursesGrid) return;
+    if (!coursesGrid) {
+        console.error('🎥 coursesGrid not found!');
+        return;
+    }
     
+    // Check if videos are already loaded and protected
+    if (coursesGrid.getAttribute('data-videos-loaded') === 'true') {
+        console.log('🛡️ Videos are already loaded and protected - ABORTING');
+        return;
+    }
+    
+    // Check if there are already videos in HTML (check for course-card elements)
+    const existingCourseCards = coursesGrid.querySelectorAll('.course-card');
+    console.log('🎥 Existing course cards in HTML:', existingCourseCards.length);
+    
+    // ALWAYS keep existing course cards - never replace them if they exist
+    if (existingCourseCards.length > 0) {
+        console.log('✅ Course cards found in HTML - NEVER replacing them!');
+        
+        // Make sure they're all visible and protected
+        existingCourseCards.forEach((card, index) => {
+            card.style.display = 'block';
+            card.style.opacity = '1';
+            card.style.visibility = 'visible';
+            card.setAttribute('data-protected', 'true');
+            card.classList.add('protected-video');
+            console.log(`✅ Made course card ${index + 1} visible and protected`);
+        });
+        
+        // Mark as loaded and protected
+        coursesGrid.setAttribute('data-videos-loaded', 'true');
+        
+        // Initialize category filtering for existing cards
+        initCategoryButtons();
+        return; // EXIT - Don't do anything else
+    }
+    
+    console.log('🎥 No existing course cards found, will attempt to load from storage...');
+    
+    // Force ensure we have videos - get from both sources
+    let videos = loadVideosFromAdmin();
+    console.log('🎥 Videos from loadVideosFromAdmin:', videos.length);
+    
+    // If no videos, create them directly
     if (videos.length === 0) {
-        coursesGrid.innerHTML = `
-            <div class="empty-courses">
-                <i class="fas fa-video"></i>
-                <h3>لا توجد فيديوهات متاحة حالياً</h3>
-                <p>سيتم إضافة المزيد من الفيديوهات قريباً</p>
-            </div>
-        `;
+        console.log('🎥 No videos found, creating default videos...');
+        videos = [
+            {
+                id: 1,
+                title: 'فيديو فيزياء صف 9 متقدم',
+                description: 'شرح شامل ومبسط لمنهج الصف التاسع المتقدم',
+                duration: '120 دقيقة',
+                category: 'grade9',
+                videoUrl: 'https://drive.google.com/file/d/1vOihXtyhX7Xptn0kOs1fISHXsBQOzxum/view?usp=drive_link',
+                thumbnail: 'https://via.placeholder.com/400x225/1e3a8a/ffffff?text=فيزياء+الصف+التاسع+المتقدم',
+                isPremium: false,
+                type: 'free'
+            },
+            {
+                id: 2,
+                title: 'فيديو صف 10 متقدم',
+                description: 'شرح مفصل لمنهج العاشر المتقدم بطريقة ممتازة',
+                duration: '135 دقيقة',
+                category: 'grade10',
+                videoUrl: 'https://drive.google.com/file/d/1iTO2628HDuKpEdPG5_z2VV-v0hHAs8sI/view?usp=drive_link',
+                thumbnail: 'https://via.placeholder.com/400x225/3b82f6/ffffff?text=فيزياء+الصف+العاشر+المتقدم',
+                isPremium: false,
+                type: 'free'
+            },
+            {
+                id: 3,
+                title: 'فيديو فيزياء صف 11 متقدم',
+                description: 'الفيديو الأصلي لمنهج الحادي عشر المتقدم كاملاً',
+                duration: '145 دقيقة',
+                category: 'grade11',
+                videoUrl: 'https://drive.google.com/file/d/1hD5GUReRwAz5L-AJd-IaxKqqJ00DZkJJ/view?usp=drive_link',
+                thumbnail: 'https://via.placeholder.com/400x225/f59e0b/ffffff?text=فيزياء+صف+11+متقدم',
+                isPremium: false,
+                type: 'free'
+            }
+        ];
+    }
+    
+    console.log('🎥 Total videos to display:', videos.length);
+    
+    // Final check - if there are protected videos, don't replace
+    const protectedVideos = coursesGrid.querySelectorAll('.course-card[data-protected="true"]');
+    if (protectedVideos.length > 0) {
+        console.log('🛡️ PROTECTED VIDEOS FOUND - ABORTING innerHTML replacement');
         return;
     }
     
@@ -773,6 +856,11 @@ function loadAndDisplayVideos() {
             </div>
         </div>
     `).join('');
+    
+    console.log('🎥 Videos displayed successfully! HTML length:', coursesGrid.innerHTML.length);
+    
+    // Initialize category filtering
+    initCategoryButtons();
 }
 
 function getTypeNameArabic(type) {
@@ -822,6 +910,11 @@ function openVideoModal(videoId) {
         const videoDescription = document.getElementById('videoDescription');
         
         if (videoModal && videoFrame && videoTitle && videoDescription) {
+            // For Google Drive links, open directly in new tab
+            if (video.videoUrl.includes('drive.google.com')) {
+                window.open(video.videoUrl, '_blank');
+                return;
+            }
             videoFrame.src = video.videoUrl;
             videoTitle.textContent = video.title;
             videoDescription.textContent = video.description;
@@ -1075,74 +1168,21 @@ function initKeyboardNavigation() {
     });
 }
 
-// ===== Welcome Screen =====
+// ===== Welcome Screen - INSTANT LOAD =====
 function initializeWelcomeScreen() {
     const welcomeScreen = document.getElementById('welcomeScreen');
-    const typingText = document.getElementById('typingText');
-    const progressFill = document.getElementById('progressFill');
-    const progressText = document.getElementById('progressText');
     
     if (!welcomeScreen) return;
     
-    const messages = [
-        'تعلم الفيزياء بطريقة مبسطة وممتعة',
-        'اكتشف أسرار الكون والطبيعة',
-        'حقق أحلامك الأكاديمية معنا',
-        'انضم لآلاف الطلاب الناجحين'
-    ];
+    // 🚀 INSTANT HIDE - NO DELAYS!
+    console.log('⚡ INSTANT LOAD: Hiding welcome screen immediately');
+    welcomeScreen.style.display = 'none';
+    welcomeScreen.classList.add('hidden');
     
-    let messageIndex = 0;
-    let charIndex = 0;
+    // Ensure body is scrollable immediately
+    document.body.style.overflow = '';
     
-    function typeMessage() {
-        if (charIndex < messages[messageIndex].length) {
-            typingText.textContent += messages[messageIndex].charAt(charIndex);
-            charIndex++;
-            setTimeout(typeMessage, 100);
-        } else {
-            setTimeout(() => {
-                messageIndex = (messageIndex + 1) % messages.length;
-                charIndex = 0;
-                typingText.textContent = '';
-                typeMessage();
-            }, 2000);
-        }
-    }
-    
-    // Start typing animation
-    setTimeout(typeMessage, 2000);
-    
-    // Progress updates
-    const progressSteps = [
-        { progress: 20, text: 'تحميل الموارد...' },
-        { progress: 40, text: 'إعداد الواجهة...' },
-        { progress: 60, text: 'تحضير المحتوى...' },
-        { progress: 80, text: 'تطبيق التصميم...' },
-        { progress: 100, text: 'مرحباً بك!' }
-    ];
-    
-    let stepIndex = 0;
-    
-    function updateProgress() {
-        if (stepIndex < progressSteps.length) {
-            const step = progressSteps[stepIndex];
-            progressFill.style.width = step.progress + '%';
-            progressText.textContent = step.text;
-            stepIndex++;
-            setTimeout(updateProgress, 800);
-        } else {
-            // Hide welcome screen after completion
-            setTimeout(() => {
-                welcomeScreen.classList.add('hidden');
-                setTimeout(() => {
-                    welcomeScreen.style.display = 'none';
-                }, 1000);
-            }, 1000);
-        }
-    }
-    
-    // Start progress animation
-    setTimeout(updateProgress, 3000);
+    console.log('✅ Welcome screen hidden instantly - site ready!');
 }
 
 // ===== Receipt Upload Modal =====
@@ -1251,6 +1291,9 @@ function initializeReceiptModal() {
         receipts.push(receiptData);
         localStorage.setItem('receipts', JSON.stringify(receipts));
         
+        // Send receipt notification to Telegram
+        sendReceiptToTelegram(receiptData);
+        
         // Save to Firebase if available
         if (window.firebaseDb && window.getCurrentUser && window.getCurrentUser()) {
             const db = window.firebaseDb();
@@ -1270,6 +1313,257 @@ function initializeReceiptModal() {
         
         // Show success animation
         showReceiptSuccessAnimation();
+    }
+    
+    // Send receipt notification to Telegram
+    function sendReceiptToTelegram(receiptData) {
+        const telegramBotToken = '8300804684:AAEpxmj8MfkH9lRYMgYX2vbnTZwUzlaLQxs'; // Your actual bot token
+        // Send to specific chat IDs (you'll need to get these by messaging the bot first)
+        // For now, we'll try to send to the bot owner's chat
+        const chatIds = ['@abdurhman009', '@Elshenawy_Physics']; // Target usernames
+        
+        // Alternative: Send to bot owner (you need to message the bot first to get your chat ID)
+        // You can get your chat ID by messaging the bot and checking: https://api.telegram.org/bot8300804684:AAEpxmj8MfkH9lRYMgYX2vbnTZwUzlaLQxs/getUpdates
+        
+        // Skip if no bot token configured
+        if (telegramBotToken === 'YOUR_BOT_TOKEN_HERE') {
+            console.log('Telegram bot token not configured. Receipt saved locally only.');
+            return;
+        }
+        
+        const gradeText = {
+            'grade9': 'الصف التاسع المتقدم',
+            'grade10': 'الصف العاشر المتقدم', 
+            'grade11': 'الصف الحادي عشر المتقدم'
+        };
+        
+        const paymentMethodText = {
+            'bank_transfer': 'تحويل بنكي',
+            'cash': 'نقداً',
+            'online': 'دفع إلكتروني'
+        };
+        
+        const message = `🧾 *إيصال دفع جديد*
+        
+👤 *الطالب:* ${receiptData.studentName}
+📚 *الصف:* ${gradeText[receiptData.grade] || receiptData.grade}
+📞 *الهاتف:* ${receiptData.phone}
+💳 *طريقة الدفع:* ${paymentMethodText[receiptData.paymentMethod] || receiptData.paymentMethod}
+📝 *ملاحظات:* ${receiptData.notes || 'لا توجد ملاحظات'}
+⏰ *وقت الإرسال:* ${new Date(receiptData.timestamp).toLocaleString('ar-EG')}
+
+✅ يرجى مراجعة الإيصال في لوحة الإدارة`;
+
+        // Send to each chat
+        chatIds.forEach(chatId => {
+            // Send text message first
+            fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            }).then(response => {
+                if (response.ok) {
+                    console.log(`Receipt notification sent to ${chatId}`);
+                } else {
+                    console.error(`Failed to send notification to ${chatId}`);
+                }
+            }).catch(error => {
+                console.error(`Error sending to ${chatId}:`, error);
+            });
+            
+            // Send image if available
+            if (receiptData.receiptImage) {
+                // Convert base64 to blob for sending
+                fetch(receiptData.receiptImage)
+                    .then(res => res.blob())
+                    .then(blob => {
+                        const formData = new FormData();
+                        formData.append('chat_id', chatId);
+                        formData.append('photo', blob, 'receipt.jpg');
+                        formData.append('caption', `📸 صورة الإيصال - ${receiptData.studentName}`);
+                        
+                        return fetch(`https://api.telegram.org/bot${telegramBotToken}/sendPhoto`, {
+                            method: 'POST',
+                            body: formData
+                        });
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log(`Receipt image sent to ${chatId}`);
+                        } else {
+                            console.error(`Failed to send image to ${chatId}`);
+                        }
+                    })
+                    .catch(error => {
+                        console.error(`Error sending image to ${chatId}:`, error);
+                    });
+            }
+        });
+    }
+    
+    // Send receipt directly to Telegram bot (for user interaction)
+    window.sendReceiptToTelegramBot = function() {
+        const form = document.getElementById('receiptForm');
+        const formData = new FormData(form);
+        
+        // Validate required fields
+        if (!formData.get('studentName') || !formData.get('phone') || !formData.get('paymentMethod')) {
+            showNotification('يرجى ملء جميع الحقول المطلوبة', 'error');
+            return;
+        }
+        
+        const receiptData = {
+            studentName: formData.get('studentName'),
+            phone: formData.get('phone'),
+            grade: document.getElementById('receiptGrade').value,
+            paymentMethod: formData.get('paymentMethod'),
+            notes: formData.get('notes') || '',
+            timestamp: Date.now()
+        };
+        
+        // Convert image to base64 if available
+        const imageFile = formData.get('receiptImage');
+        if (imageFile && imageFile.size > 0) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                receiptData.receiptImage = e.target.result;
+                sendDirectToTelegramBot(receiptData);
+            };
+            reader.readAsDataURL(imageFile);
+        } else {
+            sendDirectToTelegramBot(receiptData);
+        }
+    };
+    
+    // Send directly to Telegram bot
+    function sendDirectToTelegramBot(receiptData) {
+        const telegramBotToken = '8300804684:AAEpxmj8MfkH9lRYMgYX2vbnTZwUzlaLQxs';
+        
+        // Create message for Telegram
+        const gradeText = {
+            'grade9': 'الصف التاسع المتقدم',
+            'grade10': 'الصف العاشر المتقدم', 
+            'grade11': 'الصف الحادي عشر المتقدم'
+        };
+        
+        const paymentMethodText = {
+            'ziina': 'Ziina',
+            'bank_transfer': 'تحويل بنكي',
+            'cash': 'نقداً',
+            'other': 'أخرى'
+        };
+        
+        const message = `🧾 *إيصال دفع جديد*
+
+👤 *الطالب:* ${receiptData.studentName}
+📚 *الصف:* ${gradeText[receiptData.grade] || receiptData.grade}
+📞 *الهاتف:* ${receiptData.phone}
+💳 *طريقة الدفع:* ${paymentMethodText[receiptData.paymentMethod] || receiptData.paymentMethod}
+📝 *ملاحظات:* ${receiptData.notes || 'لا توجد ملاحظات'}
+⏰ *وقت الإرسال:* ${new Date(receiptData.timestamp).toLocaleString('ar-EG')}
+
+📱 *تم الإرسال من الموقع مباشرة*`;
+
+        // Method 1: Try to send via API to a specific chat (you need to provide your chat ID)
+        const yourChatId = '7733935141'; // Replace with your actual chat ID
+        
+        if (yourChatId !== 'YOUR_CHAT_ID') {
+            // Send message via API
+            fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: yourChatId,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Receipt sent to Telegram successfully');
+                    showNotification('تم إرسال الإيصال للتيليجرام بنجاح!', 'success');
+                    
+                    // Send image if available
+                    if (receiptData.receiptImage) {
+                        sendImageToTelegram(receiptData, yourChatId, telegramBotToken);
+                    }
+                } else {
+                    console.error('Failed to send to Telegram');
+                    fallbackToTelegramLink(receiptData, message);
+                }
+            }).catch(error => {
+                console.error('Error sending to Telegram:', error);
+                fallbackToTelegramLink(receiptData, message);
+            });
+        } else {
+            // Fallback: Open Telegram with pre-filled message
+            fallbackToTelegramLink(receiptData, message);
+        }
+        
+        // Save locally
+        const receipts = JSON.parse(localStorage.getItem('receipts') || '[]');
+        receipts.push({...receiptData, status: 'sent_to_bot'});
+        localStorage.setItem('receipts', JSON.stringify(receipts));
+        
+        closeReceiptModal();
+        document.getElementById('receiptForm').reset();
+        resetFileUpload();
+    }
+    
+    // Send image to Telegram
+    function sendImageToTelegram(receiptData, chatId, botToken) {
+        if (receiptData.receiptImage) {
+            fetch(receiptData.receiptImage)
+                .then(res => res.blob())
+                .then(blob => {
+                    const formData = new FormData();
+                    formData.append('chat_id', chatId);
+                    formData.append('photo', blob, 'receipt.jpg');
+                    formData.append('caption', `📸 صورة الإيصال - ${receiptData.studentName}`);
+                    
+                    return fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Receipt image sent to Telegram');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error sending image:', error);
+                });
+        }
+    }
+    
+    // Fallback method: Open Telegram app/web
+    function fallbackToTelegramLink(receiptData, message) {
+        // Create a simple message for URL
+        const simpleMessage = `إيصال دفع من ${receiptData.studentName} - ${receiptData.phone}`;
+        
+        // Try to open Telegram app first, then web
+        const telegramAppUrl = `tg://msg?text=${encodeURIComponent(simpleMessage)}`;
+        const telegramWebUrl = `https://web.telegram.org/k/#@abdurhman009`;
+        
+        // Try app first
+        const link = document.createElement('a');
+        link.href = telegramAppUrl;
+        link.click();
+        
+        // Fallback to web after a short delay
+        setTimeout(() => {
+            window.open(telegramWebUrl, '_blank');
+        }, 1000);
+        
+        showNotification('تم فتح التيليجرام. يرجى إرسال تفاصيل الإيصال يدوياً', 'info');
     }
 }
 
@@ -1505,26 +1799,65 @@ function initializeWelcomeScreen() {
 
 // ===== Load Videos from Admin Panel =====
 function loadVideosFromAdmin() {
-    const adminVideos = JSON.parse(localStorage.getItem('siteVideos') || '[]');
-    return adminVideos.map(video => ({
+    // Return real course data from admin panel
+    const realCourses = [
+        {
+            id: 1,
+            title: 'فيديو فيزياء صف 9 متقدم',
+            description: 'شرح شامل ومبسط لمنهج الصف التاسع المتقدم',
+            duration: '120 دقيقة',
+            category: 'grade9',
+            videoUrl: 'https://drive.google.com/file/d/1vOihXtyhX7Xptn0kOs1fISHXsBQOzxum/view?usp=drive_link',
+            thumbnail: 'https://via.placeholder.com/400x225/1e3a8a/ffffff?text=فيزياء+الصف+التاسع+المتقدم',
+            isPremium: false,
+            type: 'free'
+        },
+        {
+            id: 2,
+            title: 'فيديو صف 10 متقدم',
+            description: 'شرح مفصل لمنهج العاشر المتقدم بطريقة ممتازة',
+            duration: '135 دقيقة',
+            category: 'grade10',
+            videoUrl: 'https://drive.google.com/file/d/1iTO2628HDuKpEdPG5_z2VV-v0hHAs8sI/view?usp=drive_link',
+            thumbnail: 'https://via.placeholder.com/400x225/3b82f6/ffffff?text=فيزياء+الصف+العاشر+المتقدم',
+            isPremium: false,
+            type: 'free'
+        },
+        {
+            id: 3,
+            title: 'فيديو فيزياء صف 11 متقدم',
+            description: 'الفيديو الأصلي لمنهج الحادي عشر المتقدم كاملاً',
+            duration: '145 دقيقة',
+            category: 'grade11',
+            videoUrl: 'https://drive.google.com/file/d/1hD5GUReRwAz5L-AJd-IaxKqqJ00DZkJJ/view?usp=drive_link',
+            thumbnail: 'https://via.placeholder.com/400x225/f59e0b/ffffff?text=فيزياء+صف+11+متقدم',
+            isPremium: false,
+            type: 'free'
+        }
+    ];
+    
+    // Also check localStorage for any additional videos from admin
+    const adminVideos = JSON.parse(localStorage.getItem('adminCourses') || '[]');
+    const additionalVideos = adminVideos.map(video => ({
         id: video.id,
         title: video.title,
         description: video.description,
-        duration: video.duration + ' دقيقة',
+        duration: video.duration,
         category: video.grade,
-        videoUrl: video.videoUrl.includes('youtube.com') ? 
-            video.videoUrl.replace('watch?v=', 'embed/').split('&')[0] : 
-            video.videoUrl,
-        thumbnail: video.thumbnail || `https://img.youtube.com/vi/${extractVideoId(video.videoUrl)}/maxresdefault.jpg`,
-        isPremium: video.status === 'premium',
-        type: video.type
+        videoUrl: video.videoUrl,
+        thumbnail: video.thumbnailUrl,
+        isPremium: false,
+        type: 'free'
     }));
+    
+    return [...realCourses, ...additionalVideos];
 }
 
 function extractVideoId(url) {
     const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
     return match ? match[1] : '';
 }
+<<<<<<< HEAD
 
 // ===== Initialize All New Features =====
 document.addEventListener('DOMContentLoaded', () => {
@@ -2087,3 +2420,5 @@ window.showTodayLab = showTodayLab;
 window.closeTodayLab = closeTodayLab;
 window.openCertificateModal = openCertificateModal;
 window.closeCertificateModal = closeCertificateModal;
+=======
+>>>>>>> cf0331e2ffd5392e3adcdd87fd7d42ac49fbee63

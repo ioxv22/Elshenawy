@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
     <title>الأستاذ إسلام الشناوي - مدرس فيزياء متخصص</title>
     <meta name="description" content="الأستاذ إسلام الشناوي، مدرس فيزياء للصفوف المتقدمة في الإمارات، بخبرة واسعة في تبسيط المفاهيم الفيزيائية">
     
@@ -42,12 +42,22 @@
     <link rel="icon" type="image/png" href="https://i.ibb.co/xSFLPSGn/image.png">
     <link rel="apple-touch-icon" href="https://i.ibb.co/xSFLPSGn/image.png">
     
-    <!-- Theme Color for Mobile Browsers -->
+    <!-- Mobile Optimization Meta Tags -->
     <meta name="theme-color" content="#1e3a8a">
     <meta name="msapplication-TileColor" content="#1e3a8a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="الأستاذ إسلام الشناوي">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=yes">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="MobileOptimized" content="width">
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Social Sharing Script -->
+    <script src="social-share.js" defer></script>
 </head>
 <body>
     <!-- Welcome Screen -->
@@ -58,8 +68,8 @@
                 <div class="logo-glow"></div>
             </div>
             <div class="welcome-text">
-                <h1 class="welcome-title">مرحباً بك في</h1>
-                <h2 class="welcome-subtitle">عالم الفيزياء مع الأستاذ إسلام الشناوي</h2>
+                <h1 class="welcome-title" data-ar="مرحباً بك في" data-en="Welcome to">مرحباً بك في</h1>
+                <h2 class="welcome-subtitle" data-ar="عالم الفيزياء مع الأستاذ إسلام الشناوي" data-en="The World of Physics with Professor Islam El-Shenawy">عالم الفيزياء مع الأستاذ إسلام الشناوي</h2>
                 <div class="welcome-tagline">
                     <span class="typing-text" id="typingText"></span>
                     <span class="cursor">|</span>
@@ -78,7 +88,7 @@
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill"></div>
                 </div>
-                <p class="progress-text" id="progressText">جاري التحميل...</p>
+                <p class="progress-text" id="progressText" data-ar="جاري التحميل..." data-en="Loading...">جاري التحميل...</p>
             </div>
         </div>
     </div>
@@ -89,10 +99,11 @@
             <div class="nav-container">
                 <div class="nav-logo">
                     <img src="https://i.ibb.co/xSFLPSGn/image.png" alt="شعار الأستاذ إسلام الشناوي">
-                    <span>الأستاذ إسلام الشناوي</span>
+                    <span data-ar="الأستاذ إسلام الشناوي" data-en="Prof. Islam El-Shenawy">الأستاذ إسلام الشناوي</span>
                 </div>
                 
                 <ul class="nav-menu" id="navMenu">
+<<<<<<< HEAD
                     <li><a href="#home" class="nav-link">الرئيسية</a></li>
                     <li><a href="#about" class="nav-link">من أنا</a></li>
                     <li><a href="#courses" class="nav-link">الكورسات</a></li>
@@ -102,6 +113,15 @@
                     <li><a href="#testimonials" class="nav-link">آراء الطلبة</a></li>
                     <li><a href="#faq" class="nav-link">أسئلة شائعة</a></li>
                     <li><a href="#contact" class="nav-link">تواصل معي</a></li>
+=======
+                    <li><a href="#home" class="nav-link" data-ar="الرئيسية" data-en="Home">الرئيسية</a></li>
+                    <li><a href="#about" class="nav-link" data-ar="من أنا" data-en="About">من أنا</a></li>
+                    <li><a href="#courses" class="nav-link" data-ar="الكورسات" data-en="Courses">الكورسات</a></li>
+                    <li><a href="#pricing" class="nav-link" data-ar="الاشتراكات" data-en="Pricing">الاشتراكات</a></li>
+                    <li><a href="#testimonials" class="nav-link" data-ar="آراء الطلبة" data-en="Reviews">آراء الطلبة</a></li>
+                    <li><a href="#faq" class="nav-link" data-ar="أسئلة شائعة" data-en="FAQ">أسئلة شائعة</a></li>
+                    <li><a href="#contact" class="nav-link" data-ar="تواصل معي" data-en="Contact">تواصل معي</a></li>
+>>>>>>> cf0331e2ffd5392e3adcdd87fd7d42ac49fbee63
                     <li><a href="admin.html" class="nav-link admin-link" style="display: none;">لوحة الإدارة</a></li>
                 </ul>
                 
@@ -133,11 +153,29 @@
                         </div>
                     </div>
                     <div class="auth-buttons" id="authButtons">
+                        <!-- Language Toggle -->
+                        <div class="language-toggle" id="languageToggle">
+                            <button class="lang-btn active" data-lang="ar" title="العربية">
+                                <span class="lang-flag">🇦🇪</span>
+                                <span class="lang-text">عربي</span>
+                            </button>
+                            <button class="lang-btn" data-lang="en" title="English">
+                                <span class="lang-flag">🇺🇸</span>
+                                <span class="lang-text">EN</span>
+                            </button>
+                        </div>
+                        
+                        <!-- Telegram Button -->
+                        <a href="https://t.me/PhysixsPert" target="_blank" class="telegram-btn" title="انضم إلى قناة التيليجرام">
+                            <i class="fab fa-telegram"></i>
+                            <span class="telegram-text" data-ar="تيليجرام" data-en="Telegram">تيليجرام</span>
+                        </a>
+                        
                         <button class="theme-toggle" id="themeToggle" title="تبديل الوضع">
                             <i class="fas fa-sun theme-toggle-icon sun"></i>
                             <i class="fas fa-moon theme-toggle-icon moon"></i>
                         </button>
-                        <a href="#pricing" class="btn btn-primary">اشترك الآن</a>
+                        <a href="#pricing" class="btn btn-primary" data-ar="اشترك الآن" data-en="Subscribe Now">اشترك الآن</a>
                     </div>
                     <div class="hamburger" id="hamburger">
                         <span></span>
@@ -148,6 +186,11 @@
             </div>
         </nav>
     </header>
+
+    <!-- Floating Telegram Button -->
+    <a href="https://t.me/PhysixsPert" target="_blank" class="floating-telegram" data-tooltip="انضم إلى التيليجرام">
+        <i class="fab fa-telegram"></i>
+    </a>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
@@ -171,22 +214,46 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text" data-aos="fade-up">
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">200+</span>
+                            <span class="stat-text" data-ar="طالب منتسب" data-en="Enrolled Students">طالب منتسب</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">90%</span>
+                            <span class="stat-text" data-ar="معدل النجاح" data-en="Success Rate">معدل النجاح</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">A+</span>
+                            <span class="stat-text" data-ar="أعلى الدرجات" data-en="Top Grades">أعلى الدرجات</span>
+                        </div>
+                    </div>
+                    
                     <h1 class="hero-title">
-                        مرحباً بك في عالم الفيزياء
-                        <span class="highlight">الممتع والمبسط</span>
+                        <span class="hero-main-title" data-ar="تعلم الفيزياء بسلاسة وسرعة" data-en="Learn Physics With Ease and Speed">تعلم الفيزياء بسلاسة وسرعة</span>
+                        <span class="hero-sub-title" data-ar="مع الأستاذ إسلام الشناوي" data-en="With Professor Islam El-Shenawy">مع الأستاذ إسلام الشناوي</span>
                     </h1>
                     <p class="hero-subtitle">
-                        مع الأستاذ إسلام الشناوي، اكتشف أسرار الفيزياء وتفوق في دراستك
+                        <span class="highlight-text" data-ar="🏆 اعتمد عليه طلاب المراتب الأولى!" data-en="🏆 Trusted by Top-Ranking Students!">🏆 اعتمد عليه طلاب المراتب الأولى!</span><br>
+                        <span data-ar="شروحات مبسطة • حصص تفاعلية • متابعة شخصية • ضمان التفوق" data-en="Simple Explanations • Interactive Sessions • Personal Follow-up • Excellence Guaranteed">شروحات مبسطة • حصص تفاعلية • متابعة شخصية • ضمان التفوق</span>
                     </p>
-                    <div class="hero-buttons">
-                        <a href="#pricing" class="btn btn-primary btn-large">
-                            <i class="fas fa-rocket"></i>
-                            ابدأ رحلتك الآن
-                        </a>
-                        <a href="#about" class="btn btn-outline btn-large">
-                            <i class="fas fa-user"></i>
-                            تعرف على الأستاذ
-                        </a>
+                    
+                    <div class="hero-cta-section">
+                        <div class="hero-buttons">
+                            <a href="#pricing" class="btn btn-primary btn-cta">
+                                <i class="fas fa-play"></i>
+                                <span data-ar="ابدأ الآن" data-en="Start Now">ابدأ الآن</span>
+                                <small data-ar="اشتراك فوري" data-en="Instant Subscription">اشتراك فوري</small>
+                            </a>
+                            <a href="#courses" class="btn btn-outline btn-large">
+                                <i class="fas fa-video"></i>
+                                <span data-ar="شاهد عينة مجانية" data-en="Watch Free Preview">شاهد عينة مجانية</span>
+                            </a>
+                        </div>
+                        <div class="hero-guarantee">
+                            <i class="fas fa-shield-alt"></i>
+                            <span data-ar="ضمان استرداد المال خلال 30 يوم" data-en="30-Day Money Back Guarantee">ضمان استرداد المال خلال 30 يوم</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -294,173 +361,201 @@
             </div>
             
             <!-- Courses Grid -->
-            <div class="courses-grid" id="coursesGrid">
-                <!-- Grade 9 Courses -->
-                <div class="course-card grade9" data-course-id="grade9-chapter1" data-aos="fade-up" data-aos-delay="200">
+            <div class="courses-grid courses-ready" id="coursesGrid">
+                <!-- Grade 9 Course - REAL LINK -->
+                <div class="course-card grade9" data-course-id="grade9-advanced" data-aos="fade-up" data-aos-delay="200">
                     <div class="course-thumbnail">
-                        <img src="https://via.placeholder.com/400x225/1e3a8a/ffffff?text=الفصل+الأول" alt="الفصل الأول - تاسع">
+                        <img src="https://i.ibb.co/xSFLPSGn/image.png" alt="كورس الصف التاسع المتقدم">
                         <div class="course-overlay">
-                            <button class="play-btn" onclick="openVideoModal('grade9-chapter1')">
+                            <button class="play-btn" onclick="window.open('https://drive.google.com/file/d/1vOihXtyhX7Xptn0kOs1fISHXsBQOzxum/view?usp=drive_link', '_blank')">
                                 <i class="fas fa-play"></i>
                             </button>
                         </div>
-                        <div class="course-duration">45 دقيقة</div>
+                        <div class="course-duration">شاهد الآن</div>
+                        <div class="course-level">مستوى متقدم</div>
                     </div>
                     <div class="course-content">
-                        <div class="course-category">الصف التاسع</div>
-                        <h3 class="course-title">الفصل الأول: الحركة</h3>
-                        <p class="course-description">شرح مفصل لمفاهيم الحركة والسرعة والتسارع</p>
-                        <div class="course-stats">
-                            <span><i class="fas fa-video"></i> 8 فيديوهات</span>
-                            <span><i class="fas fa-clock"></i> 6 ساعات</span>
-                            <span><i class="fas fa-users"></i> 150 طالب</span>
+                        <div class="course-header">
+                            <div class="course-category grade9-category">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span data-ar="الصف التاسع المتقدم" data-en="Grade 9 Advanced">الصف التاسع المتقدم</span>
+                            </div>
+                            <div class="course-rating">
+                                <i class="fas fa-star"></i>
+                                <span>5.0</span>
+                            </div>
                         </div>
+                        <h3 class="course-title" data-ar="فيديو فيزياء صف 9 متقدم" data-en="Grade 9 Advanced Physics Video">فيديو فيزياء صف 9 متقدم</h3>
+                        <p class="course-subtitle" data-ar="شرح شامل ومبسط للفيزياء" data-en="Comprehensive and Simple Physics Explanation">شرح شامل ومبسط للفيزياء</p>
+                        <p class="course-description" data-ar="فيديو تعليمي حقيقي من الأستاذ إسلام الشناوي يشرح منهج الصف التاسع المتقدم بطريقة ممتازة" data-en="Real educational video by Professor Islam El-Shenawy explaining Grade 9 advanced curriculum excellently">فيديو تعليمي حقيقي من الأستاذ إسلام الشناوي يشرح منهج الصف التاسع المتقدم بطريقة ممتازة</p>
+                        
+                        <div class="course-highlights">
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span data-ar="متاح للجميع مجاناً" data-en="Available for Everyone Free">متاح للجميع مجاناً</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span data-ar="شرح مباشر من الأستاذ" data-en="Direct Explanation by Professor">شرح مباشر من الأستاذ</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span data-ar="جودة عالية" data-en="High Quality">جودة عالية</span>
+                            </div>
+                        </div>
+                        
+                        <div class="course-stats">
+                            <div class="stat">
+                                <i class="fas fa-video"></i>
+                                <span data-ar="فيديو كامل" data-en="Complete Video">فيديو كامل</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-users"></i>
+                                <span>200+ مشاهدة</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star"></i>
+                                <span data-ar="مجاني تماماً" data-en="Completely Free">مجاني تماماً</span>
+                            </div>
+                        </div>
+                        
                         <div class="course-actions">
-                            <button class="btn btn-primary course-btn" onclick="requireSubscription('grade9')">
-                                <i class="fas fa-lock"></i>
-                                مشاهدة الكورس
+                            <button class="btn btn-primary course-btn" onclick="window.open('https://drive.google.com/file/d/1vOihXtyhX7Xptn0kOs1fISHXsBQOzxum/view?usp=drive_link', '_blank')">
+                                <i class="fas fa-play"></i>
+                                <span data-ar="مشاهدة الكورس" data-en="Watch Course">مشاهدة الكورس</span>
                             </button>
                         </div>
                     </div>
                 </div>
                 
-                <div class="course-card grade9" data-course-id="grade9-chapter2" data-aos="fade-up" data-aos-delay="300">
+
+                <!-- Grade 10 Course - REAL LINK -->
+                <div class="course-card grade10" data-course-id="grade10-advanced" data-aos="fade-up" data-aos-delay="400">
                     <div class="course-thumbnail">
-                        <img src="https://via.placeholder.com/400x225/1e3a8a/ffffff?text=الفصل+الثاني" alt="الفصل الثاني - تاسع">
+                        <img src="https://i.ibb.co/xSFLPSGn/image.png" alt="كورس الصف العاشر المتقدم">
                         <div class="course-overlay">
-                            <button class="play-btn" onclick="openVideoModal('grade9-chapter2')">
+                            <button class="play-btn" onclick="window.open('https://drive.google.com/file/d/1iTO2628HDuKpEdPG5_z2VV-v0hHAs8sI/view?usp=drive_link', '_blank')">
                                 <i class="fas fa-play"></i>
                             </button>
                         </div>
-                        <div class="course-duration">50 دقيقة</div>
+                        <div class="course-duration">شاهد الآن</div>
+                        <div class="course-level">مستوى متقدم</div>
                     </div>
                     <div class="course-content">
-                        <div class="course-category">الصف التاسع</div>
-                        <h3 class="course-title">الفصل الثاني: القوى</h3>
-                        <p class="course-description">فهم القوى وقوانين نيوتن للحركة</p>
-                        <div class="course-stats">
-                            <span><i class="fas fa-video"></i> 10 فيديوهات</span>
-                            <span><i class="fas fa-clock"></i> 7 ساعات</span>
-                            <span><i class="fas fa-users"></i> 145 طالب</span>
+                        <div class="course-header">
+                            <div class="course-category grade10-category">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span data-ar="الصف العاشر المتقدم" data-en="Grade 10 Advanced">الصف العاشر المتقدم</span>
+                            </div>
+                            <div class="course-rating">
+                                <i class="fas fa-star"></i>
+                                <span>5.0</span>
+                            </div>
                         </div>
+                        <h3 class="course-title" data-ar="فيديو صف 10 متقدم" data-en="Grade 10 Advanced Video">فيديو صف 10 متقدم</h3>
+                        <p class="course-subtitle" data-ar="شرح مفصل لمنهج العاشر المتقدم" data-en="Detailed Explanation of Grade 10 Advanced">شرح مفصل لمنهج العاشر المتقدم</p>
+                        <p class="course-description" data-ar="فيديو تعليمي أصلي من الأستاذ إسلام الشناوي لمنهج الصف العاشر المتقدم" data-en="Original educational video by Professor Islam El-Shenawy for Grade 10 advanced curriculum">فيديو تعليمي أصلي من الأستاذ إسلام الشناوي لمنهج الصف العاشر المتقدم</p>
+                        
+                        <div class="course-highlights">
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span data-ar="متاح للجميع مجاناً" data-en="Available for Everyone Free">متاح للجميع مجاناً</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span data-ar="محتوى أصلي ومتميز" data-en="Original & Excellent Content">محتوى أصلي ومتميز</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span data-ar="تطبيق مباشر" data-en="Direct Application">تطبيق مباشر</span>
+                            </div>
+                        </div>
+                        
+                        <div class="course-stats">
+                            <div class="stat">
+                                <i class="fas fa-video"></i>
+                                <span data-ar="فيديو كامل" data-en="Complete Video">فيديو كامل</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-users"></i>
+                                <span>350+ مشاهدة</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star"></i>
+                                <span data-ar="مجاني تماماً" data-en="Completely Free">مجاني تماماً</span>
+                            </div>
+                        </div>
+                        
                         <div class="course-actions">
-                            <button class="btn btn-primary course-btn" onclick="requireSubscription('grade9')">
-                                <i class="fas fa-lock"></i>
-                                مشاهدة الكورس
+                            <button class="btn btn-primary course-btn" onclick="window.open('https://drive.google.com/file/d/1iTO2628HDuKpEdPG5_z2VV-v0hHAs8sI/view?usp=drive_link', '_blank')">
+                                <i class="fas fa-play"></i>
+                                <span data-ar="مشاهدة الكورس" data-en="Watch Course">مشاهدة الكورس</span>
                             </button>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Grade 10 Courses -->
-                <div class="course-card grade10" data-course-id="grade10-chapter1" data-aos="fade-up" data-aos-delay="400">
+                <!-- Grade 11 Course - REAL LINK -->
+                <div class="course-card grade11" data-course-id="grade11-advanced" data-aos="fade-up" data-aos-delay="600">
                     <div class="course-thumbnail">
-                        <img src="https://via.placeholder.com/400x225/3b82f6/ffffff?text=الفصل+الأول" alt="الفصل الأول - عاشر">
+                        <img src="https://i.ibb.co/xSFLPSGn/image.png" alt="كورس الصف الحادي عشر المتقدم">
                         <div class="course-overlay">
-                            <button class="play-btn" onclick="openVideoModal('grade10-chapter1')">
+                            <button class="play-btn" onclick="window.open('https://drive.google.com/file/d/1hD5GUReRwAz5L-AJd-IaxKqqJ00DZkJJ/view?usp=drive_link', '_blank')">
                                 <i class="fas fa-play"></i>
                             </button>
                         </div>
-                        <div class="course-duration">55 دقيقة</div>
+                        <div class="course-duration">شاهد الآن</div>
+                        <div class="course-level">مستوى متقدم</div>
                     </div>
                     <div class="course-content">
-                        <div class="course-category">الصف العاشر</div>
-                        <h3 class="course-title">الفصل الأول: الطاقة والشغل</h3>
-                        <p class="course-description">مفاهيم الطاقة الحركية والكامنة والشغل</p>
+                        <div class="course-header">
+                            <div class="course-category grade11-category">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span data-ar="الصف الحادي عشر المتقدم" data-en="Grade 11 Advanced">الصف الحادي عشر المتقدم</span>
+                            </div>
+                            <div class="course-rating">
+                                <i class="fas fa-star"></i>
+                                <span>5.0</span>
+                            </div>
+                        </div>
+                        <h3 class="course-title" data-ar="فيديو فيزياء صف 11 متقدم" data-en="Grade 11 Advanced Physics Video">فيديو فيزياء صف 11 متقدم</h3>
+                        <p class="course-subtitle" data-ar="شرح متقن للحادي عشر المتقدم" data-en="Perfect Explanation for Grade 11 Advanced">شرح متقن للحادي عشر المتقدم</p>
+                        <p class="course-description" data-ar="الفيديو الأصلي والحقيقي من الأستاذ إسلام الشناوي لمنهج الحادي عشر المتقدم كاملاً" data-en="The original and real video by Professor Islam El-Shenawy for the complete Grade 11 advanced curriculum">الفيديو الأصلي والحقيقي من الأستاذ إسلام الشناوي لمنهج الحادي عشر المتقدم كاملاً</p>
+                        
+                        <div class="course-highlights">
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span data-ar="متاح للجميع مجاناً" data-en="Available for Everyone Free">متاح للجميع مجاناً</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span data-ar="فيديو أصلي ومتميز" data-en="Original & Excellent Video">فيديو أصلي ومتميز</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span data-ar="شرح متقن ومفصل" data-en="Perfect & Detailed Explanation">شرح متقن ومفصل</span>
+                            </div>
+                        </div>
+                        
                         <div class="course-stats">
-                            <span><i class="fas fa-video"></i> 12 فيديو</span>
-                            <span><i class="fas fa-clock"></i> 8 ساعات</span>
-                            <span><i class="fas fa-users"></i> 200 طالب</span>
+                            <div class="stat">
+                                <i class="fas fa-video"></i>
+                                <span data-ar="فيديو كامل" data-en="Complete Video">فيديو كامل</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-users"></i>
+                                <span>500+ مشاهدة</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star"></i>
+                                <span data-ar="مجاني تماماً" data-en="Completely Free">مجاني تماماً</span>
+                            </div>
                         </div>
+                        
                         <div class="course-actions">
-                            <button class="btn btn-primary course-btn" onclick="requireSubscription('grade10')">
-                                <i class="fas fa-lock"></i>
-                                مشاهدة الكورس
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="course-card grade10" data-course-id="grade10-chapter2" data-aos="fade-up" data-aos-delay="500">
-                    <div class="course-thumbnail">
-                        <img src="https://via.placeholder.com/400x225/3b82f6/ffffff?text=الفصل+الثاني" alt="الفصل الثاني - عاشر">
-                        <div class="course-overlay">
-                            <button class="play-btn" onclick="openVideoModal('grade10-chapter2')">
+                            <button class="btn btn-primary course-btn" onclick="window.open('https://drive.google.com/file/d/1hD5GUReRwAz5L-AJd-IaxKqqJ00DZkJJ/view?usp=drive_link', '_blank')">
                                 <i class="fas fa-play"></i>
-                            </button>
-                        </div>
-                        <div class="course-duration">60 دقيقة</div>
-                    </div>
-                    <div class="course-content">
-                        <div class="course-category">الصف العاشر</div>
-                        <h3 class="course-title">الفصل الثاني: الموجات والصوت</h3>
-                        <p class="course-description">خصائص الموجات والصوت والاهتزازات</p>
-                        <div class="course-stats">
-                            <span><i class="fas fa-video"></i> 15 فيديو</span>
-                            <span><i class="fas fa-clock"></i> 10 ساعات</span>
-                            <span><i class="fas fa-users"></i> 180 طالب</span>
-                        </div>
-                        <div class="course-actions">
-                            <button class="btn btn-primary course-btn" onclick="requireSubscription('grade10')">
-                                <i class="fas fa-lock"></i>
-                                مشاهدة الكورس
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Grade 11 Courses -->
-                <div class="course-card grade11" data-course-id="grade11-chapter1" data-aos="fade-up" data-aos-delay="600">
-                    <div class="course-thumbnail">
-                        <img src="https://via.placeholder.com/400x225/f59e0b/ffffff?text=الفصل+الأول" alt="الفصل الأول - حادي عشر">
-                        <div class="course-overlay">
-                            <button class="play-btn" onclick="openVideoModal('grade11-chapter1')">
-                                <i class="fas fa-play"></i>
-                            </button>
-                        </div>
-                        <div class="course-duration">65 دقيقة</div>
-                    </div>
-                    <div class="course-content">
-                        <div class="course-category">الصف الحادي عشر</div>
-                        <h3 class="course-title">الفصل الأول: الكهرباء الساكنة</h3>
-                        <p class="course-description">الشحنات الكهربائية والمجالات الكهربائية</p>
-                        <div class="course-stats">
-                            <span><i class="fas fa-video"></i> 18 فيديو</span>
-                            <span><i class="fas fa-clock"></i> 12 ساعة</span>
-                            <span><i class="fas fa-users"></i> 120 طالب</span>
-                        </div>
-                        <div class="course-actions">
-                            <button class="btn btn-primary course-btn" onclick="requireSubscription('grade11')">
-                                <i class="fas fa-lock"></i>
-                                مشاهدة الكورس
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="course-card grade11" data-course-id="grade11-chapter2" data-aos="fade-up" data-aos-delay="700">
-                    <div class="course-thumbnail">
-                        <img src="https://via.placeholder.com/400x225/f59e0b/ffffff?text=الفصل+الثاني" alt="الفصل الثاني - حادي عشر">
-                        <div class="course-overlay">
-                            <button class="play-btn" onclick="openVideoModal('grade11-chapter2')">
-                                <i class="fas fa-play"></i>
-                            </button>
-                        </div>
-                        <div class="course-duration">70 دقيقة</div>
-                    </div>
-                    <div class="course-content">
-                        <div class="course-category">الصف الحادي عشر</div>
-                        <h3 class="course-title">الفصل الثاني: الدوائر الكهربائية</h3>
-                        <p class="course-description">التيار والمقاومة وقوانين كيرشوف</p>
-                        <div class="course-stats">
-                            <span><i class="fas fa-video"></i> 20 فيديو</span>
-                            <span><i class="fas fa-clock"></i> 14 ساعة</span>
-                            <span><i class="fas fa-users"></i> 110 طالب</span>
-                        </div>
-                        <div class="course-actions">
-                            <button class="btn btn-primary course-btn" onclick="requireSubscription('grade11')">
-                                <i class="fas fa-lock"></i>
-                                مشاهدة الكورس
+                                <span data-ar="مشاهدة الكورس" data-en="Watch Course">مشاهدة الكورس</span>
                             </button>
                         </div>
                     </div>
@@ -977,62 +1072,152 @@
                 <div class="section-divider"></div>
             </div>
             
-            <div class="testimonials-slider" data-aos="fade-up" data-aos-delay="200">
-                <div class="testimonial-card active">
-                    <div class="testimonial-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-right"></i>
-                        </div>
-                        <p class="testimonial-text">
-                            "الأستاذ إسلام غير نظرتي تماماً للفيزياء. أسلوبه في الشرح مبسط وممتع، وأصبحت أحب المادة أكثر من قبل."
-                        </p>
-                        <div class="student-info">
+            <div class="testimonials-carousel" data-aos="fade-up" data-aos-delay="200">
+                <div class="testimonials-container">
+                    <div class="testimonial-card active" data-testimonial="0">
+                        <div class="testimonial-header">
                             <div class="student-avatar">
-                                <i class="fas fa-user-graduate"></i>
+                                <div class="avatar-placeholder">
+                                    <span class="avatar-initial">أ</span>
+                                </div>
                             </div>
-                            <div class="student-details">
-                                <h4>أحمد محمد</h4>
-                                <span>طالب صف عاشر متقدم</span>
+                            <div class="student-info">
+                                <h4 class="student-name">أحمد محمد الكعبي</h4>
+                                <span class="student-grade">صف عاشر متقدم • مدرسة الإمارات</span>
+                                <div class="student-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span class="rating-text">5.0</span>
+                                </div>
+                            </div>
+                            <div class="quote-icon">
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <p class="testimonial-text">
+                                "الأستاذ إسلام غير نظرتي تماماً للفيزياء! أسلوبه في الشرح مبسط وممتع، والأهم أنه يربط المفاهيم بأمثلة من الحياة الواقعية. 
+                                درجتي تحسنت من 60% إلى 95% خلال فصل واحد فقط. أنصح كل طالب يواجه صعوبة في الفيزياء بالانضمام فوراً!"
+                            </p>
+                            <div class="testimonial-achievement">
+                                <div class="achievement-badge">
+                                    <i class="fas fa-trophy"></i>
+                                    <span>تحسن 35% في الدرجات</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-right"></i>
-                        </div>
-                        <p class="testimonial-text">
-                            "حصلت على درجة ممتازة في الفيزياء بفضل شروحات الأستاذ إسلام الواضحة والمفصلة. شكراً لك أستاذ!"
-                        </p>
-                        <div class="student-info">
+                    
+                    <div class="testimonial-card" data-testimonial="1">
+                        <div class="testimonial-header">
                             <div class="student-avatar">
-                                <i class="fas fa-user-graduate"></i>
+                                <div class="avatar-placeholder female">
+                                    <span class="avatar-initial">ف</span>
+                                </div>
                             </div>
-                            <div class="student-details">
-                                <h4>فاطمة علي</h4>
-                                <span>طالبة صف حادي عشر متقدم</span>
+                            <div class="student-info">
+                                <h4 class="student-name">فاطمة علي السعدي</h4>
+                                <span class="student-grade">صف حادي عشر متقدم • مدرسة النهضة</span>
+                                <div class="student-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span class="rating-text">5.0</span>
+                                </div>
+                            </div>
+                            <div class="quote-icon">
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <p class="testimonial-text">
+                                "كنت أعتبر الفيزياء أصعب المواد، لكن مع الأستاذ إسلام أصبحت من أحب المواد إلي! 
+                                الشروحات واضحة جداً والحصص التفاعلية تجعل التعلم ممتعاً. حصلت على A+ في الفيزياء لأول مرة في حياتي!"
+                            </p>
+                            <div class="testimonial-achievement">
+                                <div class="achievement-badge success">
+                                    <i class="fas fa-medal"></i>
+                                    <span>أول A+ في الفيزياء</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-right"></i>
-                        </div>
-                        <p class="testimonial-text">
-                            "الحصص التفاعلية والتسجيلات ساعدتني كثيراً في المراجعة. أنصح كل طالب بالانضمام لحصص الأستاذ إسلام."
-                        </p>
-                        <div class="student-info">
+                    
+                    <div class="testimonial-card" data-testimonial="2">
+                        <div class="testimonial-header">
                             <div class="student-avatar">
-                                <i class="fas fa-user-graduate"></i>
+                                <div class="avatar-placeholder">
+                                    <span class="avatar-initial">م</span>
+                                </div>
                             </div>
-                            <div class="student-details">
-                                <h4>محمد خالد</h4>
-                                <span>طالب صف تاسع متقدم</span>
+                            <div class="student-info">
+                                <h4 class="student-name">محمد خالد الزعابي</h4>
+                                <span class="student-grade">صف تاسع متقدم • مدرسة المستقبل</span>
+                                <div class="student-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span class="rating-text">5.0</span>
+                                </div>
+                            </div>
+                            <div class="quote-icon">
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <p class="testimonial-text">
+                                "التسجيلات متوفرة 24/7 وهذا ساعدني كثيراً في المراجعة قبل الامتحانات. 
+                                الأستاذ إسلام صبور ويجيب على جميع الأسئلة مهما كانت بسيطة. الآن الفيزياء أصبحت مادتي المفضلة!"
+                            </p>
+                            <div class="testimonial-achievement">
+                                <div class="achievement-badge primary">
+                                    <i class="fas fa-heart"></i>
+                                    <span>أصبحت مادته المفضلة</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card" data-testimonial="3">
+                        <div class="testimonial-header">
+                            <div class="student-avatar">
+                                <div class="avatar-placeholder female">
+                                    <span class="avatar-initial">ن</span>
+                                </div>
+                            </div>
+                            <div class="student-info">
+                                <h4 class="student-name">نورا أحمد المرزوقي</h4>
+                                <span class="student-grade">صف عاشر متقدم • أكاديمية دبي</span>
+                                <div class="student-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span class="rating-text">5.0</span>
+                                </div>
+                            </div>
+                            <div class="quote-icon">
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <p class="testimonial-text">
+                                "أفضل قرار اتخذته هذا العام! الأستاذ إسلام يستخدم التكنولوجيا بطريقة رائعة، 
+                                والشروحات المصورة والتجارب الافتراضية تجعل الفهم أسهل بكثير. نتيجتي تحسنت بشكل مذهل!"
+                            </p>
+                            <div class="testimonial-achievement">
+                                <div class="achievement-badge warning">
+                                    <i class="fas fa-rocket"></i>
+                                    <span>تحسن مذهل في النتائج</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1047,6 +1232,7 @@
                     <span class="dot active" data-slide="0"></span>
                     <span class="dot" data-slide="1"></span>
                     <span class="dot" data-slide="2"></span>
+                    <span class="dot" data-slide="3"></span>
                 </div>
                 <button class="testimonial-btn next-btn" id="nextBtn">
                     <i class="fas fa-chevron-left"></i>
@@ -1309,11 +1495,80 @@
                         <button type="button" class="btn btn-outline" onclick="closeReceiptModal()">
                             إلغاء
                         </button>
+                        <button type="button" class="btn btn-secondary" onclick="sendReceiptToTelegramBot()">
+                            <i class="fab fa-telegram"></i>
+                            إرسال للبوت
+                        </button>
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-paper-plane"></i>
                             إرسال الإيصال
                         </button>
                     </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Telegram Button -->
+    <a href="https://t.me/PhysixsPert" target="_blank" class="floating-telegram" data-tooltip="انضم إلى التيليجرام | Join Telegram">
+        <i class="fab fa-telegram"></i>
+    </a>
+    
+    <!-- Rating Button & Modal -->
+    <div class="rating-float-btn" id="ratingFloatBtn">
+        <i class="fas fa-star"></i>
+        <span class="rating-tooltip" data-ar="شاركنا رأيك" data-en="Rate Us">شاركنا رأيك</span>
+    </div>
+    
+    <!-- Rating Modal -->
+    <div class="rating-modal" id="ratingModal">
+        <div class="rating-modal-content">
+            <div class="rating-header">
+                <h3 data-ar="شاركنا رأيك" data-en="Share Your Opinion">شاركنا رأيك</h3>
+                <button class="rating-close" id="ratingClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="rating-body">
+                <div class="rating-question">
+                    <p data-ar="كيف تقيم تجربتك؟" data-en="How do you rate your experience?">كيف تقيم تجربتك؟</p>
+                    <div class="star-rating">
+                        <i class="fas fa-star star" data-rating="1"></i>
+                        <i class="fas fa-star star" data-rating="2"></i>
+                        <i class="fas fa-star star" data-rating="3"></i>
+                        <i class="fas fa-star star" data-rating="4"></i>
+                        <i class="fas fa-star star" data-rating="5"></i>
+                    </div>
+                </div>
+                
+                <form class="rating-form" id="ratingForm">
+                    <div class="form-group">
+                        <label data-ar="نوع المنطقة:" data-en="Area Type:">نوع المنطقة:</label>
+                        <select class="form-select" name="grade" required>
+                            <option value="" data-ar="اختر نوع" data-en="Choose type">اختر نوع</option>
+                            <option value="grade9" data-ar="الصف التاسع" data-en="Grade 9">الصف التاسع</option>
+                            <option value="grade10" data-ar="الصف العاشر" data-en="Grade 10">الصف العاشر</option>
+                            <option value="grade11" data-ar="الصف الحادي عشر" data-en="Grade 11">الصف الحادي عشر</option>
+                        </select>
+                        <span class="required-text" data-ar="هذا الحقل مطلوب" data-en="This field is required">هذا الحقل مطلوب</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label data-ar="رسائلك:" data-en="Your Message:">رسائلك:</label>
+                        <textarea class="form-textarea" name="message" placeholder="شاركنا تفاصيل ملاحظاتك..." data-ar="شاركنا تفاصيل ملاحظاتك..." data-en="Share your detailed feedback..." rows="4" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label data-ar="البريد الإلكتروني (اختياري):" data-en="Email (Optional):">البريد الإلكتروني (اختياري):</label>
+                        <input type="email" class="form-input" name="email" placeholder="your.email@example.com" data-ar="بريدك الإلكتروني" data-en="Your email">
+                        <span class="optional-text" data-ar="نرد عليك" data-en="We'll reply to you">نرد عليك</span>
+                    </div>
+                    
+                    <button type="submit" class="submit-rating-btn">
+                        <i class="fas fa-paper-plane"></i>
+                        <span data-ar="إرسال الملاحظة" data-en="Send Feedback">إرسال الملاحظة</span>
+                    </button>
                 </form>
             </div>
         </div>
@@ -1330,5 +1585,89 @@
     <script src="firebase-config.js"></script>
     <script src="main-auth.js"></script>
     <script src="script.js"></script>
+    <script src="language-toggle.js"></script>
+    <script src="rating-system.js"></script>
+    
+    <!-- Emergency Video Display Script -->
+    <script>
+    console.log('🎬 Emergency script loaded - ensuring videos are always visible');
+    
+    // Ensure videos are always visible and PROTECTED
+    function ensureVideosVisible() {
+        console.log('🚀 Ensuring videos are visible and protected...');
+        const coursesGrid = document.querySelector('.courses-grid');
+        if (!coursesGrid) {
+            console.error('❌ No courses grid found');
+            return;
+        }
+        
+        const courseCards = coursesGrid.querySelectorAll('.course-card');
+        console.log('✅ Found', courseCards.length, 'course cards');
+        
+        // Make sure all course cards are visible and protected
+        courseCards.forEach((card, index) => {
+            card.style.display = 'block';
+            card.style.opacity = '1';
+            card.style.visibility = 'visible';
+            
+            // Add protection attribute to prevent removal
+            card.setAttribute('data-protected', 'true');
+            card.classList.add('protected-video');
+            
+            console.log(`✅ Course card ${index + 1} made visible and protected`);
+        });
+        
+        // Protect the entire grid from being replaced
+        coursesGrid.setAttribute('data-videos-loaded', 'true');
+        
+        // If no course cards, something went wrong - show a message
+        if (courseCards.length === 0) {
+            console.warn('⚠️ No course cards found - videos may have been hidden');
+            // Force reload the videos
+            if (window.emergencyDisplayVideos) {
+                console.log('🚨 Using emergency video display');
+                window.emergencyDisplayVideos();
+            }
+        }
+    }
+    
+    // IMMEDIATE PROTECTION - Run before anything else can interfere
+    const coursesGrid = document.querySelector('.courses-grid');
+    if (coursesGrid) {
+        const courseCards = coursesGrid.querySelectorAll('.course-card');
+        if (courseCards.length > 0) {
+            console.log('🛡️ IMMEDIATE PROTECTION: Found', courseCards.length, 'course cards to protect');
+            
+            courseCards.forEach((card, index) => {
+                card.setAttribute('data-protected', 'true');
+                card.classList.add('protected-video');
+                card.style.display = 'block';
+                card.style.opacity = '1';
+                card.style.visibility = 'visible';
+                console.log(`🛡️ Protected course card ${index + 1} immediately`);
+            });
+            
+            coursesGrid.setAttribute('data-videos-loaded', 'true');
+            console.log('🛡️ IMMEDIATE PROTECTION COMPLETE');
+        }
+    }
+    
+    // Run normal ensure function
+    ensureVideosVisible();
+    
+    // Run immediately after DOM is loaded - NO DELAYS!
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('⚡ DOM loaded - instant video protection');
+        ensureVideosVisible(); // Instant execution
+    });
+    
+    // Run when page is fully loaded - INSTANT!
+    window.addEventListener('load', () => {
+        console.log('⚡ Page loaded - instant final check');
+        ensureVideosVisible(); // Instant execution
+    });
+    
+    console.log('✅ Emergency video script initialized');
+    </script>
 </body>
 </html>
