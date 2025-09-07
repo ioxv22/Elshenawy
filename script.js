@@ -1714,6 +1714,18 @@ function initializeWelcomeScreen() {
     
     if (!welcomeScreen) return;
     
+    // التحقق من تحميل الصفحة بالكامل
+    let pageLoaded = false;
+    
+    // عند تحميل الصفحة بالكامل
+    if (document.readyState === 'complete') {
+        pageLoaded = true;
+    } else {
+        window.addEventListener('load', () => {
+            pageLoaded = true;
+        });
+    }
+    
     const messages = [
         'اكتشف أسرار الفيزياء معنا 🔬',
         'تعلم بطريقة مبسطة وممتعة ✨',
@@ -1751,15 +1763,14 @@ function initializeWelcomeScreen() {
     // Start typing animation
     setTimeout(typeMessage, 1000);
     
-    // Enhanced progress bar animation
+    // Enhanced progress bar animation - سرعة محسنة
     let progress = 0;
     const loadingSteps = [
-        { progress: 15, text: 'تحميل الموارد...', delay: 100 },
-        { progress: 35, text: 'تحضير المحتوى...', delay: 80 },
-        { progress: 55, text: 'تجهيز الكورسات...', delay: 60 },
-        { progress: 75, text: 'إعداد التجربة...', delay: 70 },
-        { progress: 90, text: 'اللمسات الأخيرة...', delay: 90 },
-        { progress: 100, text: 'مرحباً بك! 🎉', delay: 50 }
+        { progress: 20, text: 'تحميل الموارد...', delay: 50 },
+        { progress: 45, text: 'تحضير المحتوى...', delay: 40 },
+        { progress: 70, text: 'تجهيز الكورسات...', delay: 30 },
+        { progress: 90, text: 'إعداد التجربة...', delay: 35 },
+        { progress: 100, text: 'مرحباً بك! 🎉', delay: 25 }
     ];
     
     let stepIndex = 0;
@@ -1779,22 +1790,68 @@ function initializeWelcomeScreen() {
                     stepIndex++;
                     setTimeout(updateProgress, step.delay);
                 }
-            }, 30);
+            }, 20); // تسريع الأنيميشن من 30 إلى 20
         } else {
-            // Finish loading with enhanced animation
-            setTimeout(() => {
-                welcomeScreen.style.transform = 'scale(1.1)';
-                welcomeScreen.style.opacity = '0';
-                setTimeout(() => {
-                    welcomeScreen.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                }, 800);
-            }, 1000);
+            // انتظار تحميل الصفحة بالكامل قبل الإنهاء
+            const finishLoading = () => {
+                if (welcomeScreen) {
+                    welcomeScreen.classList.add('hidden');
+                    welcomeScreen.style.transform = 'scale(1.1)';
+                    welcomeScreen.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        welcomeScreen.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                        document.body.classList.remove('loading');
+                        
+                        // Trigger page ready event
+                        document.dispatchEvent(new Event('pageReady'));
+                    }, 600);
+                }
+            };
+            
+            // إنهاء التحميل عند اكتمال الصفحة أو بعد وقت قصير
+            if (pageLoaded) {
+                setTimeout(finishLoading, 300);
+            } else {
+                setTimeout(finishLoading, 800);
+            }
         }
     }
     
     // Start progress animation
     setTimeout(updateProgress, 500);
+    
+    // زر التخطي
+    const skipBtn = document.getElementById('skipLoadingBtn');
+    if (skipBtn) {
+        skipBtn.addEventListener('click', () => {
+            // إنهاء التحميل فوراً
+            if (welcomeScreen) {
+                welcomeScreen.classList.add('hidden');
+                welcomeScreen.style.transform = 'scale(1.1)';
+                welcomeScreen.style.opacity = '0';
+                
+                setTimeout(() => {
+                    welcomeScreen.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    document.body.classList.remove('loading');
+                    document.dispatchEvent(new Event('pageReady'));
+                }, 300);
+            }
+        });
+    }
+    
+    // Fallback: Force hide welcome screen after maximum time
+    setTimeout(() => {
+        if (welcomeScreen && welcomeScreen.style.display !== 'none') {
+            console.log('Fallback: Forcing welcome screen to close');
+            welcomeScreen.classList.add('hidden');
+            welcomeScreen.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.body.classList.remove('loading');
+        }
+    }, 8000); // 8 ثواني كحد أقصى
 }
 
 // ===== Load Videos from Admin Panel =====
